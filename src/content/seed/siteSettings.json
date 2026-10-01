@@ -113,13 +113,31 @@
   "heroTrustLine": "Trusted by 850+ students",
   "pressLogos": [
     {
-      "name": "Marie Claire"
+      "name": "Marie Claire",
+      "image": {
+        "url": "/images/press/marie-claire.png",
+        "alt": "Marie Claire",
+        "width": 1116,
+        "height": 160
+      }
     },
     {
-      "name": "Stylist"
+      "name": "Stylist",
+      "image": {
+        "url": "/images/press/stylist.png",
+        "alt": "Stylist",
+        "width": 581,
+        "height": 160
+      }
     },
     {
-      "name": "Cosmopolitan"
+      "name": "Cosmopolitan",
+      "image": {
+        "url": "/images/press/cosmopolitan.png",
+        "alt": "Cosmopolitan",
+        "width": 881,
+        "height": 160
+      }
     }
   ],
   "continueInclusions": [

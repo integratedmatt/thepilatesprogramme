@@ -10,9 +10,9 @@ const { items, settings, heading = 'What students say about training here' } = A
       <header class="wall-heading">
         <p class="eyebrow">In their words</p>
         <h2 id="wall-heading">{heading}</h2>
-        {settings.heroTrustLine && <p class="lead">{settings.heroTrustLine}. Every quote is from a student, in their own words.</p>}
+        {settings.heroTrustLine && <p class="lead">{settings.heroTrustLine}, in their own words.</p>}
       </header>
-      <ul class="wall" role="list" data-stagger>
+      <ul class="wall" role="list" data-stagger tabindex="0" aria-label="Student testimonials, scroll sideways for more">
         {items.map((t) => (
           <li class="wall-item">
             <blockquote>
@@ -26,21 +26,27 @@ const { items, settings, heading = 'What students say about training here' } = A
           </li>
         ))}
       </ul>
-      <p class="wall-more"><a href="/graduates" class="arrow-link">Meet our graduates</a></p>
+      <p class="wall-more"><a href="/graduates" class="arrow-link">Meet our graduates</a><span class="small muted wall-hint">Scroll for more</span></p>
     </div>
   </section>
 )}
 <style>
-  .wall-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
-  .wall { list-style: none; columns: 1; column-gap: var(--space-5); }
-  @media (min-width: 768px) { .wall { columns: 2; } }
-  @media (min-width: 1024px) { .wall { columns: 3; } }
-  .wall-item { break-inside: avoid; margin-bottom: var(--space-5); }
-  .wall-item blockquote { margin: 0; display: grid; gap: var(--space-4); padding: var(--space-6); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); transition: border-color var(--dur-fast) var(--ease-out); }
+  .wall-heading { display: grid; gap: var(--space-2); margin-bottom: var(--space-6); }
+  .wall-heading h2 { font-size: var(--type-h3); }
+  .wall-heading .lead { font-size: var(--type-body); }
+  /* Mobile: one row, horizontal scroll with snap, bleeding to the viewport edge. */
+  .wall { list-style: none; display: flex; gap: var(--space-3); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--margin-outer); margin-inline: calc(-1 * var(--margin-outer)); padding-inline: var(--margin-outer); padding-bottom: var(--space-2); -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .wall::-webkit-scrollbar { display: none; }
+  .wall-item { flex: 0 0 82%; scroll-snap-align: start; }
+  /* Wider screens: still one row, more cards visible, scroll for the rest. */
+  @media (min-width: 768px) { .wall { gap: var(--space-4); } .wall-item { flex-basis: calc((100% - var(--space-4)) / 2 - var(--space-2)); } }
+  @media (min-width: 1024px) { .wall-item { flex-basis: calc((100% - 2 * var(--space-4)) / 3 - var(--space-2)); } }
+  .wall:focus-within, .wall:hover { scrollbar-width: thin; }
+  .wall-item blockquote { margin: 0; display: grid; align-content: start; gap: var(--space-3); padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); height: 100%; transition: border-color var(--dur-fast) var(--ease-out); }
   .wall-item:hover blockquote { border-color: var(--border-strong); }
-  .mark { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h1); line-height: var(--leading-button); color: var(--text-link); }
-  .wall-quote { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); line-height: var(--leading-h3); color: var(--text-primary); max-width: none; }
-  .wall-item footer { display: grid; gap: var(--space-1); padding-top: var(--space-4); border-top: var(--border-width) solid var(--border-subtle); }
-  cite { font-style: normal; font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); }
-  .wall-more { margin-top: var(--space-5); }
+  .mark { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h2); line-height: var(--leading-button); color: var(--text-link); height: var(--space-4); }
+  .wall-quote { font-size: var(--type-body); line-height: var(--leading-lead); font-weight: var(--weight-regular); color: var(--text-primary); max-width: none; }
+  .wall-item footer { display: grid; gap: var(--space-1); padding-top: var(--space-3); margin-top: auto; border-top: var(--border-width) solid var(--border-subtle); }
+  cite { font-style: normal; font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); color: var(--text-secondary); }
+  .wall-more { margin-top: var(--space-5); display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); max-width: none; }
 </style>
