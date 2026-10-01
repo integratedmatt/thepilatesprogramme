@@ -77,12 +77,12 @@ const weeks = [
 
   <Section>
     <header class="section-heading"><p class="eyebrow">Exams</p><h2>What are the exams?</h2><p class="lead">Three, all included in the course fee, and you are prepared for each during training.</p></header>
-    <ol class="exam-list" role="list">{exams.map((e) => <li><h3>{e.title}</h3><p class="secondary">{e.detail}</p></li>)}</ol>
+    <ol class="exam-list" role="list" data-stagger>{exams.map((e) => <li><h3>{e.title}</h3><p class="secondary">{e.detail}</p></li>)}</ol>
   </Section>
 
   <Section tone="subtle">
     <header class="section-heading"><p class="eyebrow">Support</p><h2>What support do you get?</h2></header>
-    <ul class="support-grid" role="list">
+    <ul class="support-grid" role="list" data-stagger>
       <li><h3>Your trainers</h3><p class="secondary">Georgie, Sarah and the team are available throughout your hours by email and at the centre.</p></li>
       <li><h3>The online platform</h3><p class="secondary">Manual, video library and revision material, which you keep after you qualify.</p></li>
       <li><h3>The centre</h3><p class="secondary">Studio and equipment hire for practice teaching, and classes to observe.</p></li>

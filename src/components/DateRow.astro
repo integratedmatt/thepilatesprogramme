@@ -1,16 +1,32 @@
 ---
-import { dateRange } from '@/lib/format';
+import { dateRange, gbp, parseDate } from '@/lib/format';
 import { statusLabel, statusClass, isBookable, locationLabel, dayPatternLabel } from '@/lib/dates';
 import { arketaUrl } from '@/lib/arketa';
+import { getSiteSettings, courseUrl } from '@/lib/content';
 import type { Course, CourseDate } from '@/lib/types';
 interface Props { date: CourseDate; course: Course; showCourse?: boolean }
 const { date, course, showCourse = false } = Astro.props;
+const settings = await getSiteSettings();
 const bookable = isBookable(date.status);
 const href = arketaUrl(date.arketaUrl, { courseSlug: course.slug, dateId: date._id });
+const courseName = `${course.shortTitle}${course.kind === 'teacher-training' ? ' teacher training' : course.kind === 'cpd' ? ' CPD' : ''}`;
+const WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'short' });
+const days = Math.round((parseDate(date.endDate).getTime() - parseDate(date.startDate).getTime()) / 86400000) + 1;
+const dayLine = date.startDate === date.endDate
+  ? `${WEEKDAY.format(parseDate(date.startDate))} ${dateRange(date.startDate, date.endDate)}, one day`
+  : `${WEEKDAY.format(parseDate(date.startDate))} to ${WEEKDAY.format(parseDate(date.endDate))}, ${dateRange(date.startDate, date.endDate)} (${days} days)`;
+const where = date.location === 'partner-studio'
+  ? (date.locationName || 'Partner studio, Manchester')
+  : `${settings.entityName}, ${settings.address.street}, ${settings.address.town}, ${settings.address.postcode}`;
+const finance = course.financeOptions.find((f) => f.instalments && f.amount);
+const priceLine = course.price != null ? `${gbp(course.price)}${finance ? ` or ${finance.instalments} × ${gbp(finance.amount)} interest-free` : ''}` : 'Price on request';
+const included = course.inclusions.slice(0, 4);
+const more = course.inclusions.length - included.length;
+const detailsId = `details-${date._id}`;
 ---
 <li class="date-row">
   <div class="date-main">
-    {showCourse && <p class="eyebrow">{course.shortTitle}{course.kind === 'teacher-training' ? ' teacher training' : course.kind === 'cpd' ? ' CPD' : ''}</p>}
+    {showCourse && <p class="eyebrow">{courseName}</p>}
     <p class="date-range"><time datetime={date.startDate}>{dateRange(date.startDate, date.endDate)}</time></p>
   </div>
   <p class="small secondary">{dayPatternLabel(date.dayPattern)}</p>
@@ -23,6 +39,27 @@ const href = arketaUrl(date.arketaUrl, { courseSlug: course.slug, dateId: date._
       <a href={`/contact?topic=waitlist&course=${course.slug}&date=${date.startDate}`} class="btn btn-secondary">Join waitlist<span class="visually-hidden"> for {course.shortTitle} {dateRange(date.startDate, date.endDate)}</span></a>
     )}
   </p>
+  <details class="date-details disclosure" id={detailsId}>
+    <summary class="date-summary"><span class="arrow-link as-toggle" aria-hidden="true"><span class="lbl-open">See details</span><span class="lbl-close">Hide details</span></span><span class="visually-hidden">Show details for {courseName}, {dateRange(date.startDate, date.endDate)}</span></summary>
+    <div class="date-detail-body">
+      <p class="secondary detail-outcome">{course.outcome}</p>
+      <dl class="facts detail-facts">
+        <div><dt>Days</dt><dd>{dayLine}</dd></div>
+        <div><dt>Where</dt><dd>{where}</dd></div>
+        <div><dt>Price</dt><dd>{priceLine}</dd></div>
+        <div><dt>Prerequisite</dt><dd>{course.prerequisites?.length ? course.prerequisites.join('; ') : 'None'}</dd></div>
+        {course.hoursBreakdown && <div><dt>After the course</dt><dd>{course.hoursBreakdown.observation + course.hoursBreakdown.personalStudy + course.hoursBreakdown.practiceTeaching} supported practice hours, then {course.exams.length} exams, all included</dd></div>}
+        {date.spacesLeft != null && date.status === 'few-spaces' && <div><dt>Availability</dt><dd>{date.spacesLeft} {date.spacesLeft === 1 ? 'space' : 'spaces'} left</dd></div>}
+      </dl>
+      {included.length > 0 && (
+        <div class="detail-included">
+          <p class="eyebrow">What's included</p>
+          <ul class="checklist" role="list">{included.map((i) => <li>{i}</li>)}{more > 0 && <li class="muted">and {more} more on the course page</li>}</ul>
+        </div>
+      )}
+      <p class="detail-links"><a href={courseUrl(course)} class="arrow-link">Full {course.shortTitle} course page</a>{bookable && <a href={href} class="text-link small" target="_blank" rel="noopener" data-book data-course={course.slug} data-date-id={date._id} data-price={course.price ?? ''} data-path={course.path} data-location={date.location}>Book this date</a>}</p>
+    </div>
+  </details>
 </li>
 <style>
   .date-row { display: grid; gap: var(--space-2) var(--space-5); padding-block: var(--space-5); align-items: center; }
@@ -31,4 +68,23 @@ const href = arketaUrl(date.arketaUrl, { courseSlug: course.slug, dateId: date._
   .date-range { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); line-height: var(--leading-h3); }
   .date-action .btn { width: 100%; }
   @media (min-width: 768px) { .date-action .btn { width: auto; } }
+  .date-details { grid-column: 1 / -1; margin-top: var(--space-2); }
+  .date-summary { display: inline-flex; align-items: center; min-height: var(--touch-target); list-style: none; }
+  .date-summary::-webkit-details-marker { display: none; }
+  .as-toggle::after { transform: rotate(90deg); }
+  .lbl-close, .date-details[open] .lbl-open { display: none; }
+  .date-details[open] .lbl-close { display: inline; }
+  .date-details[open] .as-toggle::after { transform: rotate(-90deg); }
+  .date-details:hover .as-toggle::after { transform: rotate(90deg) translateX(var(--space-1)); }
+  .date-details[open]:hover .as-toggle::after { transform: rotate(-90deg) translateX(calc(-1 * var(--space-1))); }
+  .date-detail-body { display: grid; gap: var(--space-5); padding: var(--space-5); margin-top: var(--space-2); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); }
+  @media (min-width: 1024px) { .date-detail-body { grid-template-columns: 7fr 5fr; } .detail-outcome, .detail-links { grid-column: 1 / -1; } }
+  .detail-facts { display: grid; gap: var(--space-3); }
+  .detail-facts div { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-2); }
+  .detail-included { display: grid; gap: var(--space-3); align-content: start; }
+  .checklist { list-style: none; display: grid; gap: var(--space-2); }
+  .checklist li { padding-left: var(--space-5); position: relative; color: var(--text-secondary); font-size: var(--type-small); }
+  .checklist li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); }
+  .checklist li.muted::before { content: "+"; }
+  .detail-links { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
 </style>

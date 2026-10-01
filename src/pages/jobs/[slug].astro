@@ -76,7 +76,7 @@ const desc = `${job.title} at ${job.studio.name}, ${job.town}. ${typeLabel[job.e
   </Section>
   <Section tone="subtle">
     <header class="section-heading"><p class="eyebrow">Strengthen your application</p><h2>Training this studio will value</h2></header>
-    <ul class="card-grid" role="list">{fallback.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
+    <ul class="card-grid" role="list" data-stagger>{fallback.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
   </Section>
 </Base>
 <style>

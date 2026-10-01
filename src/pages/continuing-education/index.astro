@@ -31,7 +31,7 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
 
   <Section tone="subtle" id="apparatus">
     <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer qualification.</p></header>
-    <ul class="card-grid" role="list">{apparatus.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+    <ul class="card-grid" role="list" data-stagger>{apparatus.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
     {bundle && (
       <div class="bundle">
         <div><p class="eyebrow">Bundle</p><h3>Cadillac, Chair and Barrels together: {gbp(bundle.price)}. Barrels is free.</h3></div>
@@ -42,7 +42,7 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
 
   <Section id="cpd">
     <header class="section-heading"><p class="eyebrow">CPD</p><h2>One-day CPD for working teachers</h2><p class="lead">£250 each, pay in full or in two interest-free instalments. In person at the centre, or online on demand.</p></header>
-    <ul class="card-grid" role="list">{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+    <ul class="card-grid" role="list" data-stagger>{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
   </Section>
 
   {returning && (

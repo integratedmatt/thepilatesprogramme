@@ -29,4 +29,8 @@ const { faqs, heading = 'Questions people ask', schema = true, eyebrow = 'FAQ', 
   .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
   .faq-item[open] .faq-icon::after { transform: translate(-50%, -50%) rotate(0); }
   .faq-answer { padding-bottom: var(--space-5); }
+  .faq-item::details-content { opacity: 0; block-size: 0; overflow: hidden; transition: opacity var(--dur-base) var(--ease-out), block-size var(--dur-base) var(--ease-out), content-visibility var(--dur-base) allow-discrete; }
+  .faq-item[open]::details-content { opacity: 1; block-size: auto; }
+  .faq-item summary .h3 { transition: color var(--dur-fast) var(--ease-out); }
+  .faq-item summary:hover .h3 { color: var(--text-link); }
 </style>

@@ -77,7 +77,7 @@
 
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--header-height); interpolate-size: allow-keywords; }
   body {
     margin: 0;
     background: var(--bg-page);
@@ -146,7 +146,8 @@
   .rule-top { border-top: var(--border-width) solid var(--border-subtle); }
   .rule-bottom { border-bottom: var(--border-width) solid var(--border-subtle); }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--button-min-height); padding: var(--space-4) var(--space-6); font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); line-height: var(--leading-button); text-decoration: none; border-radius: var(--radius-0); border: var(--border-width) solid transparent; cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); position: relative; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--button-min-height); padding: var(--space-4) var(--space-6); font-family: var(--font-body); font-size: var(--type-button); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); line-height: var(--leading-button); text-decoration: none; border-radius: var(--radius-0); border: var(--border-width) solid transparent; cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); position: relative; }
+  .btn:active { transform: translateY(var(--press)); }
   .btn-primary { background: var(--button-primary-bg); color: var(--button-primary-text); border-color: var(--button-primary-bg); }
   .btn-primary:hover { background: var(--button-primary-bg-hover); border-color: var(--button-primary-bg-hover); color: var(--button-primary-text); }
   .btn-primary:active { background: var(--ink-900); }
@@ -180,13 +181,16 @@
   .field .hint { font-size: var(--type-small); color: var(--text-muted); }
   .field .error { font-size: var(--type-small); color: var(--status-error); font-weight: var(--weight-regular); }
   .input { width: 100%; min-height: var(--button-min-height); padding: var(--space-3) var(--space-4); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-0); color: var(--text-primary); font-weight: var(--weight-regular); }
+  .input { transition: border-color var(--dur-fast) var(--ease-out); }
   .input:hover { border-color: var(--ink-500); }
   .input:focus { border-color: var(--border-strong); outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
   .input[aria-invalid="true"] { border-color: var(--status-error); }
   textarea.input { min-height: calc(var(--button-min-height) * 3); resize: vertical; }
   .checkbox { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--type-small); font-weight: var(--weight-regular); }
   .checkbox input { width: var(--space-5); height: var(--space-5); margin: 0; accent-color: var(--ink-900); flex: none; }
-  .form-status { padding: var(--space-4); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); font-size: var(--type-small); }
+  .form-status { padding: var(--space-4); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); font-size: var(--type-small); transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out), display var(--dur-base) allow-discrete; }
+  .form-status[hidden] { display: none; opacity: 0; translate: 0 var(--rise-sm); }
+  @starting-style { .form-status:not([hidden]) { opacity: 0; translate: 0 var(--rise-sm); } }
   .form-status[data-state="success"] { border-color: var(--status-open); }
   .form-status[data-state="error"] { border-color: var(--status-error); }
   .honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -211,9 +215,43 @@
   .prose strong { font-weight: var(--weight-medium); color: var(--text-primary); }
   .prose blockquote { border-left: var(--focus-width) solid var(--bronze-700); padding-left: var(--space-5); font-size: var(--type-lead); line-height: var(--leading-lead); margin-block: var(--space-6); }
 
+  /* Motion (spec 4.7 + UI/UX playbook 5.6): purposeful, spatial, eased. Values come only from tokens. */
   .reveal { opacity: 0; transform: translateY(var(--rise)); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
   .reveal.is-visible { opacity: 1; transform: none; }
   .no-js .reveal { opacity: 1; transform: none; }
+
+  /* Staggered entry: children of [data-stagger] inside a .reveal rise in reading order so the eye is led through the group. */
+  .reveal [data-stagger] > * { opacity: 0; transform: translateY(var(--rise)); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); transition-delay: calc(var(--stagger) * var(--i, 0)); }
+  .reveal.is-visible [data-stagger] > *, .no-js [data-stagger] > * { opacity: 1; transform: none; }
+  [data-stagger] > :nth-child(1) { --i: 0; } [data-stagger] > :nth-child(2) { --i: 1; } [data-stagger] > :nth-child(3) { --i: 2; } [data-stagger] > :nth-child(4) { --i: 3; }
+  [data-stagger] > :nth-child(5) { --i: 4; } [data-stagger] > :nth-child(6) { --i: 5; } [data-stagger] > :nth-child(7) { --i: 6; } [data-stagger] > :nth-child(n + 8) { --i: 7; }
+
+  /* Spatial show/hide for elements toggled with the hidden attribute (menus, sheets, steps, status). Degrades to instant where allow-discrete is unsupported. */
+  .motion-pop { transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out), display var(--dur-base) allow-discrete, overlay var(--dur-base) allow-discrete; opacity: 1; translate: 0 0; }
+  .motion-pop[hidden] { display: none; opacity: 0; translate: 0 calc(-1 * var(--rise-sm)); transition-timing-function: var(--ease-in-out); }
+  .motion-sheet { transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out), display var(--dur-base) allow-discrete; opacity: 1; translate: 0 0; }
+  .motion-sheet[hidden] { display: none; opacity: 0; translate: 0 var(--space-6); transition-timing-function: var(--ease-in-out); }
+  .motion-step { transition: opacity var(--dur-base) var(--ease-out), translate var(--dur-base) var(--ease-out), display var(--dur-base) allow-discrete; opacity: 1; translate: 0 0; }
+  .motion-step[hidden] { display: none; opacity: 0; translate: 0 var(--rise-sm); }
+  @starting-style {
+    .motion-pop:not([hidden]) { opacity: 0; translate: 0 calc(-1 * var(--rise-sm)); }
+    .motion-sheet:not([hidden]) { opacity: 0; translate: 0 var(--space-6); }
+    .motion-step:not([hidden]) { opacity: 0; translate: 0 var(--rise-sm); }
+  }
+
+  /* Eased disclosure for any <details>: content height and opacity ease open instead of snapping. */
+  .disclosure::details-content { opacity: 0; block-size: 0; overflow: hidden; transition: opacity var(--dur-base) var(--ease-out), block-size var(--dur-base) var(--ease-out), content-visibility var(--dur-base) allow-discrete; }
+  .disclosure[open]::details-content { opacity: 1; block-size: auto; }
+
+  /* Image lift on hover for linked cards: a small spatial cue that the whole card is the target. */
+  .img-lift .img-frame img { transition: transform var(--dur-slow) var(--ease-out); }
+  .img-lift:hover .img-frame img { transform: scale(var(--scale-hover)); }
+
+  /* Hours bar segments grow from the left when their section enters, so the proportions are read in order. */
+  .reveal .hours-bar span { transform: scaleX(0); transform-origin: left; transition: transform var(--dur-slow) var(--ease-out); }
+  .reveal .hours-bar .seg-2 { transition-delay: calc(var(--stagger) * 3); }
+  .reveal .hours-bar .seg-3 { transition-delay: calc(var(--stagger) * 6); }
+  .reveal.is-visible .hours-bar span, .no-js .hours-bar span { transform: scaleX(1); }
 
   .img-frame { background: var(--bg-subtle); overflow: hidden; }
   .img-frame img { width: 100%; height: 100%; object-fit: cover; }
@@ -230,8 +268,10 @@
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(var(--rise-sm)); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal, .reveal [data-stagger] > *, .reveal .hours-bar span { opacity: 1; transform: none; transition-delay: 0s; }
+  .motion-pop, .motion-sheet, .motion-step, .form-status { translate: none; }
 }

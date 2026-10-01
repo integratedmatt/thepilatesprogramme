@@ -95,7 +95,7 @@ const answer = `Pilates teacher training at The Pilates Programme, Altrincham co
 
   <Section tone="subtle">
     <header class="section-heading"><p class="eyebrow">Finance</p><h2>How can I pay?</h2></header>
-    <ul class="finance-grid" role="list">
+    <ul class="finance-grid" role="list" data-stagger>
       <li><h3>Pay in full</h3><p class="secondary">Card payment at checkout in Arketa.</p></li>
       <li><h3>Interest-free instalments</h3><p class="secondary">Four monthly payments on a teacher training course, six on a double booking, two on CPD and apparatus courses. No interest, no credit check.</p></li>
       <li><h3>Funded places</h3><p class="secondary">Elevating Others funds two Mat trainings a year for people facing barriers to access. <a href="/elevating-others">Find out more</a>.</p></li>
@@ -104,7 +104,7 @@ const answer = `Pilates teacher training at The Pilates Programme, Altrincham co
 
   <Section>
     <header class="section-heading"><p class="eyebrow">Discounts</p><h2>Ways to pay less</h2></header>
-    <ul class="discount-grid" role="list">
+    <ul class="discount-grid" role="list" data-stagger>
       {rules.map((r) => <li><h3>{r.title}</h3><p class="secondary">{r.summary}</p>{r.detail && <p class="secondary">{r.detail}</p>}{r.howToClaim && <p class="small muted">{r.howToClaim}</p>}</li>)}
     </ul>
   </Section>

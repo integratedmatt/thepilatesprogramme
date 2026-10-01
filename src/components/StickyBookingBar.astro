@@ -4,7 +4,7 @@ import type { Course, CourseDate } from '@/lib/types';
 interface Props { course: Course; nextDate?: CourseDate }
 const { course, nextDate } = Astro.props;
 ---
-<div class="sticky-bar" id="sticky-bar" hidden aria-label="Booking">
+<div class="sticky-bar motion-sheet" id="sticky-bar" hidden aria-label="Booking">
   <div class="container sticky-inner">
     <div class="sticky-copy">
       <p class="sticky-title">{course.shortTitle}{course.kind === 'teacher-training' ? ' teacher training' : ''}</p>
@@ -17,8 +17,7 @@ const { course, nextDate } = Astro.props;
   </div>
 </div>
 <style>
-  .sticky-bar { position: fixed; inset-inline: 0; bottom: 0; z-index: 70; background: var(--bg-surface); border-top: var(--border-width) solid var(--border-subtle); padding-block: var(--space-3); transition: transform var(--dur-base) var(--ease-out); }
-  .sticky-bar[hidden] { display: none; }
+  .sticky-bar { position: fixed; inset-inline: 0; bottom: 0; z-index: 70; background: var(--bg-surface); border-top: var(--border-width) solid var(--border-subtle); padding-block: var(--space-3); }
   .sticky-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
   .sticky-copy { display: grid; gap: var(--space-1); min-width: 0; }
   .sticky-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); line-height: var(--leading-h3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

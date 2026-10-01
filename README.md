@@ -36,6 +36,21 @@ Anything marked `[CLIENT TO CONFIRM]` in the spec is an empty CMS field that the
 | Banned-terms guard (2.4) | `scripts/check-banned-terms.mjs`, allowlist in `scripts/banned-terms.allowlist.json` |
 | Sanity Studio | `studio/` (separate install) |
 
+## Motion
+
+Follows spec 4.7 and section 5.6 of the UI/UX playbook (Google Drive, "02 UI UX Playbook"): every animation is functional, transitions are spatial rather than plain dissolves, and interactive elements have eased micro-interactions. All durations, curves and offsets are tokens in `src/styles/tokens.css`; utilities live in `src/styles/global.css`.
+
+| Pattern | Where | How |
+|---|---|---|
+| Entry on scroll, once | every section | `.reveal`: fade + 16px rise, `--dur-slow` / `--ease-out` |
+| Staggered entry | card grids, timelines, value lists | `[data-stagger]` children delayed by `--stagger` in reading order |
+| Spatial open and close | mega-menu, mobile sheet, quiz steps, sticky bar, cookie banner, form status | `.motion-pop` / `.motion-sheet` / `.motion-step` with `@starting-style` and `allow-discrete` on `hidden` |
+| Eased disclosure | FAQ accordion, course date details | `.disclosure::details-content` animates height and opacity |
+| Micro-interactions | buttons, inputs, cards, arrow links | press offset, border and colour eases, image lift, arrow slide |
+| Data read in order | hours bar | segments grow from the left with a stagger when the section enters |
+
+The playbook's 3D transitions and animated 3D clay icons were deliberately not used: they conflict with the spec's quiet, editorial direction. Everything collapses to instant under `prefers-reduced-motion: reduce`.
+
 ## Analytics
 
 GTM is loaded only when `PUBLIC_GTM_ID` is set. Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, graduate_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.

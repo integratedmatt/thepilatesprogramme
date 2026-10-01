@@ -16,7 +16,7 @@ const nextFor = (id: string) => dates.find((d) => d.course === id);
   </Hero>
   <Section><AnswerBox question="What CPD do you run?" answer="The Pilates Programme, Altrincham runs one-day CPD courses for qualified Pilates and Barre teachers from any provider, at £250 each or two interest-free instalments: Prenatal and Postpartum, Strength and Endurance and Pain Science in person at our training centre, and Jumpboard online on demand. Past students receive 10% off." /></Section>
   <Section tone="subtle">
-    <ul class="card-grid" role="list">{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+    <ul class="card-grid" role="list" data-stagger>{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
   </Section>
   <Section><FaqAccordion faqs={faqs} heading="CPD questions" /></Section>
 </Base>

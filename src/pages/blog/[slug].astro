@@ -75,13 +75,13 @@ const nextFor = (id: string) => dates.find((d) => d.course === id);
   {related.length > 0 && (
     <Section tone="subtle">
       <header class="section-heading"><p class="eyebrow">Related courses</p><h2>Train with the people who wrote this</h2></header>
-      <ul class="card-grid" role="list">{related.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
+      <ul class="card-grid" role="list" data-stagger>{related.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
     </Section>
   )}
   {morePosts.length > 0 && (
     <Section>
       <header class="section-heading"><p class="eyebrow">Keep reading</p><h2>Related articles</h2></header>
-      <ul class="card-grid" role="list">{morePosts.map((p) => <li><PostCard post={p} /></li>)}</ul>
+      <ul class="card-grid" role="list" data-stagger>{morePosts.map((p) => <li><PostCard post={p} /></li>)}</ul>
     </Section>
   )}
   <Section tone="inverse">

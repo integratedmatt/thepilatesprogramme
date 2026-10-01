@@ -39,7 +39,7 @@ const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
   {posts.length > 0 && (
     <Section tone="subtle">
       <header class="section-heading"><p class="eyebrow">Journal</p><h2>Articles by {name}</h2></header>
-      <ul class="card-grid" role="list">{posts.map((p) => <li><PostCard post={p} /></li>)}</ul>
+      <ul class="card-grid" role="list" data-stagger>{posts.map((p) => <li><PostCard post={p} /></li>)}</ul>
     </Section>
   )}
 </Base>

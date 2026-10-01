@@ -118,7 +118,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   {course.curriculum.length > 0 && (
     <Section>
       <header class="section-heading"><p class="eyebrow">Curriculum</p><h2>What you'll learn</h2></header>
-      <div class="curriculum">
+      <div class="curriculum" data-stagger>
         {course.curriculum.map((g) => (
           <div class="curriculum-group">
             <h3>{g.title}</h3>
@@ -132,7 +132,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   {course.inclusions.length > 0 && (
     <Section tone="subtle">
       <header class="section-heading"><p class="eyebrow">Included</p><h2>What's included</h2></header>
-      <ul class="included-grid" role="list">
+      <ul class="included-grid" role="list" data-stagger>
         {course.inclusions.map((i) => <li><span class="tick" aria-hidden="true">✓</span><span>{i}</span></li>)}
       </ul>
     </Section>
@@ -214,7 +214,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   {unlocks.length > 0 && (
     <Section>
       <header class="section-heading"><p class="eyebrow">{isQualify ? 'Continue learning' : 'Keep going'}</p><h2>What this course unlocks</h2></header>
-      <ul class="card-grid" role="list">{unlocks.slice(0, 3).map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
+      <ul class="card-grid" role="list" data-stagger>{unlocks.slice(0, 3).map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
     </Section>
   )}
 

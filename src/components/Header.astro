@@ -30,7 +30,7 @@ const links = [
         {menus.map((m) => (
           <li class="has-menu">
             <button type="button" class:list={['nav-link', { 'is-active': isActive(m.href) }]} aria-expanded="false" aria-controls={`menu-${m.id}`} data-menu-trigger={m.id}>{m.label}</button>
-            <div class="mega" id={`menu-${m.id}`} hidden data-menu={m.id}>
+            <div class="mega motion-pop" id={`menu-${m.id}`} hidden data-menu={m.id}>
               <div class="container mega-inner">
                 <div class="mega-intro">
                   <p class="eyebrow">{m.intro}</p>
@@ -69,9 +69,9 @@ const links = [
     </div>
   </div>
 
-  <div class="mobile-nav" id="mobile-nav" hidden>
+  <div class="mobile-nav motion-pop" id="mobile-nav" hidden>
     <div class="container mobile-inner">
-      <div class="mobile-tiles">
+      <div class="mobile-tiles" data-stagger>
         <a href="/become-a-pilates-instructor" class="mobile-tile">
           <span class="eyebrow">I want to qualify</span>
           <span class="h3">Become a Pilates or Barre teacher</span>
@@ -81,7 +81,7 @@ const links = [
           <span class="h3">Continue learning</span>
         </a>
       </div>
-      <ul class="mobile-links rule-list">
+      <ul class="mobile-links rule-list" data-stagger>
         {qualify.map((c) => <li><a href={courseUrl(c)}>{c.shortTitle} teacher training</a></li>)}
         <li><a href="/become-a-pilates-instructor/which-course">Which course is right for me?</a></li>
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
@@ -112,7 +112,9 @@ const links = [
   .mega-extra { list-style: none; display: grid; gap: var(--space-2); font-size: var(--type-small); }
   .mega-courses { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
   .mega-card { display: grid; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); background: var(--bg-page); text-decoration: none; color: var(--text-primary); min-height: 100%; transition: border-color var(--dur-fast) var(--ease-out); }
-  .mega-card:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .mega-card:hover { border-color: var(--border-strong); color: var(--text-primary); transform: translateY(calc(-1 * var(--press))); }
+  .mega-card { transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .mobile-nav:not([hidden]) [data-stagger] > * { animation: rise var(--dur-slow) var(--ease-out) both; animation-delay: calc(var(--stagger) * var(--i, 0)); }
   .mega-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); }
   .header-actions { display: flex; align-items: center; gap: var(--space-3); }
   .btn-book { min-height: var(--touch-target); padding: var(--space-3) var(--space-4); white-space: nowrap; }

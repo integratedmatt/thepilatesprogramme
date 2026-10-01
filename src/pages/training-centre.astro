@@ -33,7 +33,7 @@ const localSchema = {
   </Hero>
 
   <Section>
-    <ul class="gallery" role="list">{gallery.map((g) => <li><Picture image={g} aspect="landscape" sizes="(min-width: 768px) 50vw, 100vw" /></li>)}</ul>
+    <ul class="gallery" role="list" data-stagger>{gallery.map((g) => <li><Picture image={g} aspect="landscape" sizes="(min-width: 768px) 50vw, 100vw" /></li>)}</ul>
   </Section>
 
   <Section tone="subtle">

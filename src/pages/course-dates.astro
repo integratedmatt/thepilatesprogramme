@@ -40,7 +40,7 @@ const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Co
     ) : (
       <div class="empty"><p class="lead">New dates are being scheduled.</p><EmailCapture formId="dates_page_alerts" tag="date-alerts" buttonLabel="Get notified" compact successText="Thanks. We will email you when new dates go live." /></div>
     )}
-    <div class="empty" id="no-match" hidden>
+    <div class="empty motion-step" id="no-match" hidden>
       <p class="lead">No dates match. <button type="button" class="text-link as-link" data-clear>Clear filters</button> or get notified when new dates are added.</p>
       <EmailCapture formId="dates_filter_alerts" tag="date-alerts" buttonLabel="Get notified" compact successText="Thanks. We will email you when new dates go live." />
     </div>
@@ -53,6 +53,7 @@ const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Co
   .dates { list-style: none; }
   .date-wrap { display: contents; }
   .date-wrap[hidden] { display: none; }
+  .date-wrap > :global(.date-row) { animation: rise var(--dur-base) var(--ease-out) both; }
   .empty { display: grid; gap: var(--space-5); padding: var(--space-6); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); margin-top: var(--space-5); }
   .as-link { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; }
 </style>

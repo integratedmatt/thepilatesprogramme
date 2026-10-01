@@ -68,7 +68,7 @@ const facts = [
 
   <Section id="courses">
     <header class="section-heading"><p class="eyebrow">Teacher training</p><h2>Choose your first course</h2></header>
-    <ul class="card-grid" role="list">{courses.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+    <ul class="card-grid" role="list" data-stagger>{courses.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
   </Section>
 
   {mat && reformer && (

@@ -26,7 +26,7 @@ const questions = [
       <form class="quiz-form" novalidate>
         <ol class="quiz-steps" role="list">
           {questions.map((qu, i) => (
-            <li class="quiz-step" data-step={i} hidden={i !== 0}>
+            <li class="quiz-step motion-step" data-step={i} hidden={i !== 0}>
               <fieldset>
                 <legend><span class="eyebrow">Question {i + 1} of {questions.length}</span><span class="h2">{qu.q}</span></legend>
                 <div class="options">
@@ -43,12 +43,12 @@ const questions = [
           ))}
         </ol>
       </form>
-      <div class="quiz-result" id="quiz-result" hidden aria-live="polite">
+      <div class="quiz-result motion-step" id="quiz-result" hidden aria-live="polite">
         <p class="eyebrow">Our recommendation</p>
         <h2 id="result-title"></h2>
         <p class="lead" id="result-reason"></p>
         <div id="result-courses" class="result-courses"></div>
-        <div id="result-double" class="callout" hidden></div>
+        <div id="result-double" class="callout motion-step" hidden></div>
         <p id="result-fitness" class="small secondary" hidden></p>
         <div class="result-actions"><a href="/course-dates" class="btn btn-primary">See course dates</a><button type="button" class="btn btn-secondary" data-restart>Start again</button></div>
         <div class="result-email">
@@ -66,7 +66,9 @@ const questions = [
   legend { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); padding: 0; }
   .options { display: grid; gap: var(--space-3); }
   .option { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); cursor: pointer; min-height: var(--button-min-height); transition: border-color var(--dur-fast) var(--ease-out); }
+  .option { transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
   .option:hover { border-color: var(--ink-500); }
+  .option:active { transform: translateY(var(--press)); }
   .option:has(input:checked) { border-color: var(--border-strong); }
   .option:has(input:focus-visible) { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
   .option input { width: var(--space-5); height: var(--space-5); margin: 0; accent-color: var(--ink-900); }

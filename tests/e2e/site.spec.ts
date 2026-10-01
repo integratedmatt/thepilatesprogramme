@@ -100,3 +100,16 @@ test('no page contains banned accreditation terms', async ({ page }) => {
     expect(text).not.toMatch(/level\s*3|ofqual|\bNVQ\b|regulated/i);
   }
 });
+
+test('course date rows expand to show details', async ({ page }) => {
+  await page.goto('/course-dates');
+  const first = page.locator('.date-row').first();
+  const details = first.locator('details.date-details');
+  await expect(details).not.toHaveAttribute('open', '');
+  await first.locator('summary').click();
+  await expect(details).toHaveAttribute('open', '');
+  await expect(first.locator('.date-detail-body')).toBeVisible();
+  await expect(first.locator('.date-detail-body dt', { hasText: 'Where' })).toBeVisible();
+  await expect(first.locator('.date-detail-body dt', { hasText: 'Price' })).toBeVisible();
+  await expect(first.locator('.date-detail-body a.arrow-link')).toHaveAttribute('href', /\/(become-a-pilates-instructor|continuing-education)\//);
+});

@@ -31,7 +31,7 @@ const questions = [
 
   <Section tone="subtle">
     <header class="section-heading"><p class="eyebrow">What it is</p><h2>What is our accreditation?</h2></header>
-    <ul class="bodies" role="list">
+    <ul class="bodies" role="list" data-stagger>
       <li>
         <h3>ITTAP through the Pilates Method Alliance</h3>
         <p class="secondary">{statements[0] ?? ''}</p>
@@ -57,7 +57,7 @@ const questions = [
 
   <Section tone="subtle">
     <header class="section-heading"><p class="eyebrow">Compare any provider</p><h2>Choosing a Pilates course: questions to ask any provider</h2><p class="lead">Including us. The answers tell you more than any badge.</p></header>
-    <ol class="questions" role="list">{questions.map((q) => <li><h3>{q.q}</h3><p class="secondary">{q.a}</p></li>)}</ol>
+    <ol class="questions" role="list" data-stagger>{questions.map((q) => <li><h3>{q.q}</h3><p class="secondary">{q.a}</p></li>)}</ol>
   </Section>
 
   <Section><FaqAccordion faqs={faqs} heading="Questions about accreditation" /></Section>

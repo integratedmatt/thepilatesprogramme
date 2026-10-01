@@ -24,7 +24,7 @@ const pageUrl = (n: number) => (n === 1 ? basePath : `${basePath}/page/${n}`);
     ) : (
       <>
         {featured && <div class="featured"><PostCard post={featured} featured /></div>}
-        {rest.filter(Boolean).length > 0 && <ul class="card-grid" role="list">{rest.filter((p): p is Post => Boolean(p)).map((p) => <li><PostCard post={p} /></li>)}</ul>}
+        {rest.filter(Boolean).length > 0 && <ul class="card-grid" role="list" data-stagger>{rest.filter((p): p is Post => Boolean(p)).map((p) => <li><PostCard post={p} /></li>)}</ul>}
         {totalPages > 1 && (
           <nav class="pagination" aria-label="Pagination">
             {page > 1 ? <a href={pageUrl(page - 1)} class="btn btn-secondary">Newer</a> : <span />}

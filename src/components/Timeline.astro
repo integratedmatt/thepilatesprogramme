@@ -2,7 +2,7 @@
 interface Props { steps: { title: string; text: string; meta?: string }[] }
 const { steps } = Astro.props;
 ---
-<ol class="timeline" role="list">
+<ol class="timeline" role="list" data-stagger>
   {steps.map((s, i) => (
     <li class="step">
       <span class="step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>

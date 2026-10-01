@@ -29,7 +29,7 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
   </Hero>
 
   <Section>
-    <div class="paths">
+    <div class="paths" data-stagger>
       <PathTile eyebrow="I want to qualify" title="Become a Pilates or Barre teacher" promise="Mat, Reformer and Barre teacher training with 5 in-person days, supported practice hours and exams included." href="/become-a-pilates-instructor" image={{ url: '/images/placeholder-reformer.svg', alt: 'Students on Reformers during a practical day' }} cta="Start your route" />
       <PathTile eyebrow="I'm already qualified" title="Continue learning" promise="Advanced Reformer, Chair, Cadillac, Barrels and CPD for teachers from any provider. Returning students save 10%." href="/continuing-education" image={{ url: '/images/placeholder-apparatus.svg', alt: 'Full apparatus studio at the Altrincham centre' }} cta="See apparatus and CPD" />
     </div>
@@ -45,7 +45,7 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
 
   <Section>
     <header class="section-heading"><p class="eyebrow">Why train with us</p><h2>Depth over speed, and a job at the end of it</h2></header>
-    <ul class="why-grid" role="list">
+    <ul class="why-grid" role="list" data-stagger>
       <li>
         <Picture image={{ url: '/images/placeholder-team.svg', alt: 'A trainer giving hands-on feedback to one student' }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
         <h3>Small cohorts, individual coaching</h3>
@@ -79,7 +79,7 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
 
   <Section>
     <header class="section-heading"><p class="eyebrow">Teacher training</p><h2>Choose your first course</h2></header>
-    <ul class="card-grid" role="list">
+    <ul class="card-grid" role="list" data-stagger>
       {qualify.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}
     </ul>
     <div class="quiz-cta">
@@ -131,7 +131,7 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
   {posts.length > 0 && (
     <Section>
       <header class="section-heading"><p class="eyebrow">From the journal</p><h2>Honest guides to becoming a teacher</h2></header>
-      <ul class="card-grid" role="list">{posts.slice(0, 3).map((p) => <li><PostCard post={p} /></li>)}</ul>
+      <ul class="card-grid" role="list" data-stagger>{posts.slice(0, 3).map((p) => <li><PostCard post={p} /></li>)}</ul>
       <p class="mt-6"><a href="/blog" class="arrow-link">Read the journal</a></p>
     </Section>
   )}

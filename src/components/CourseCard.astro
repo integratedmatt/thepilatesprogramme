@@ -8,7 +8,7 @@ interface Props { course: Course; nextDate?: CourseDate; showBestFor?: boolean }
 const { course, nextDate, showBestFor = false } = Astro.props;
 const href = courseUrl(course);
 ---
-<article class="course-card">
+<article class="course-card img-lift">
   <a href={href} class="card-img" tabindex="-1" aria-hidden="true">
     <Picture image={course.heroImage} aspect="portrait" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
   </a>
