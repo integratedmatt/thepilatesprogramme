@@ -1,0 +1,12 @@
+---
+import BlogIndex from '@/components/BlogIndex.astro';
+import { getPosts, getCategories } from '@/lib/content';
+export async function getStaticPaths() {
+  const categories = await getCategories();
+  return categories.map((c) => ({ params: { slug: c.slug }, props: { category: c } }));
+}
+const { category } = Astro.props;
+const [posts, categories] = await Promise.all([getPosts(), getCategories()]);
+const filtered = posts.filter((p) => p.category?.slug === category.slug);
+---
+<BlogIndex posts={filtered.slice(0, 10)} categories={categories} active={category} page={1} totalPages={Math.max(1, Math.ceil(filtered.length / 10))} basePath={`/blog/category/${category.slug}`} />

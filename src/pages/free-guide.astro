@@ -1,0 +1,77 @@
+---
+import Base from '@/layouts/Base.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Picture from '@/components/Picture.astro';
+import Turnstile from '@/components/Turnstile.astro';
+import DatesList from '@/components/DatesList.astro';
+import { getSiteSettings, getQualifyCourses, getUpcomingDates } from '@/lib/content';
+const [settings, courses, allDates] = await Promise.all([getSiteSettings(), getQualifyCourses(), getUpcomingDates()]);
+const ids = new Set(courses.map((c) => c._id));
+const dates = allDates.filter((d) => ids.has(d.course)).slice(0, 3);
+const guide = settings.freeGuide;
+---
+<Base title="Free Pilates Teacher Career Guide | The Pilates Programme" description="A free guide to becoming a Pilates teacher: the real costs, how the practice hours fit around life, what accreditation means and how graduates land their first job." canonicalPath="/free-guide">
+  <Section reveal={false}>
+    <Breadcrumbs items={[{ name: 'Free guide', url: '/free-guide' }]} class="crumbs" />
+    <div class="grid guide">
+      <div class="col-7">
+        <p class="eyebrow">Free guide</p>
+        <h1>{guide.title}</h1>
+        <ul class="bullets" role="list">{guide.bullets.map((b) => <li>{b}</li>)}</ul>
+        <div class="guide-form" id="guide-form">
+          <form method="post" action="/api/lead" data-form="lead" data-form-id="free_guide" data-path="qualify" novalidate>
+            <input type="hidden" name="form_id" value="free_guide" />
+            <input type="hidden" name="tag" value="career-guide" />
+            <input type="hidden" name="source_page" value="/free-guide" />
+            <input type="hidden" name="redirect" value="/free-guide?subscribed=1" />
+            <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+            <div class="row">
+              <div class="field"><label for="fg-name">First name</label><input class="input" id="fg-name" name="first_name" required autocomplete="given-name" /><p class="error" hidden></p></div>
+              <div class="field"><label for="fg-email">Email</label><input class="input" id="fg-email" name="email" type="email" required autocomplete="email" /><p class="error" hidden></p></div>
+            </div>
+            <fieldset class="field">
+              <legend>Which describes you?</legend>
+              <div class="radios">
+                <label class="checkbox"><input type="radio" name="path" value="qualify" checked /> I want to qualify as a teacher</label>
+                <label class="checkbox"><input type="radio" name="path" value="continue" /> I'm already a teacher</label>
+              </div>
+            </fieldset>
+            <label class="checkbox"><input type="checkbox" name="consent" value="yes" required /><span>I agree to receive the guide and emails from The Pilates Programme. Unsubscribe any time. <a href="/privacy">Privacy policy</a></span></label>
+            <Turnstile />
+            <button type="submit" class="btn btn-primary">Send me the guide</button>
+            <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. The guide is on its way. While you wait, take the course quiz or look at the next dates below."></div>
+          </form>
+        </div>
+        <div class="form-status" data-state="success" role="status" id="guide-sent" hidden><p><strong>Thanks. The guide is on its way to your inbox.</strong> While you wait, take the 60-second course quiz or look at the next dates.</p><p class="mt-3"><a href="/become-a-pilates-instructor/which-course" class="btn btn-primary">Take the course quiz</a></p></div>
+      </div>
+      <div class="col-5">
+        <Picture image={guide.coverImage ?? { url: '/images/placeholder-guide.svg', alt: 'Cover of the Pilates Teacher Career Guide' }} aspect="portrait" sizes="(min-width: 1024px) 33vw, 100vw" priority />
+      </div>
+    </div>
+  </Section>
+  <Section tone="subtle" id="dates">
+    <header class="section-heading"><p class="eyebrow">Next dates</p><h2>Upcoming teacher training</h2></header>
+    <DatesList dates={dates} courses={courses} showCourse emptyText="New teacher training dates are being scheduled." />
+  </Section>
+</Base>
+<style>
+  :global(.crumbs) { margin-bottom: var(--space-6); }
+  .guide { align-items: start; }
+  .col-7 { grid-column: span 12; display: grid; gap: var(--space-5); } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .bullets { list-style: none; display: grid; gap: var(--space-3); color: var(--text-secondary); }
+  .bullets li { padding-left: var(--space-5); position: relative; }
+  .bullets li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); }
+  .guide-form form { display: grid; gap: var(--space-5); padding: var(--space-6); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); }
+  .row { display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  legend { font-size: var(--type-small); font-weight: var(--weight-medium); margin-bottom: var(--space-2); padding: 0; }
+  .radios { display: grid; gap: var(--space-2); }
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .mt-3 { margin-top: var(--space-3); }
+</style>
+<script>
+  if (new URLSearchParams(location.search).get('subscribed') === '1') { document.getElementById('guide-form')!.hidden = true; document.getElementById('guide-sent')!.hidden = false; }
+</script>

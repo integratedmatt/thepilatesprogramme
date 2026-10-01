@@ -1,0 +1,116 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AnswerBox from '@/components/AnswerBox.astro';
+import Timeline from '@/components/Timeline.astro';
+import HoursBar from '@/components/HoursBar.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import { getSiteSettings, getQualifyCourses, getFaqsByIds } from '@/lib/content';
+import { gbp } from '@/lib/format';
+const [settings, courses, faqs] = await Promise.all([getSiteSettings(), getQualifyCourses(), getFaqsByIds(['faq-how-long', 'faq-hours', 'faq-exams', 'faq-studio-hire', 'faq-reformer-access'])]);
+const hours = courses[0]?.hoursBreakdown ?? { observation: 30, personalStudy: 25, practiceTeaching: 25 };
+const total = hours.observation + hours.personalStudy + hours.practiceTeaching;
+const exams = courses[0]?.exams ?? [];
+const timeline = [
+  { meta: 'Day 0', title: 'You book', text: 'Welcome email, online platform access and the Human Movement course to complete before your in-person days.' },
+  { meta: 'Weeks 1 to 4', title: 'Pre-course study', text: 'Work through the Human Movement course and pre-reading at your own pace, around work.' },
+  { meta: 'Intensive', title: '5 in-person days', text: 'Repertoire, teaching skills and workshops in a small cohort at the Altrincham centre.' },
+  { meta: 'Weeks 5 to 12', title: `${total} practice hours`, text: 'Observation, personal study and practice teaching with a week-by-week plan and your trainers on hand.' },
+  { meta: 'Weeks 12 to 14', title: 'Three exams', text: 'Two online multiple choice exams and a 45-minute practical over Zoom. All included.' },
+  { meta: 'Weeks 14 to 16', title: 'Your first paid class', text: 'Cover at a local studio, apply through the jobs board, or launch your own class.' },
+];
+const weeks = [
+  ['1', 'Observe 5 hours. Study 3 hours. Revisit the manual.'],
+  ['2', 'Observe 5 hours. Study 3 hours. Teach 1 hour to a friend.'],
+  ['3', 'Observe 4 hours. Study 3 hours. Teach 2 hours.'],
+  ['4', 'Observe 4 hours. Study 3 hours. Teach 3 hours. Sit the Human Movement exam.'],
+  ['5', 'Observe 4 hours. Study 3 hours. Teach 3 hours.'],
+  ['6', 'Observe 3 hours. Study 3 hours. Teach 4 hours. Sit the theory exam.'],
+  ['7', 'Observe 3 hours. Study 4 hours. Teach 4 full classes.'],
+  ['8', 'Observe 2 hours. Study 3 hours. Teach 5 hours. Book your practical.'],
+];
+---
+<Base title="How Long Does It Take to Become a Pilates Instructor? | The Pilates Programme" description="From booking to your first paid class in three to four months: the timeline, the 80 practice hours week by week, the three exams and the support you get along the way.">
+  <Hero eyebrow="Road to Certification" title="How long does it take to become a Pilates instructor?" lead="Three to four months from booking to your first paid class is typical. Here is exactly what fills that time, and why it is the reason studios hire our graduates.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Become a Pilates instructor', url: '/become-a-pilates-instructor' }, { name: 'Road to Certification', url: '/become-a-pilates-instructor/road-to-certification' }]} />
+  </Hero>
+
+  <Section>
+    <AnswerBox question="How long does it take to become a Pilates instructor?" answer={`At The Pilates Programme, Altrincham, becoming a Pilates instructor takes three to four months: a few weeks of online pre-course study, a 5-day in-person intensive, ${total} supported practice hours over about eight weeks, and three exams. The hours can flex around a job and family, so some students take longer.`} />
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Timeline</p><h2>From booking to your first paid class</h2></header>
+    <Timeline steps={timeline} />
+  </Section>
+
+  <Section>
+    <div class="grid">
+      <div class="col-7">
+        <header class="section-heading"><p class="eyebrow">The hours</p><h2>Why are there {total} practice hours?</h2><p class="lead">Because knowing the exercises is not the same as teaching them. Studios hire teachers who have watched, studied and taught real bodies before their first paid class.</p></header>
+        <HoursBar hours={hours} />
+      </div>
+      <div class="col-5">
+        <h3>Are the hours hard to organise?</h3>
+        <p class="secondary">No, if you have a plan. Ten hours a week for eight weeks covers it: two evenings and a Saturday morning. Observation can be at any studio or through the video library. Practice teaching can be friends, family or fellow students. If you need a room and equipment, hire the centre.</p>
+        <ul class="rule-list how-list mt-4" role="list">
+          <li><strong>Studio hire.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour at the Altrincham centre.` : 'At the Altrincham centre. Current rate on the pricing page.'}</li>
+          <li><strong>Equipment hire.</strong> {settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour.` : 'Available at the centre.'}</li>
+          <li><strong>Online observation.</strong> Through the video library{settings.appMonthlyPrice ? ` and the app (${gbp(settings.appMonthlyPrice)} a month)` : ''}.</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Week by week</p><h2>What does an 8-week hours plan look like?</h2><p class="lead">A realistic plan that adds up to {total} hours. Move things around to suit your week.</p></header>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Week</th><th scope="col">Plan</th></tr></thead>
+        <tbody>{weeks.map(([w, p]) => <tr><th scope="row">Week {w}</th><td>{p}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Exams</p><h2>What are the exams?</h2><p class="lead">Three, all included in the course fee, and you are prepared for each during training.</p></header>
+    <ol class="exam-list" role="list">{exams.map((e) => <li><h3>{e.title}</h3><p class="secondary">{e.detail}</p></li>)}</ol>
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Support</p><h2>What support do you get?</h2></header>
+    <ul class="support-grid" role="list">
+      <li><h3>Your trainers</h3><p class="secondary">Georgie, Sarah and the team are available throughout your hours by email and at the centre.</p></li>
+      <li><h3>The online platform</h3><p class="secondary">Manual, video library and revision material, which you keep after you qualify.</p></li>
+      <li><h3>The centre</h3><p class="secondary">Studio and equipment hire for practice teaching, and classes to observe.</p></li>
+      <li><h3>Your cohort</h3><p class="secondary">Small groups mean you practise teaching on each other and keep each other going.</p></li>
+    </ul>
+  </Section>
+
+  <Section><FaqAccordion faqs={faqs} heading="Questions about hours and exams" /></Section>
+
+  <Section tone="inverse">
+    <div class="grid">
+      <div class="col-7"><p class="eyebrow">Ready?</p><h2>Choose your first course</h2><p class="lead">Mat, Reformer or Barre. Five in-person days, {total} supported hours, exams included.</p><div class="hero-actions"><a href="/become-a-pilates-instructor#courses" class="btn btn-primary">See the courses</a><a href="/course-dates" class="btn btn-secondary">See dates</a></div></div>
+      <div class="col-5"><EmailCapture formId="road_guide" path="qualify" tag="career-guide" heading="Or get the free guide first" successText="Thanks. The guide is on its way to your inbox." /></div>
+    </div>
+  </Section>
+</Base>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .how-list { list-style: none; } .how-list li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .table-wrap { overflow-x: auto; } th[scope="row"] { white-space: nowrap; font-weight: var(--weight-medium); } td { color: var(--text-secondary); }
+  .exam-list { list-style: none; display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .exam-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .exam-list li { display: grid; gap: var(--space-2); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); }
+  .support-grid { list-style: none; display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .support-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .support-grid li { display: grid; gap: var(--space-2); border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-4); }
+  .mt-4 { margin-top: var(--space-4); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+</style>

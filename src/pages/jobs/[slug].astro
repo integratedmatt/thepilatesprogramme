@@ -1,0 +1,93 @@
+---
+/** Job detail. Server-rendered: expired or unapproved roles return 410 with a notice. */
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import CourseCard from '@/components/CourseCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getJobs, getCourses, getUpcomingDates } from '@/lib/content';
+import { jobPostingSchema } from '@/lib/schema';
+import { gbp, longDate } from '@/lib/format';
+export const prerender = false;
+
+const slug = Astro.params.slug!;
+const jobs = await getJobs();
+const job = jobs.find((j) => j.slug === slug);
+const today = new Date().toISOString().slice(0, 10);
+const live = job && job.status === 'approved' && job.validThrough >= today;
+if (!job) return new Response(null, { status: 404 });
+Astro.response.headers.set('Cache-Control', live ? 'public, s-maxage=60, stale-while-revalidate=300' : 'no-store');
+if (!live) Astro.response.status = 410;
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+const [courses, dates] = await Promise.all([getCourses(), getUpcomingDates()]);
+const related = courses.filter((c) => job.disciplines.some((d) => c.discipline.toLowerCase() === d.toLowerCase() || (d.toLowerCase() === 'apparatus' && c.kind === 'apparatus'))).slice(0, 3);
+const fallback = related.length ? related : courses.filter((c) => c.path === 'qualify').slice(0, 3);
+const nextFor = (id: string) => dates.find((d) => d.course === id);
+const typeLabel: Record<string, string> = { FULL_TIME: 'Full time', PART_TIME: 'Part time', CONTRACTOR: 'Freelance', TEMPORARY: 'Temporary', INTERN: 'Internship', VOLUNTEER: 'Volunteer', PER_DIEM: 'Cover', OTHER: 'Other' };
+const unit: Record<string, string> = { HOUR: 'hour', DAY: 'day', WEEK: 'week', MONTH: 'month', YEAR: 'year', CLASS: 'class' };
+const pay = job.payMin || job.payMax ? `${job.payMin ? gbp(job.payMin) : ''}${job.payMin && job.payMax && job.payMax !== job.payMin ? ` – ${gbp(job.payMax)}` : !job.payMin && job.payMax ? `Up to ${gbp(job.payMax)}` : ''} per ${unit[job.payUnit ?? 'HOUR']}` : 'Pay not stated';
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const toParagraphs = (t: string) => esc(t).split(/\n{2,}/).map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+const applyHref = job.applyUrl || (job.applyEmail ? `mailto:${job.applyEmail}?subject=${encodeURIComponent(`Application: ${job.title}`)}` : '#');
+const desc = `${job.title} at ${job.studio.name}, ${job.town}. ${typeLabel[job.employmentType]}${pay !== 'Pay not stated' ? `, ${pay}` : ''}. ${job.disciplines.join(', ')}. Apply via The Pilates Programme jobs board.`;
+---
+<Base title={`${job.title} at ${job.studio.name}, ${job.town} | The Pilates Programme`} description={desc.slice(0, 155)} noindex={!live}>
+  <Fragment slot="head">{live && <JsonLd data={jobPostingSchema(job, siteUrl)} />}</Fragment>
+  <div data-page-event={JSON.stringify({ event: 'job_view', job_id: job._id, studio: job.studio.name })} hidden></div>
+  <Hero eyebrow={`${job.studio.name} · ${job.town}`} title={job.title}>
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }, { name: job.title, url: `/jobs/${job.slug}` }]} />
+    {!live && <div class="form-status" data-state="error" role="status"><strong>This role has closed.</strong> It is no longer accepting applications. <a href="/jobs">See live roles</a>.</div>}
+    {Astro.url.searchParams.get('renewed') === '1' && <div class="form-status" data-state="success" role="status">This listing has been renewed for another 60 days.</div>}
+  </Hero>
+  <Section>
+    <div class="grid">
+      <div class="col-main">
+        <dl class="facts meta">
+          <div><dt>Type</dt><dd>{typeLabel[job.employmentType] ?? job.employmentType}</dd></div>
+          <div><dt>Pay</dt><dd>{pay}</dd></div>
+          <div><dt>Location</dt><dd>{job.location}</dd></div>
+          <div><dt>Disciplines</dt><dd>{job.disciplines.join(', ')}</dd></div>
+          {job.datePosted && <div><dt>Posted</dt><dd>{longDate(job.datePosted)}</dd></div>}
+          <div><dt>Closes</dt><dd>{longDate(job.validThrough)}</dd></div>
+        </dl>
+        <h2 class="h3 mt-7">About the role</h2>
+        <div class="prose" set:html={toParagraphs(job.description)} />
+        {job.requirements && (
+          <div>
+            <h2 class="h3 mt-7">Requirements</h2>
+            <div class="prose" set:html={toParagraphs(job.requirements)} />
+          </div>
+        )}
+        {job.studio.website && <p class="mt-6 small"><a href={job.studio.website} target="_blank" rel="noopener">About {job.studio.name}</a></p>}
+      </div>
+      <aside class="col-side">
+        <div class="side-card">
+          {live ? (
+            <a href={applyHref} class="btn btn-primary" target={job.applyUrl ? '_blank' : undefined} rel={job.applyUrl ? 'noopener' : undefined} data-job-apply data-job-id={job._id} data-studio={job.studio.name}>Apply for this role</a>
+          ) : (
+            <span class="btn btn-primary" aria-disabled="true">Applications closed</span>
+          )}
+          {job.featuredGraduateFriendly && <p class="small secondary">This studio welcomes recently qualified teachers.</p>}
+          <p class="small muted">Listed by {job.studio.name}. Report a problem to <a href="mailto:info@thepilatesprogramme.co.uk">info@thepilatesprogramme.co.uk</a>.</p>
+        </div>
+      </aside>
+    </div>
+  </Section>
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Strengthen your application</p><h2>Training this studio will value</h2></header>
+    <ul class="card-grid" role="list">{fallback.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
+  </Section>
+</Base>
+<style>
+  .col-main { grid-column: span 12; } .col-side { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-main { grid-column: span 8; } .col-side { grid-column: 10 / span 3; } }
+  .meta { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 768px) { .meta { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .meta div { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
+  .side-card { display: grid; gap: var(--space-3); padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); position: sticky; top: calc(var(--header-height) + var(--space-5)); }
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .card-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+  .mt-6 { margin-top: var(--space-6); } .mt-7 { margin-top: var(--space-7); margin-bottom: var(--space-4); }
+</style>

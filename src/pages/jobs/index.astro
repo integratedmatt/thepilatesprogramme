@@ -1,0 +1,82 @@
+---
+/** Jobs listing. Server-rendered with a 60s cache so approvals appear within a minute. Filters are URL-param driven. */
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import JobRow from '@/components/JobRow.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import { getLiveJobs } from '@/lib/content';
+export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
+
+const jobs = await getLiveJobs();
+const p = Astro.url.searchParams;
+const f = { discipline: p.get('discipline') ?? '', area: p.get('area') ?? '', type: p.get('type') ?? '', graduate: p.get('graduate') === '1' };
+const disciplines = Array.from(new Set(jobs.flatMap((j) => j.disciplines))).sort();
+const areas = Array.from(new Set(jobs.map((j) => j.town))).sort();
+const types: [string, string][] = [['FULL_TIME', 'Full time'], ['PART_TIME', 'Part time'], ['CONTRACTOR', 'Freelance'], ['TEMPORARY', 'Temporary'], ['PER_DIEM', 'Cover'], ['OTHER', 'Other']];
+const filtered = jobs.filter((j) =>
+  (!f.discipline || j.disciplines.some((d) => d.toLowerCase() === f.discipline.toLowerCase())) &&
+  (!f.area || j.town.toLowerCase() === f.area.toLowerCase()) &&
+  (!f.type || j.employmentType === f.type) &&
+  (!f.graduate || j.featuredGraduateFriendly),
+);
+const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
+---
+<Base title="Pilates Instructor Jobs Manchester and the North West | The Pilates Programme" description="Pilates and Barre teaching jobs in Manchester, Cheshire and the North West, listed free by studios and reviewed by us. Filter by discipline, area and type, or set up job alerts." canonicalPath="/jobs" noindex={isFiltered}>
+  <Hero eyebrow="Jobs board" title="Pilates and Barre teaching jobs in Manchester, Cheshire and the North West" lead="Roles listed by studios, reviewed by us, free for everyone. New roles are added as they are approved.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }]} />
+  </Hero>
+  <Section reveal={false}>
+    <div class="grid">
+      <div class="col-main">
+        <form class="filters" method="get" action="/jobs" aria-label="Filter jobs">
+          <div class="field"><label for="j-discipline">Discipline</label><select class="input" id="j-discipline" name="discipline"><option value="">All</option>{disciplines.map((d) => <option value={d} selected={d.toLowerCase() === f.discipline.toLowerCase()}>{d}</option>)}</select></div>
+          <div class="field"><label for="j-area">Area</label><select class="input" id="j-area" name="area"><option value="">All</option>{areas.map((a) => <option value={a} selected={a.toLowerCase() === f.area.toLowerCase()}>{a}</option>)}</select></div>
+          <div class="field"><label for="j-type">Type</label><select class="input" id="j-type" name="type"><option value="">All</option>{types.map(([v, l]) => <option value={v} selected={v === f.type}>{l}</option>)}</select></div>
+          <label class="checkbox grad"><input type="checkbox" name="graduate" value="1" checked={f.graduate} /> Graduate friendly</label>
+          <div class="filter-actions"><button type="submit" class="btn btn-primary">Filter</button>{isFiltered && <a href="/jobs" class="btn btn-secondary">Clear</a>}</div>
+        </form>
+        {filtered.length > 0 ? (
+          <ul class="rule-list rule-top rule-bottom jobs" role="list">{filtered.map((j) => <JobRow job={j} />)}</ul>
+        ) : (
+          <div class="empty">
+            <p class="lead">{isFiltered ? 'No roles match those filters right now.' : 'No roles are live right now.'} Get new jobs by email.</p>
+            <EmailCapture formId="job_alerts" path="continue" tag="jobs-alerts" buttonLabel="Get job alerts" compact successText="Thanks. We will email you when new roles are approved." />
+          </div>
+        )}
+        {filtered.length > 0 && (
+          <div class="alerts">
+            <EmailCapture formId="job_alerts_footer" path="continue" tag="jobs-alerts" heading="Get new jobs by email" text="One email when new roles are approved. No spam." buttonLabel="Get job alerts" compact successText="Thanks. We will email you when new roles are approved." />
+          </div>
+        )}
+      </div>
+      <aside class="col-side">
+        <div class="side-card">
+          <p class="eyebrow">Not qualified yet?</p>
+          <h2 class="h3">Train to teach in Altrincham</h2>
+          <p class="small secondary">Mat, Reformer and Barre teacher training with exams included, from £2,200.</p>
+          <a href="/become-a-pilates-instructor" class="arrow-link">How to become a Pilates instructor</a>
+        </div>
+        <div class="side-card">
+          <p class="eyebrow">Hiring?</p>
+          <h2 class="h3">List a role free</h2>
+          <p class="small secondary">Reach qualified teachers across the North West. Reviewed within 2 working days.</p>
+          <a href="/jobs/post" class="btn btn-primary">Post a job</a>
+        </div>
+      </aside>
+    </div>
+  </Section>
+</Base>
+<style>
+  .col-main { grid-column: span 12; display: grid; gap: var(--space-6); align-content: start; }
+  .col-side { grid-column: span 12; display: grid; gap: var(--space-5); align-content: start; }
+  @media (min-width: 1024px) { .col-main { grid-column: span 8; } .col-side { grid-column: 10 / span 3; } }
+  .filters { display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .filters { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; } .grad { grid-column: span 2; align-self: center; } .filter-actions { grid-column: span 1; } }
+  .filter-actions { display: flex; gap: var(--space-2); }
+  .jobs { list-style: none; }
+  .empty, .alerts { display: grid; gap: var(--space-4); padding: var(--space-6); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); }
+  .side-card { display: grid; gap: var(--space-3); padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); justify-items: start; }
+</style>

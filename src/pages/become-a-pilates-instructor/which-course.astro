@@ -1,0 +1,150 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import { getQualifyCourses, getPricingRules, courseUrl } from '@/lib/content';
+const [courses, rules] = await Promise.all([getQualifyCourses(), getPricingRules()]);
+const dbl = rules.find((r) => r.slug === 'double-booking');
+const fitness = rules.find((r) => r.slug === 'fitness-qualification-discount');
+const courseData = courses.map((c) => ({ slug: c.slug, title: c.shortTitle, url: courseUrl(c), price: c.price, outcome: c.outcome, bestFor: c.bestFor }));
+const questions = [
+  { id: 'experience', q: 'How much Pilates have you done?', options: [['new', 'I am new to Pilates'], ['some', 'I practise sometimes'], ['regular', 'I practise regularly'], ['teacher', 'I already teach movement or fitness']] },
+  { id: 'qualification', q: 'Do you hold a fitness or movement teaching qualification?', options: [['none', 'No'], ['fitness', 'Yes, a fitness qualification'], ['pilates', 'Yes, I already teach Pilates or Barre']] },
+  { id: 'where', q: 'Where do you want to teach?', options: [['studio', 'Boutique Reformer studios'], ['anywhere', 'Gyms, community venues or online'], ['own', 'My own classes or private clients'], ['music', 'Energetic, music-led group classes']] },
+  { id: 'reformer', q: 'Can you practise on a Reformer between the course and your exam?', options: [['yes', 'Yes, I have regular access'], ['hire', 'I could hire one or use a local studio'], ['no', 'No access at all']] },
+];
+---
+<Base title="Which Pilates Course Should I Take? 60-Second Quiz | The Pilates Programme" description="Four questions to find the right first course: Mat, Reformer or Barre teacher training. Honest recommendations, and when a double booking saves £1,000.">
+  <Hero eyebrow="Course chooser" title="Which course should you start with?" lead="Four questions, sixty seconds. We recommend a route and explain why, and we tell you when two courses together is the better value.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Become a Pilates instructor', url: '/become-a-pilates-instructor' }, { name: 'Which course', url: '/become-a-pilates-instructor/which-course' }]} />
+  </Hero>
+
+  <Section>
+    <div class="quiz" id="quiz" data-courses={JSON.stringify(courseData)} data-double={JSON.stringify(dbl ? { amount: dbl.amount, saving: dbl.saving } : null)} data-fitness={JSON.stringify(fitness ? { summary: fitness.summary, howToClaim: fitness.howToClaim } : null)}>
+      <form class="quiz-form" novalidate>
+        <ol class="quiz-steps" role="list">
+          {questions.map((qu, i) => (
+            <li class="quiz-step" data-step={i} hidden={i !== 0}>
+              <fieldset>
+                <legend><span class="eyebrow">Question {i + 1} of {questions.length}</span><span class="h2">{qu.q}</span></legend>
+                <div class="options">
+                  {qu.options.map(([v, label]) => (
+                    <label class="option"><input type="radio" name={qu.id} value={v} required /><span>{label}</span></label>
+                  ))}
+                </div>
+              </fieldset>
+              <div class="quiz-nav">
+                {i > 0 && <button type="button" class="btn btn-secondary" data-prev>Back</button>}
+                <button type="button" class="btn btn-primary" data-next>{i === questions.length - 1 ? 'See my result' : 'Next'}</button>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </form>
+      <div class="quiz-result" id="quiz-result" hidden aria-live="polite">
+        <p class="eyebrow">Our recommendation</p>
+        <h2 id="result-title"></h2>
+        <p class="lead" id="result-reason"></p>
+        <div id="result-courses" class="result-courses"></div>
+        <div id="result-double" class="callout" hidden></div>
+        <p id="result-fitness" class="small secondary" hidden></p>
+        <div class="result-actions"><a href="/course-dates" class="btn btn-primary">See course dates</a><button type="button" class="btn btn-secondary" data-restart>Start again</button></div>
+        <div class="result-email">
+          <EmailCapture formId="quiz_result" path="qualify" tag="quiz-result" heading="Email me this result" text="We will send your recommendation, dates and the free career guide." buttonLabel="Send" compact successText="Sent. Check your inbox." />
+        </div>
+      </div>
+      <noscript><p class="lead">This quiz needs JavaScript. You can <a href="/become-a-pilates-instructor#courses">compare the courses here</a> or <a href="/contact">ask us</a>.</p></noscript>
+    </div>
+  </Section>
+</Base>
+<style>
+  .quiz { max-width: calc(var(--measure-body) + var(--space-9)); }
+  .quiz-steps { list-style: none; }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-5); }
+  legend { display: grid; gap: var(--space-3); margin-bottom: var(--space-5); padding: 0; }
+  .options { display: grid; gap: var(--space-3); }
+  .option { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); cursor: pointer; min-height: var(--button-min-height); transition: border-color var(--dur-fast) var(--ease-out); }
+  .option:hover { border-color: var(--ink-500); }
+  .option:has(input:checked) { border-color: var(--border-strong); }
+  .option:has(input:focus-visible) { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
+  .option input { width: var(--space-5); height: var(--space-5); margin: 0; accent-color: var(--ink-900); }
+  .quiz-nav { display: flex; gap: var(--space-3); margin-top: var(--space-6); }
+  .quiz-result { display: grid; gap: var(--space-5); }
+  .result-courses { display: grid; gap: var(--space-4); }
+  .result-course { padding: var(--space-5); border: var(--border-width) solid var(--border-strong); background: var(--bg-surface); display: grid; gap: var(--space-2); }
+  .callout { padding: var(--space-5); background: var(--bg-subtle); border-left: var(--focus-width) solid var(--bronze-700); }
+  .result-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .result-email { margin-top: var(--space-5); padding-top: var(--space-6); border-top: var(--border-width) solid var(--border-subtle); }
+</style>
+<script>
+  type C = { slug: string; title: string; url: string; price: number | null; outcome: string; bestFor?: string };
+  const root = document.getElementById('quiz')!;
+  const courses: C[] = JSON.parse(root.dataset.courses || '[]');
+  const dbl = JSON.parse(root.dataset.double || 'null') as { amount: number; saving: number } | null;
+  const fitness = JSON.parse(root.dataset.fitness || 'null') as { summary: string; howToClaim: string } | null;
+  const form = root.querySelector('form')!;
+  const steps = Array.from(root.querySelectorAll<HTMLElement>('.quiz-step'));
+  const result = document.getElementById('quiz-result')!;
+  const w = window as any; w.dataLayer = w.dataLayer || [];
+  let started = false;
+  const gbp = (n: number) => `£${n.toLocaleString('en-GB')}`;
+  const byslug = (s: string) => courses.find((c) => c.slug.startsWith(s))!;
+
+  function show(i: number) { steps.forEach((s, j) => (s.hidden = j !== i)); steps[i].querySelector<HTMLElement>('input')?.focus(); }
+  form.addEventListener('change', () => { if (!started) { started = true; w.dataLayer.push({ event: 'quiz_start' }); } });
+  root.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const step = t.closest<HTMLElement>('.quiz-step');
+    if (t.matches('[data-prev]') && step) show(Number(step.dataset.step) - 1);
+    if (t.matches('[data-next]') && step) {
+      const i = Number(step.dataset.step);
+      if (!step.querySelector('input:checked')) { step.querySelector<HTMLElement>('input')?.focus(); return; }
+      if (i < steps.length - 1) show(i + 1); else finish();
+    }
+    if (t.matches('[data-restart]')) { form.reset(); result.hidden = true; form.hidden = false; show(0); }
+  });
+
+  function finish() {
+    const fd = new FormData(form);
+    const a = Object.fromEntries(fd.entries()) as Record<string, string>;
+    const picks: C[] = []; let title = ''; let reason = '';
+    const mat = byslug('mat'), reformer = byslug('reformer'), barre = byslug('barre');
+    if (a.qualification === 'pilates') {
+      title = 'You may be ready for continuing education';
+      reason = 'You already teach Pilates or Barre. Advanced Reformer, Chair, Cadillac, Barrels and our CPD days are open to teachers from any provider, and returning students receive 10% off.';
+    } else if (a.where === 'music') {
+      picks.push(barre); title = 'Start with Barre';
+      reason = 'You want energetic, music-led classes. Barre is the format built for that, and it pairs well with Mat later.';
+      if (a.experience === 'regular' || a.experience === 'teacher') { picks.push(mat); reason += ' With regular Pilates practice, adding Mat as a double booking gives you the deepest foundation.'; }
+    } else if (a.where === 'studio' && a.reformer !== 'no') {
+      picks.push(reformer); title = 'Start with Reformer';
+      reason = 'Boutique studios hire Reformer teachers more than any other format, and you can practise on a Reformer between the course and your exam.';
+      if (a.experience === 'regular' || a.experience === 'teacher') { picks.push(mat); reason += ' Adding Mat gives you the fullest understanding of the method and more places to teach.'; }
+    } else if (a.reformer === 'no') {
+      picks.push(mat); title = 'Start with Mat';
+      reason = 'Without regular Reformer access the practice hours are much easier on Mat, and Mat is the foundation everything else builds on. You can add Reformer once you have access.';
+    } else {
+      picks.push(mat); title = 'Start with Mat';
+      reason = 'Mat works anywhere, needs no equipment for your practice hours and gives you the fullest understanding of the method.';
+      if (a.reformer === 'yes' || a.reformer === 'hire') { picks.push(reformer); reason += ' Because you can practise on a Reformer, booking Reformer alongside Mat is the better value and opens boutique studio work.'; }
+    }
+    if (a.experience === 'new' && picks.length) reason += ' As you are new to Pilates, we suggest a few months of regular classes before your course so the repertoire feels familiar.';
+
+    (document.getElementById('result-title') as HTMLElement).textContent = title;
+    (document.getElementById('result-reason') as HTMLElement).textContent = reason;
+    const list = document.getElementById('result-courses')!;
+    list.innerHTML = picks.map((c) => `<div class="result-course"><span class="eyebrow">${c.title}</span><a class="h3" href="${c.url}">${c.title} teacher training</a><span class="secondary">${c.bestFor || c.outcome}</span>${c.price != null ? `<span class="small">${gbp(c.price)} or 4 interest-free payments</span>` : ''}</div>`).join('');
+    if (!picks.length) list.innerHTML = `<div class="result-course"><a class="h3" href="/continuing-education">See continuing education</a></div>`;
+    const dblEl = document.getElementById('result-double')!;
+    if (picks.length === 2 && dbl) { dblEl.hidden = false; dblEl.innerHTML = `<p class="eyebrow">Double booking</p><p>Book ${picks[0].title} and ${picks[1].title} together for ${gbp(dbl.amount)} and save ${gbp(dbl.saving)}, with six interest-free payments.</p>`; } else dblEl.hidden = true;
+    const fit = document.getElementById('result-fitness')!;
+    if (a.qualification === 'fitness' && fitness && picks.length) { fit.hidden = false; fit.textContent = `${fitness.summary} ${fitness.howToClaim}`; } else fit.hidden = true;
+    const hidden = result.querySelector<HTMLInputElement>('input[name="course"]');
+    const resultSlug = picks.map((p) => p.slug).join('+') || 'continue';
+    if (hidden) hidden.value = resultSlug; else { const h = document.createElement('input'); h.type = 'hidden'; h.name = 'course'; h.value = resultSlug; result.querySelector('form')?.appendChild(h); }
+    form.hidden = true; result.hidden = false; result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    w.dataLayer.push({ event: 'quiz_complete', result: resultSlug });
+  }
+</script>

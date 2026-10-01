@@ -1,0 +1,57 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getFaqs } from '@/lib/content';
+import { faqSchema } from '@/lib/schema';
+import { slugify } from '@/lib/format';
+const faqs = await getFaqs();
+const order = ['Choosing a course', 'Cost and finance', 'Practice hours and exams', 'Accreditation', 'After you qualify', 'Continuing education', 'The training centre'];
+const groups = order.map((g) => ({ title: g, items: faqs.filter((f) => f.group === g) })).filter((g) => g.items.length);
+const other = faqs.filter((f) => !order.includes(f.group ?? ''));
+if (other.length) groups.push({ title: 'Other questions', items: other });
+---
+<Base title="Pilates Teacher Training FAQs | The Pilates Programme" description="Answers on choosing a course, cost and finance, practice hours and exams, accreditation, life after qualifying, continuing education and the Altrincham training centre.">
+  <Fragment slot="head"><JsonLd data={faqSchema(faqs)} /></Fragment>
+  <Hero eyebrow="FAQs" title="Questions people ask before they book" lead="Honest answers. If yours is not here, ask us and we will add it.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'FAQs', url: '/faqs' }]} />
+    <div class="field search"><label for="faq-search">Search questions</label><input class="input" id="faq-search" type="search" placeholder="e.g. instalments, Reformer, hours" autocomplete="off" /></div>
+  </Hero>
+  <Section reveal={false}>
+    <nav class="faq-nav" aria-label="FAQ sections"><ul role="list">{groups.map((g) => <li><a href={`#${slugify(g.title)}`}>{g.title}</a></li>)}</ul></nav>
+    <div class="faq-groups">
+      {groups.map((g) => (
+        <section class="faq-group" id={slugify(g.title)} data-group>
+          <FaqAccordion faqs={g.items} heading={g.title} eyebrow="" schema={false} id={`faq-${slugify(g.title)}`} exclusive={false} />
+        </section>
+      ))}
+    </div>
+    <p class="lead" id="faq-none" hidden>No questions match. <a href="/contact">Ask us directly</a>.</p>
+  </Section>
+</Base>
+<style>
+  .search { max-width: calc(var(--measure-body)); margin-top: var(--space-4); }
+  .faq-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-7); }
+  .faq-nav a { display: inline-flex; align-items: center; min-height: var(--touch-target); padding: var(--space-2) var(--space-4); border: var(--border-width) solid var(--border-subtle); text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); }
+  .faq-nav a:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .faq-groups { display: grid; gap: var(--space-8); }
+  .faq-group[hidden] { display: none; }
+</style>
+<script>
+  const input = document.getElementById('faq-search') as HTMLInputElement;
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-group]'));
+  const none = document.getElementById('faq-none')!;
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let total = 0;
+    groups.forEach((g) => {
+      let n = 0;
+      g.querySelectorAll<HTMLDetailsElement>('details').forEach((d) => { const ok = !q || d.textContent!.toLowerCase().includes(q); d.hidden = !ok; if (ok) n++; if (q && ok) d.open = true; });
+      g.hidden = n === 0; total += n;
+    });
+    none.hidden = total > 0;
+  });
+</script>

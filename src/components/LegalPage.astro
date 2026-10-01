@@ -1,0 +1,14 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+interface Props { title: string; description: string; path: string; crumb: string; updated: string }
+const { title, description, path, crumb, updated } = Astro.props;
+---
+<Base title={`${title} | The Pilates Programme`} description={description}>
+  <Hero eyebrow="Legal" title={title} lead={`Last updated ${updated}.`}>
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: crumb, url: path }]} />
+  </Hero>
+  <Section><div class="prose"><slot /></div></Section>
+</Base>

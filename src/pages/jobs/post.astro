@@ -1,0 +1,81 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Turnstile from '@/components/Turnstile.astro';
+const disciplines = ['Mat', 'Reformer', 'Barre', 'Chair', 'Cadillac', 'Barrels', 'Apparatus', 'Prenatal'];
+const types: [string, string][] = [['PART_TIME', 'Part time'], ['FULL_TIME', 'Full time'], ['CONTRACTOR', 'Freelance / self-employed'], ['PER_DIEM', 'Cover'], ['TEMPORARY', 'Temporary'], ['OTHER', 'Other']];
+---
+<Base title="List a Pilates Teaching Job Free | The Pilates Programme" description="Studios: list a Pilates or Barre teaching role free on The Pilates Programme jobs board. Reviewed within 2 working days, live for 60 days, seen by qualified teachers across the North West." noindex>
+  <Hero eyebrow="For studios" title="List a role, free" lead="Reach qualified Pilates and Barre teachers across Manchester, Cheshire and the North West. We review every listing within 2 working days and it runs for 60 days.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }, { name: 'Post a job', url: '/jobs/post' }]} />
+  </Hero>
+  <Section>
+    <div class="form-status" data-state="success" id="sent" hidden role="status"><p><strong>Thanks. We have your listing.</strong> We review within 2 working days and will email you the live link. <a href="/jobs">Back to the jobs board</a>.</p></div>
+    <form class="form-grid" id="job-form" method="post" action="/api/job" data-form="job" data-form-id="job_post" data-path="studio" novalidate>
+      <div class="error-summary form-status" data-state="error" tabindex="-1" hidden>Please check the highlighted fields below.</div>
+      <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+      <fieldset>
+        <legend class="h3">Your studio</legend>
+        <div class="row">
+          <div class="field"><label for="studioName">Studio name</label><input class="input" id="studioName" name="studioName" required autocomplete="organization" /><p class="error" hidden></p></div>
+          <div class="field"><label for="studioWebsite">Website</label><input class="input" id="studioWebsite" name="studioWebsite" type="url" placeholder="https://" autocomplete="url" /><p class="error" hidden></p></div>
+          <div class="field"><label for="contactName">Contact name</label><input class="input" id="contactName" name="contactName" required autocomplete="name" /><p class="error" hidden></p></div>
+          <div class="field"><label for="contactEmail">Contact email</label><input class="input" id="contactEmail" name="contactEmail" type="email" required autocomplete="email" /><p class="hint">For our review emails. Not published unless it is also your application email.</p><p class="error" hidden></p></div>
+          <div class="field"><label for="town">Town</label><input class="input" id="town" name="town" required autocomplete="address-level2" /><p class="error" hidden></p></div>
+          <div class="field"><label for="postcode">Postcode</label><input class="input" id="postcode" name="postcode" autocomplete="postal-code" /><p class="error" hidden></p></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="h3">The role</legend>
+        <div class="row">
+          <div class="field span"><label for="title">Job title</label><input class="input" id="title" name="title" required placeholder="e.g. Reformer Pilates instructor" /><p class="error" hidden></p></div>
+          <div class="field"><label for="employmentType">Employment type</label><select class="input" id="employmentType" name="employmentType" required>{types.map(([v, l]) => <option value={v}>{l}</option>)}</select><p class="error" hidden></p></div>
+          <div class="field"><label for="validThrough">Closing date</label><input class="input" id="validThrough" name="validThrough" type="date" /><p class="hint">Leave blank for 60 days from approval.</p><p class="error" hidden></p></div>
+          <div class="field"><label for="payMin">Pay from (£)</label><input class="input" id="payMin" name="payMin" type="number" min="0" step="0.5" inputmode="decimal" /><p class="error" hidden></p></div>
+          <div class="field"><label for="payMax">Pay to (£)</label><input class="input" id="payMax" name="payMax" type="number" min="0" step="0.5" inputmode="decimal" /><p class="error" hidden></p></div>
+          <div class="field"><label for="payUnit">Pay per</label><select class="input" id="payUnit" name="payUnit"><option value="">Choose</option><option value="HOUR">Hour</option><option value="CLASS">Class</option><option value="DAY">Day</option><option value="MONTH">Month</option><option value="YEAR">Year</option></select><p class="hint">Optional, but listings with pay get more applications.</p></div>
+        </div>
+        <div class="field">
+          <fieldset class="checks"><legend>Disciplines</legend><div class="check-grid">{disciplines.map((d) => <label class="checkbox"><input type="checkbox" name="disciplines" value={d} /> {d}</label>)}</div></fieldset>
+          <p class="error" hidden></p>
+        </div>
+        <div class="field"><label for="requirements">Requirements</label><textarea class="input" id="requirements" name="requirements" maxlength="2000" placeholder="Qualifications, experience, availability"></textarea><p class="error" hidden></p></div>
+        <div class="field"><label for="description">Description</label><textarea class="input" id="description" name="description" required maxlength="2000"></textarea><p class="hint">Up to 2,000 characters. What the role involves, the studio, the timetable.</p><p class="error" hidden></p></div>
+        <label class="checkbox"><input type="checkbox" name="graduateFriendly" value="yes" /> We welcome recently qualified teachers (shows a "Graduate friendly" tag)</label>
+      </fieldset>
+      <fieldset>
+        <legend class="h3">How to apply</legend>
+        <div class="row">
+          <div class="field"><label for="applyUrl">Application link</label><input class="input" id="applyUrl" name="applyUrl" type="url" placeholder="https://" /><p class="error" hidden></p></div>
+          <div class="field"><label for="applyEmail">Or application email</label><input class="input" id="applyEmail" name="applyEmail" type="email" /><p class="error" hidden></p></div>
+        </div>
+      </fieldset>
+      <Turnstile />
+      <p class="small muted">By submitting you confirm this is a genuine role at a real studio and agree to our <a href="/terms">terms</a>.</p>
+      <button type="submit" class="btn btn-primary">Submit listing for review</button>
+      <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. We have your listing and will email you the live link once it is approved."></div>
+    </form>
+  </Section>
+</Base>
+<style>
+  .form-grid { display: grid; gap: var(--space-7); max-width: calc(var(--measure-body) + var(--space-10)); }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-5); }
+  legend { padding: 0; margin-bottom: var(--space-4); }
+  .row { display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .span { grid-column: span 2; } }
+  .checks legend { font-size: var(--type-small); font-weight: var(--weight-medium); margin-bottom: var(--space-2); }
+  .check-grid { display: grid; gap: var(--space-2); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 768px) { .check-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+</style>
+<script>
+  if (new URLSearchParams(location.search).get('sent') === '1') { document.getElementById('sent')!.hidden = false; document.getElementById('job-form')!.hidden = true; }
+  // Disciplines: at least one required (client side).
+  const form = document.getElementById('job-form') as HTMLFormElement;
+  form.addEventListener('submit', (e) => {
+    const checked = form.querySelectorAll('input[name="disciplines"]:checked').length;
+    const err = form.querySelector<HTMLElement>('.checks')!.parentElement!.querySelector<HTMLElement>('.error')!;
+    if (!checked) { e.preventDefault(); e.stopImmediatePropagation(); err.textContent = 'Choose at least one discipline.'; err.hidden = false; form.querySelector<HTMLElement>('input[name="disciplines"]')?.focus(); } else err.hidden = true;
+  }, true);
+</script>

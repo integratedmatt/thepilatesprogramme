@@ -1,0 +1,7 @@
+---
+import BlogIndex from '@/components/BlogIndex.astro';
+import { getPosts, getCategories } from '@/lib/content';
+const PER_PAGE = 10;
+const [posts, categories] = await Promise.all([getPosts(), getCategories()]);
+---
+<BlogIndex posts={posts.slice(0, PER_PAGE)} categories={categories} page={1} totalPages={Math.max(1, Math.ceil(posts.length / PER_PAGE))} basePath="/blog" />

@@ -1,0 +1,23 @@
+---
+import LegalPage from '@/components/LegalPage.astro';
+import { getSiteSettings } from '@/lib/content';
+const s = await getSiteSettings();
+---
+<LegalPage title="Terms and conditions" description="Booking terms for Pilates and Barre teacher training, continuing education and CPD at The Pilates Programme, Altrincham, including payment, instalments and refunds." path="/terms" crumb="Terms" updated="1 October 2026">
+  <h2>Bookings</h2>
+  <p>Course places are booked through Arketa and confirmed by email. A place is held once payment, or the first instalment, is received.</p>
+  <h2>Payment and instalments</h2>
+  <p>Courses can be paid in full or by the interest-free instalment plan shown on the course page. Instalments are collected monthly from the card used at booking. All instalments must be paid before certification is issued.</p>
+  <h2>Refunds and transfers</h2>
+  <p>All payments are non-refundable and non-transferable. If you cannot attend, email <a href={`mailto:${s.email}`}>{s.email}</a> as early as possible and we will do what we can to help.</p>
+  <h2>Discounts</h2>
+  <p>Discounts cannot be combined unless stated. Discount codes must be applied at checkout. Proof of eligibility may be requested.</p>
+  <h2>Certification</h2>
+  <p>Certification is issued when all in-person days, practice hours and exams are complete. Exams are included in the course fee.</p>
+  <h2>Conduct and safety</h2>
+  <p>Tell us about injuries or health conditions before your course. We may ask for medical clearance. We reserve the right to remove anyone whose behaviour puts others at risk.</p>
+  <h2>Jobs board</h2>
+  <p>Listings are submitted by studios and reviewed before publishing. We do not verify every detail and are not party to any employment relationship. Report a listing to <a href={`mailto:${s.email}`}>{s.email}</a>.</p>
+  <h2>Website</h2>
+  <p>Content on this site is for information. Prices and dates are correct at publication and may change. These terms are governed by the law of England and Wales.</p>
+</LegalPage>

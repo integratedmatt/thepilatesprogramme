@@ -1,0 +1,78 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AnswerBox from '@/components/AnswerBox.astro';
+import CourseCard from '@/components/CourseCard.astro';
+import DatesList from '@/components/DatesList.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import JobRow from '@/components/JobRow.astro';
+import { getContinueCourses, getUpcomingDates, getPricingRules, getFaqsByIds, getLiveJobs, courseUrl } from '@/lib/content';
+import { gbp } from '@/lib/format';
+const [courses, allDates, rules, faqs, jobs] = await Promise.all([getContinueCourses(), getUpcomingDates(), getPricingRules(), getFaqsByIds(['faq-prereq-apparatus', 'faq-bundle', 'faq-returning-discount', 'faq-cpd-who', 'faq-cpd-finance']), getLiveJobs()]);
+const apparatus = courses.filter((c) => c.kind === 'apparatus');
+const bundle = courses.find((c) => c.kind === 'bundle');
+const cpd = courses.filter((c) => c.kind === 'cpd');
+const ids = new Set(courses.map((c) => c._id));
+const dates = allDates.filter((d) => ids.has(d.course));
+const nextFor = (id: string) => allDates.find((d) => d.course === id);
+const returning = rules.find((r) => r.slug === 'returning-student');
+const apparatusJobs = jobs.filter((j) => j.disciplines.some((d) => /reformer|chair|cadillac|barrel|apparatus/i.test(d))).slice(0, 3);
+const answer = `The Pilates Programme, Altrincham offers continuing education for qualified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three apparatus courses for £2,700 with Barrels free, plus one-day CPD at £250. Past students receive 10% off. Everything is taught in person on full apparatus.`;
+---
+<Base title="Pilates CPD Courses UK and Apparatus Training | The Pilates Programme" description="Continuing education for qualified Pilates teachers: Advanced Reformer, Chair, Cadillac, Barrels and CPD days in Altrincham. Open to teachers from any provider. Returning students save 10%.">
+  <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for qualified teachers from any provider, taught in person on full apparatus in Altrincham.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Continuing education', url: '/continuing-education' }]} />
+    <div class="hero-actions"><a href="#apparatus" class="btn btn-primary">Apparatus courses</a><a href="#cpd" class="btn btn-secondary">CPD days</a></div>
+  </Hero>
+
+  <Section><AnswerBox question="What continuing education do you offer qualified teachers?" answer={answer} /></Section>
+
+  <Section tone="subtle" id="apparatus">
+    <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer qualification.</p></header>
+    <ul class="card-grid" role="list">{apparatus.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+    {bundle && (
+      <div class="bundle">
+        <div><p class="eyebrow">Bundle</p><h3>Cadillac, Chair and Barrels together: {gbp(bundle.price)}. Barrels is free.</h3></div>
+        <a href={courseUrl(bundle)} class="btn btn-primary">See the bundle</a>
+      </div>
+    )}
+  </Section>
+
+  <Section id="cpd">
+    <header class="section-heading"><p class="eyebrow">CPD</p><h2>One-day CPD for working teachers</h2><p class="lead">£250 each, pay in full or in two interest-free instalments. In person at the centre, or online on demand.</p></header>
+    <ul class="card-grid" role="list">{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
+  </Section>
+
+  {returning && (
+    <Section tone="inverse">
+      <div class="grid"><div class="col-7"><p class="eyebrow">Returning students</p><h2>{returning.percent}% off everything above</h2></div><div class="col-5"><p class="lead">{returning.summary}</p><p class="secondary mt-4">{returning.howToClaim}</p></div></div>
+    </Section>
+  )}
+
+  <Section id="dates">
+    <header class="section-heading"><p class="eyebrow">Dates</p><h2>Upcoming continuing education dates</h2></header>
+    <DatesList dates={dates} courses={courses} showCourse emptyText="New apparatus and CPD dates are being scheduled." />
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Jobs board</p><h2>Roles that ask for apparatus skills</h2></header>
+    {apparatusJobs.length > 0 ? <ul class="rule-list rule-top rule-bottom jobs" role="list">{apparatusJobs.map((j) => <JobRow job={j} />)}</ul> : <p class="lead">Studios list Reformer and apparatus roles on our jobs board. Check back, or set up job alerts.</p>}
+    <p class="mt-6"><a href="/jobs?discipline=Reformer" class="arrow-link">See Reformer and apparatus roles</a></p>
+  </Section>
+
+  <Section><FaqAccordion faqs={faqs} heading="Questions from qualified teachers" /></Section>
+</Base>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .card-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+  @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .bundle { display: grid; gap: var(--space-4); margin-top: var(--space-7); padding: var(--space-6); background: var(--bg-surface); border: var(--border-width) solid var(--border-strong); }
+  @media (min-width: 768px) { .bundle { grid-template-columns: 1fr auto; align-items: center; } }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .jobs { list-style: none; }
+  .mt-4 { margin-top: var(--space-4); } .mt-6 { margin-top: var(--space-6); }
+</style>

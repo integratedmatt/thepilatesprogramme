@@ -19,7 +19,6 @@ const visible = facts.filter((f) => f.value !== undefined && f.value !== null &&
 )}
 <style>
   .facts-block { display: grid; gap: var(--space-4); }
-  .facts { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  @media (min-width: 768px) { .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .facts { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(var(--space-11), 1fr)); }
   .fact { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
 </style>

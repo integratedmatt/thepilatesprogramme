@@ -1,0 +1,2 @@
+import { defineField, defineType } from 'sanity';
+export default defineType({ name: 'author', title: 'Author', type: 'document', fields: [defineField({ name: 'name', type: 'string' }), defineField({ name: 'slug', type: 'slug', options: { source: 'name' } }), defineField({ name: 'role', type: 'string' }), defineField({ name: 'bio', type: 'text', rows: 5 }), defineField({ name: 'credentials', type: 'array', of: [{ type: 'string' }] }), defineField({ name: 'image', type: 'imageWithAlt' })] });

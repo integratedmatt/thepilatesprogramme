@@ -1,0 +1,84 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import DateRow from '@/components/DateRow.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSiteSettings, getCourses, getUpcomingDates } from '@/lib/content';
+import { courseInstanceSchema } from '@/lib/schema';
+import { monthKey, monthYear } from '@/lib/format';
+const [settings, courses, dates] = await Promise.all([getSiteSettings(), getCourses(), getUpcomingDates()]);
+const byId = new Map(courses.map((c) => [c._id, c]));
+const rows = dates.map((d) => ({ d, c: byId.get(d.course)! })).filter((r) => r.c);
+const months = Array.from(new Set(rows.map((r) => monthKey(r.d.startDate))));
+const courseOptions = courses.filter((c) => rows.some((r) => r.c._id === c._id));
+const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Course', name: r.c.title, description: r.c.answerSummary, provider: { '@type': 'EducationalOrganization', name: settings.entityName }, offers: r.c.price != null ? { '@type': 'Offer', price: r.c.price, priceCurrency: 'GBP', category: 'Paid' } : undefined, hasCourseInstance: [courseInstanceSchema(r.d, settings)] }));
+---
+<Base title="Pilates Teacher Training Course Dates | The Pilates Programme" description="All upcoming Mat, Reformer, Barre, apparatus and CPD dates at our Altrincham training centre. Filter by course, month and location, and book in two clicks." canonicalPath="/course-dates">
+  <Fragment slot="head"><JsonLd data={schema} /></Fragment>
+  <Hero eyebrow="Course dates" title="Upcoming course dates" lead="Every date, every course. Book opens Arketa in a new tab. Full dates show a waitlist.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Course dates', url: '/course-dates' }]} />
+  </Hero>
+  <Section id="dates" reveal={false}>
+    <form class="filters" id="date-filters" aria-label="Filter dates">
+      <div class="field"><label for="f-course">Course</label><select id="f-course" name="course" class="input"><option value="">All courses</option>{courseOptions.map((c) => <option value={c.slug}>{c.shortTitle}</option>)}</select></div>
+      <div class="field"><label for="f-month">Month</label><select id="f-month" name="month" class="input"><option value="">Any month</option>{months.map((m) => <option value={m}>{monthYear(`${m}-01`)}</option>)}</select></div>
+      <div class="field"><label for="f-location">Location</label><select id="f-location" name="location" class="input"><option value="">Any location</option><option value="training-centre">Altrincham training centre</option><option value="partner-studio">Partner studio</option></select></div>
+      <div class="field"><label for="f-pattern">Days</label><select id="f-pattern" name="pattern" class="input"><option value="">Weekdays or weekends</option><option value="weekday">Weekdays</option><option value="weekend">Weekends</option></select></div>
+      <div class="field filter-actions"><button type="button" class="btn btn-secondary" data-clear>Clear filters</button></div>
+    </form>
+    {rows.length > 0 ? (
+      <ul class="rule-list rule-top rule-bottom dates" role="list" id="date-list">
+        {rows.map(({ d, c }) => (
+          <div class="date-wrap" data-course={c.slug} data-month={monthKey(d.startDate)} data-location={d.location} data-pattern={d.dayPattern}>
+            <DateRow date={d} course={c} showCourse />
+          </div>
+        ))}
+      </ul>
+    ) : (
+      <div class="empty"><p class="lead">New dates are being scheduled.</p><EmailCapture formId="dates_page_alerts" tag="date-alerts" buttonLabel="Get notified" compact successText="Thanks. We will email you when new dates go live." /></div>
+    )}
+    <div class="empty" id="no-match" hidden>
+      <p class="lead">No dates match. <button type="button" class="text-link as-link" data-clear>Clear filters</button> or get notified when new dates are added.</p>
+      <EmailCapture formId="dates_filter_alerts" tag="date-alerts" buttonLabel="Get notified" compact successText="Thanks. We will email you when new dates go live." />
+    </div>
+  </Section>
+</Base>
+<style>
+  .filters { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+  @media (min-width: 768px) { .filters { grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: end; } }
+  .filter-actions .btn { width: 100%; }
+  .dates { list-style: none; }
+  .date-wrap { display: contents; }
+  .date-wrap[hidden] { display: none; }
+  .empty { display: grid; gap: var(--space-5); padding: var(--space-6); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); margin-top: var(--space-5); }
+  .as-link { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; }
+</style>
+<script>
+  const form = document.getElementById('date-filters') as HTMLFormElement;
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('.date-wrap'));
+  const noMatch = document.getElementById('no-match')!;
+  const list = document.getElementById('date-list');
+  function apply(push = true) {
+    const fd = new FormData(form);
+    const f = { course: String(fd.get('course') || ''), month: String(fd.get('month') || ''), location: String(fd.get('location') || ''), pattern: String(fd.get('pattern') || '') };
+    let visible = 0;
+    rows.forEach((r) => {
+      const ok = (!f.course || r.dataset.course === f.course) && (!f.month || r.dataset.month === f.month) && (!f.location || r.dataset.location === f.location) && (!f.pattern || r.dataset.pattern === f.pattern);
+      r.hidden = !ok; if (ok) visible++;
+    });
+    noMatch.hidden = visible > 0 || rows.length === 0;
+    if (list) list.hidden = visible === 0;
+    if (push) {
+      const p = new URLSearchParams(); Object.entries(f).forEach(([k, v]) => v && p.set(k, v));
+      history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname);
+    }
+  }
+  const init = new URLSearchParams(location.search);
+  ['course', 'month', 'location', 'pattern'].forEach((k) => { const el = form.elements.namedItem(k) as HTMLSelectElement | null; if (el && init.get(k)) el.value = init.get(k)!; });
+  form.addEventListener('change', () => apply());
+  document.querySelectorAll('[data-clear]').forEach((b) => b.addEventListener('click', () => { form.reset(); apply(); }));
+  apply(false);
+</script>

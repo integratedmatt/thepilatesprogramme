@@ -10,7 +10,7 @@
   "address": { "street": "23 Central Way", "town": "Altrincham", "postcode": "WA14 1RF", "country": "GB" },
   "geo": { "lat": 53.3881, "lng": -2.3503 },
   "mapUrl": "https://www.google.com/maps/search/?api=1&query=23+Central+Way+Altrincham+WA14+1RF",
-  "logo": { "url": "/images/logo.svg", "alt": "The Pilates Programme", "width": 220, "height": 40 },
+  "logo": { "url": "/images/logo.svg", "alt": "The Pilates Programme", "width": 300, "height": 40 },
   "accreditationBadges": [
     { "name": "ITTAP", "url": "" },
     { "name": "Pilates Method Alliance", "url": "" },

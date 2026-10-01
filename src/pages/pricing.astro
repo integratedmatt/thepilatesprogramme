@@ -1,0 +1,129 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AnswerBox from '@/components/AnswerBox.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import { getSiteSettings, getCourses, getPricingRules, getFaqsByIds, courseUrl } from '@/lib/content';
+import { gbp } from '@/lib/format';
+const [settings, courses, rules, faqs] = await Promise.all([getSiteSettings(), getCourses(), getPricingRules(), getFaqsByIds(['faq-cost', 'faq-finance', 'faq-double', 'faq-fitness-discount', 'faq-refunds', 'faq-extra-costs', 'faq-returning-discount'])]);
+const qualify = courses.filter((c) => c.path === 'qualify');
+const minQualify = Math.min(...qualify.map((c) => c.price ?? Infinity));
+const inPersonHours = (c: typeof courses[number]) => c.hoursBreakdown?.inPersonHours ?? (c.hoursBreakdown?.inPersonDays ? c.hoursBreakdown.inPersonDays * 7 : undefined);
+const perHour = qualify.map((c) => ({ c, hours: inPersonHours(c), rate: c.price != null && inPersonHours(c) ? c.price / inPersonHours(c)! : undefined }));
+const rate = settings.typicalClassRate;
+const financeLabel = (c: typeof courses[number]) => c.financeOptions.map((f) => f.instalments && f.amount ? `${f.instalments} × ${gbp(f.amount)}` : f.label).join(' or ');
+const answer = `Pilates teacher training at The Pilates Programme, Altrincham costs ${gbp(minQualify)} for Mat, Reformer or Barre, including the online course, five in-person days, manual, video library, workshops and all three exams. Pay in full or in four monthly interest-free payments. Two courses together cost £3,400. Apparatus courses run from £800 and CPD days are £250.`;
+---
+<Base title="How Much Does Pilates Teacher Training Cost? | The Pilates Programme" description="All-in pricing for Pilates and Barre teacher training in Manchester: £2,200 with exams included, interest-free instalments, double booking savings and the costs to plan for.">
+  <Hero eyebrow="Pricing" title="How much does Pilates teacher training cost?" lead="One price per course with exams, manual and assessment included. Here is every number, the finance options and the maths on paying it back.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Pricing', url: '/pricing' }]} />
+  </Hero>
+
+  <Section><AnswerBox question="What does it cost to train with The Pilates Programme?" answer={answer} /></Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">All courses</p><h2>Every course, one table</h2></header>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Course</th><th scope="col">Path</th><th scope="col">Price</th><th scope="col">Finance</th><th scope="col">Prerequisite</th></tr></thead>
+        <tbody>
+          {courses.map((c) => (
+            <tr>
+              <th scope="row"><a href={courseUrl(c)}>{c.shortTitle}{c.kind === 'teacher-training' ? ' teacher training' : c.kind === 'cpd' ? ' CPD' : ''}</a></th>
+              <td>{c.path === 'qualify' ? 'Qualify' : 'Continue learning'}</td>
+              <td>{c.price != null ? gbp(c.price) : <span class="muted">On request</span>}</td>
+              <td>{financeLabel(c)}</td>
+              <td>{c.prerequisites?.length ? c.prerequisites.join('; ') : 'None'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid">
+      <div class="col-7">
+        <header class="section-heading"><p class="eyebrow">No extras</p><h2>What's included, and what isn't</h2></header>
+        <ul class="checklist" role="list">{qualify[0]?.inclusions.map((i) => <li>{i}</li>)}</ul>
+        <p class="small muted mt-4">All payments are non-refundable and non-transferable.</p>
+      </div>
+      <div class="col-5">
+        <h3>Additional costs to plan for</h3>
+        <ul class="rule-list plain" role="list">
+          <li><strong>Studio hire for practice hours.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour at the centre.` : 'Available at the centre; ask us for the current rate.'}</li>
+          <li><strong>Equipment hire.</strong> {settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour.` : 'Available at the centre.'}</li>
+          {settings.appMonthlyPrice && <li><strong>The online app.</strong> {gbp(settings.appMonthlyPrice)} a month, optional, for observation hours and your own practice.</li>}
+          {settings.insuranceNote && <li><strong>Insurance.</strong> {settings.insuranceNote}</li>}
+          <li><strong>Travel.</strong> The centre is a short walk from Altrincham train and tram interchange.</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Value</p><h2>What does it cost per in-person coaching hour?</h2><p class="lead">A simple way to compare providers: divide the fee by the hours you spend in a room with a trainer.</p></header>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Course</th><th scope="col">Price</th><th scope="col">In-person hours</th><th scope="col">Per in-person hour</th></tr></thead>
+        <tbody>
+          {perHour.map(({ c, hours, rate }) => (
+            <tr><th scope="row">{c.shortTitle}</th><td>{gbp(c.price)}</td><td>{hours ? `${hours} hours (${c.hoursBreakdown?.inPersonDays} days)` : <span class="muted">Confirm with us</span>}</td><td>{rate ? gbp(rate, { decimals: true }) : <span class="muted">Confirm with us</span>}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted mt-4">In-person hours are based on the number of practical days. Online study, workshops and the video library are on top of this.</p>
+  </Section>
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Payback</p><h2>How many classes does it take to pay back the fee?</h2></header>
+    {rate ? (
+      <div class="payback">
+        <p class="lead">At a typical local class rate of {gbp(rate)} per class, {gbp(minQualify)} is {Math.ceil(minQualify / rate)} classes. Teaching four classes a week, that is about {Math.ceil(minQualify / rate / 4)} weeks.</p>
+        <p class="small muted">Working: {gbp(minQualify)} ÷ {gbp(rate)} = {Math.ceil(minQualify / rate)} classes. {Math.ceil(minQualify / rate)} ÷ 4 classes a week = {Math.ceil(minQualify / rate / 4)} weeks. Rates vary by studio and area.</p>
+      </div>
+    ) : (
+      <div class="payback">
+        <p class="lead">Divide the course fee by what local studios pay per class, and you have the number of classes to recover it. Most graduates teach several classes a week, so the fee comes back within months rather than years.</p>
+        <p class="small muted">Working: course fee ÷ pay per class = classes to pay back. Ask us about typical rates in your area.</p>
+      </div>
+    )}
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Finance</p><h2>How can I pay?</h2></header>
+    <ul class="finance-grid" role="list">
+      <li><h3>Pay in full</h3><p class="secondary">Card payment at checkout in Arketa.</p></li>
+      <li><h3>Interest-free instalments</h3><p class="secondary">Four monthly payments on a teacher training course, six on a double booking, two on CPD and apparatus courses. No interest, no credit check.</p></li>
+      <li><h3>Funded places</h3><p class="secondary">Elevating Others funds two Mat trainings a year for people facing barriers to access. <a href="/elevating-others">Find out more</a>.</p></li>
+    </ul>
+  </Section>
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Discounts</p><h2>Ways to pay less</h2></header>
+    <ul class="discount-grid" role="list">
+      {rules.map((r) => <li><h3>{r.title}</h3><p class="secondary">{r.summary}</p>{r.detail && <p class="secondary">{r.detail}</p>}{r.howToClaim && <p class="small muted">{r.howToClaim}</p>}</li>)}
+    </ul>
+  </Section>
+
+  <Section tone="subtle"><FaqAccordion faqs={faqs} heading="Questions about payment" /></Section>
+</Base>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .table-wrap { overflow-x: auto; } td { color: var(--text-secondary); } th[scope="row"] { font-weight: var(--weight-medium); }
+  .checklist { list-style: none; display: grid; gap: var(--space-3); }
+  .checklist li { padding-left: var(--space-5); position: relative; color: var(--text-secondary); }
+  .checklist li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); }
+  .plain { list-style: none; } .plain li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .col-5 h3 { margin-bottom: var(--space-3); }
+  .payback { display: grid; gap: var(--space-4); }
+  .finance-grid, .discount-grid { list-style: none; display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .finance-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .discount-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .finance-grid li, .discount-grid li { display: grid; gap: var(--space-2); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); align-content: start; }
+  .mt-4 { margin-top: var(--space-4); }
+</style>

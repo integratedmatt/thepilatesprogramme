@@ -1,0 +1,2 @@
+import { defineField, defineType } from 'sanity';
+export default defineType({ name: 'studio', title: 'Studio', type: 'document', fields: [defineField({ name: 'name', type: 'string' }), defineField({ name: 'slug', type: 'slug', options: { source: 'name' } }), defineField({ name: 'website', type: 'url' }), defineField({ name: 'town', type: 'string' }), defineField({ name: 'postcode', type: 'string' })] });

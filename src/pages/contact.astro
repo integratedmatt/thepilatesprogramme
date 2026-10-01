@@ -1,0 +1,67 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Turnstile from '@/components/Turnstile.astro';
+import { getSiteSettings } from '@/lib/content';
+const settings = await getSiteSettings();
+const topics = [
+  ['course', 'A question about a course'],
+  ['unsure', "I'm not sure which course"],
+  ['waitlist', 'Join a waitlist'],
+  ['hire', 'Studio or equipment hire'],
+  ['studio', "I'm a studio looking for teachers"],
+  ['other', 'Something else'],
+];
+---
+<Base title="Contact The Pilates Programme, Altrincham | The Pilates Programme" description="Ask a question about Pilates or Barre teacher training, join a waitlist, or arrange studio hire. Email info@thepilatesprogramme.co.uk or use the form.">
+  <Hero eyebrow="Contact" title="Ask us anything" lead="We reply within two working days. If you are deciding between courses, the 60-second quiz may answer it faster.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Contact', url: '/contact' }]} />
+  </Hero>
+  <Section>
+    <div class="grid">
+      <div class="col-7">
+        <form class="form-grid" method="post" action="/api/contact" data-form="contact" data-form-id="contact" data-path="unknown" novalidate id="contact-form">
+          <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+          <input type="hidden" name="course" id="c-course" />
+          <input type="hidden" name="date" id="c-date" />
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" required autocomplete="name" /><p class="error" hidden></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" required autocomplete="email" /><p class="error" hidden></p></div>
+          <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic" required>{topics.map(([v, l]) => <option value={v}>{l}</option>)}</select><p class="hint" id="topic-hint" hidden>Not sure which course? <a href="/become-a-pilates-instructor/which-course">The 60-second quiz</a> recommends a route. You can still send your question.</p></div>
+          <div class="field"><label for="c-message">Message</label><textarea class="input" id="c-message" name="message" required maxlength="3000"></textarea><p class="error" hidden></p></div>
+          <Turnstile />
+          <button type="submit" class="btn btn-primary">Send message</button>
+          <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. We have your message and will reply within two working days."></div>
+        </form>
+      </div>
+      <div class="col-5">
+        <h2 class="h3">Other ways to reach us</h2>
+        <ul class="rule-list contact-list" role="list">
+          <li><span class="eyebrow">Email</span><a href={`mailto:${settings.email}`}>{settings.email}</a></li>
+          <li><span class="eyebrow">Instagram</span><a href={settings.instagramUrl} target="_blank" rel="noopener">{settings.instagram}</a></li>
+          <li><span class="eyebrow">Visit</span><span>{settings.address.street}, {settings.address.town}, {settings.address.postcode}</span><a href="/training-centre" class="small">About the training centre</a></li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+</Base>
+<style>
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .form-grid { display: grid; gap: var(--space-5); }
+  .contact-list { list-style: none; margin-top: var(--space-4); }
+  .contact-list li { display: grid; gap: var(--space-1); padding-block: var(--space-4); }
+</style>
+<script>
+  const p = new URLSearchParams(location.search);
+  const topic = document.getElementById('c-topic') as HTMLSelectElement;
+  const hint = document.getElementById('topic-hint')!;
+  const msg = document.getElementById('c-message') as HTMLTextAreaElement;
+  if (p.get('topic')) topic.value = p.get('topic')!;
+  if (p.get('course')) (document.getElementById('c-course') as HTMLInputElement).value = p.get('course')!;
+  if (p.get('date')) (document.getElementById('c-date') as HTMLInputElement).value = p.get('date')!;
+  if (p.get('topic') === 'waitlist' && !msg.value) msg.value = `Please add me to the waitlist for ${p.get('course') ?? 'the course'}${p.get('date') ? ` starting ${p.get('date')}` : ''}.`;
+  const update = () => { hint.hidden = topic.value !== 'unsure'; };
+  topic.addEventListener('change', update); update();
+</script>

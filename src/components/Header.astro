@@ -62,7 +62,7 @@ const links = [
     </nav>
 
     <div class="header-actions">
-      <a href="/course-dates" class="btn btn-primary btn-book">Book a course</a>
+      <a href="/course-dates" class="btn btn-primary btn-book"><span class="book-full">Book a course</span><span class="book-short">Book</span></a>
       <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
       </button>
@@ -103,8 +103,8 @@ const links = [
   .logo-text { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); letter-spacing: var(--tracking-h2); }
   .nav-desktop { display: none; }
   @media (min-width: 1024px) { .nav-desktop { display: block; } }
-  .nav-desktop > ul { display: flex; gap: var(--space-2); list-style: none; }
-  .nav-link { display: inline-flex; align-items: center; min-height: var(--touch-target); padding: var(--space-2) var(--space-3); background: none; border: 0; cursor: pointer; text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); border-bottom: var(--focus-width) solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .nav-desktop > ul { display: flex; gap: var(--space-1); list-style: none; }
+  .nav-link { display: inline-flex; align-items: center; white-space: nowrap; min-height: var(--touch-target); padding: var(--space-2) var(--space-2); background: none; border: 0; cursor: pointer; text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); border-bottom: var(--focus-width) solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
   .nav-link:hover, .nav-link[aria-expanded="true"], .nav-link.is-active { color: var(--text-primary); border-bottom-color: var(--bronze-700); }
   .mega { position: absolute; left: 0; right: 0; top: 100%; background: var(--bg-surface); border-bottom: var(--border-width) solid var(--border-subtle); padding-block: var(--space-7); }
   .mega-inner { display: grid; grid-template-columns: 3fr 9fr; gap: var(--space-7); }
@@ -115,14 +115,17 @@ const links = [
   .mega-card:hover { border-color: var(--border-strong); color: var(--text-primary); }
   .mega-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); }
   .header-actions { display: flex; align-items: center; gap: var(--space-3); }
-  .btn-book { min-height: var(--touch-target); padding: var(--space-3) var(--space-4); }
+  .btn-book { min-height: var(--touch-target); padding: var(--space-3) var(--space-4); white-space: nowrap; }
+  .book-full { display: none; }
+  @media (min-width: 768px) { .book-full { display: inline; } .book-short { display: none; } }
+  @media (min-width: 1440px) { .nav-link { padding-inline: var(--space-3); } .nav-desktop > ul { gap: var(--space-3); } }
   .menu-toggle { display: inline-grid; gap: var(--space-1); place-content: center; width: var(--touch-target); height: var(--touch-target); background: none; border: 0; cursor: pointer; }
   .menu-toggle .bar { display: block; width: var(--space-5); height: var(--focus-width); background: var(--ink-900); transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
   .menu-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(calc(var(--space-1) + var(--focus-width))) rotate(45deg); }
   .menu-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
   .menu-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(calc(-1 * (var(--space-1) + var(--focus-width)))) rotate(-45deg); }
   @media (min-width: 1024px) { .menu-toggle { display: none; } }
-  .mobile-nav { position: fixed; inset: 0; top: var(--header-height-mobile); background: var(--bg-page); overflow-y: auto; z-index: 79; }
+  .mobile-nav { position: fixed; left: 0; right: 0; top: var(--header-height-mobile); height: calc(100dvh - var(--header-height-mobile)); background: var(--bg-page); overflow-y: auto; z-index: 79; }
   .mobile-inner { padding-block: var(--space-5) var(--space-8); display: grid; gap: var(--space-6); }
   .mobile-tiles { display: grid; gap: var(--space-3); }
   .mobile-tile { display: grid; gap: var(--space-2); padding: var(--space-5); background: var(--bg-inverse); color: var(--text-inverse); text-decoration: none; }

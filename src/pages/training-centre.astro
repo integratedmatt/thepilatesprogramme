@@ -1,0 +1,101 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Picture from '@/components/Picture.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSiteSettings, getFaqsByIds } from '@/lib/content';
+import { gbp } from '@/lib/format';
+const [settings, faqs] = await Promise.all([getSiteSettings(), getFaqsByIds(['faq-location', 'faq-studio-hire'])]);
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+const travel = settings.travelTimes.filter((t) => t.minutes);
+const gallery = [
+  { url: '/images/placeholder-centre.svg', alt: 'Ground floor apparatus studio at the Altrincham centre' },
+  { url: '/images/placeholder-reformer.svg', alt: 'Row of Reformers ready for a practical day' },
+  { url: '/images/placeholder-apparatus.svg', alt: 'Cadillac, Chair and Barrels on the first floor' },
+  { url: '/images/placeholder-barre.svg', alt: 'Barre studio with mirrors' },
+];
+const facilities = ['Two floors of studio space', 'Full apparatus: Reformers, Cadillac, Chairs and Barrels', 'Barre fit-out with mirrors', 'Seminar screens for theory sessions', 'Study and breakout spaces', 'Kitchen for lunch and breaks'];
+const localSchema = {
+  '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': `${siteUrl}/#organization`, name: settings.entityName, url: `${siteUrl}/training-centre`, email: settings.email,
+  address: { '@type': 'PostalAddress', streetAddress: settings.address.street, addressLocality: settings.address.town, postalCode: settings.address.postcode, addressCountry: settings.address.country },
+  geo: settings.geo ? { '@type': 'GeoCoordinates', latitude: settings.geo.lat, longitude: settings.geo.lng } : undefined,
+  hasMap: settings.mapUrl, sameAs: [settings.instagramUrl].filter(Boolean),
+};
+---
+<Base title="Pilates Training Centre Altrincham | The Pilates Programme" description="Our two-floor training centre at 23 Central Way, Altrincham: full apparatus and Barre studios, seminar space, study rooms, a short walk from the train and tram. Studio hire for practice hours.">
+  <Fragment slot="head"><JsonLd data={localSchema} /></Fragment>
+  <Hero eyebrow="Training centre" title="The training centre, Altrincham" lead={`${settings.address.street}, ${settings.address.town}, ${settings.address.postcode}. Two floors of apparatus, Barre and study space, a short walk from Altrincham interchange.`} image={gallery[0]}>
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Training centre', url: '/training-centre' }]} />
+    <div class="hero-actions"><a href={settings.mapUrl} class="btn btn-primary" target="_blank" rel="noopener">Open in Google Maps</a><a href="#hire" class="btn btn-secondary">Studio hire</a></div>
+  </Hero>
+
+  <Section>
+    <ul class="gallery" role="list">{gallery.map((g) => <li><Picture image={g} aspect="landscape" sizes="(min-width: 768px) 50vw, 100vw" /></li>)}</ul>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Facilities</p><h2>What's here</h2></div>
+      <div class="col-7"><ul class="rule-list facilities" role="list">{facilities.map((f) => <li>{f}</li>)}</ul></div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid">
+      <div class="col-5">
+        <p class="eyebrow">Getting here</p>
+        <h2>How to find us</h2>
+        <address class="not-italic secondary">{settings.address.street}<br />{settings.address.town}<br />{settings.address.postcode}</address>
+        <p class="mt-4"><a href={settings.mapUrl} target="_blank" rel="noopener" class="arrow-link">Directions in Google Maps</a></p>
+        {settings.parkingNote && <p class="secondary mt-4">{settings.parkingNote}</p>}
+        {settings.accessibilityNote && <p class="secondary mt-4">{settings.accessibilityNote}</p>}
+      </div>
+      <div class="col-7">
+        <a href={settings.mapUrl} target="_blank" rel="noopener" class="map" aria-label="Map of 23 Central Way, Altrincham (opens Google Maps)">
+          <div class="map-static" role="img" aria-hidden="true"><span class="eyebrow">Altrincham WA14 1RF</span></div>
+        </a>
+        {travel.length > 0 && (
+          <div class="table-wrap mt-6">
+            <table><thead><tr><th scope="col">From</th><th scope="col">Time</th><th scope="col">By</th></tr></thead>
+              <tbody>{travel.map((t) => <tr><th scope="row">{t.from}</th><td>About {t.minutes} min</td><td>{t.mode}</td></tr>)}</tbody></table>
+          </div>
+        )}
+        {settings.partnerStudios.length > 0 && <p class="small muted mt-4">Some courses run at partner studios: {settings.partnerStudios.join(', ')}. Your date row shows the location.</p>}
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle" id="hire">
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Practice hours</p><h2>Studio and equipment hire</h2></div>
+      <div class="col-7">
+        <p class="lead">Students and graduates can hire the studio and apparatus for practice teaching, observation and their own practice.</p>
+        <dl class="facts mt-5">
+          <div><dt>Studio hire</dt><dd>{settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour` : 'Ask us for the current rate'}</dd></div>
+          <div><dt>Equipment hire</dt><dd>{settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour` : 'Ask us'}</dd></div>
+        </dl>
+        <p class="mt-5"><a href={`mailto:${settings.email}?subject=Studio%20hire`} class="btn btn-primary">Book studio hire by email</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section><FaqAccordion faqs={faqs} heading="Questions about the centre" /></Section>
+</Base>
+<style>
+  .gallery { list-style: none; display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-5 { grid-column: span 4; } .col-7 { grid-column: 6 / span 7; } }
+  .col-5 h2 { margin-block: var(--space-3) var(--space-4); }
+  .facilities { list-style: none; } .facilities li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .not-italic { font-style: normal; }
+  .map { display: block; text-decoration: none; }
+  .map-static { aspect-ratio: 3 / 2; background: var(--bg-subtle); border: var(--border-width) solid var(--border-subtle); display: grid; place-content: center; background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px); background-size: var(--space-7) var(--space-7); }
+  .table-wrap { overflow-x: auto; } td { color: var(--text-secondary); }
+  .facts { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts div { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
+  .mt-4 { margin-top: var(--space-4); } .mt-5 { margin-top: var(--space-5); } .mt-6 { margin-top: var(--space-6); }
+</style>

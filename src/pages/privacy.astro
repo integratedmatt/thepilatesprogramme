@@ -1,0 +1,23 @@
+---
+import LegalPage from '@/components/LegalPage.astro';
+import { getSiteSettings } from '@/lib/content';
+const s = await getSiteSettings();
+---
+<LegalPage title="Privacy policy" description="How The Pilates Programme, Altrincham collects, uses and protects your personal data, including form submissions, email lists, analytics and bookings through Arketa." path="/privacy" crumb="Privacy" updated="1 October 2026">
+  <h2>Who we are</h2>
+  <p>{s.entityName}, {s.address.street}, {s.address.town}, {s.address.postcode}. Contact <a href={`mailto:${s.email}`}>{s.email}</a> for anything about your data.</p>
+  <h2>What we collect and why</h2>
+  <ul>
+    <li><strong>Email sign-ups.</strong> Your email, name and the path you chose, so we can send the guide and relevant emails. Lawful basis: consent. Unsubscribe from any email.</li>
+    <li><strong>Contact, waitlist, graduate and Elevating Others forms.</strong> What you type, so we can reply, publish an approved profile, or assess an application. Lawful basis: consent and legitimate interests.</li>
+    <li><strong>Job listings.</strong> Studio details you submit, published once approved. Lawful basis: contract.</li>
+    <li><strong>Bookings.</strong> Taken in Arketa with payment through Stripe. Their privacy policies apply to checkout.</li>
+    <li><strong>Analytics and marketing cookies.</strong> Google Analytics and Meta Pixel, only after you accept them in the cookie banner. See the <a href="/cookies">cookie policy</a>.</li>
+  </ul>
+  <h2>Who we share it with</h2>
+  <p>Our content system (Sanity), hosting (Vercel), email delivery (Resend), our email list provider, Cloudflare for spam protection, Arketa and Stripe for bookings, and Google and Meta where you consent to analytics or marketing cookies. We never sell your data.</p>
+  <h2>How long we keep it</h2>
+  <p>Email list data until you unsubscribe. Form submissions for up to two years. Graduate profiles until you ask us to remove them. Job listings for 12 months after expiry.</p>
+  <h2>Your rights</h2>
+  <p>You can ask for a copy of your data, correct it, delete it, or object to how we use it. Email <a href={`mailto:${s.email}`}>{s.email}</a>. You can also complain to the Information Commissioner's Office.</p>
+</LegalPage>

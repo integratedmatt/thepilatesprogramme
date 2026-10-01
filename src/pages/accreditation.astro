@@ -1,0 +1,80 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import AnswerBox from '@/components/AnswerBox.astro';
+import AccreditationStrip from '@/components/AccreditationStrip.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import { getSiteSettings, getFaqsByIds } from '@/lib/content';
+const [settings, faqs] = await Promise.all([getSiteSettings(), getFaqsByIds(['faq-accreditation', 'faq-where-teach', 'faq-after', 'faq-cpd-who'])]);
+const statements = settings.accreditationStatements.filter(Boolean);
+const questions = [
+  { q: 'How many hours are in person, with a trainer in the room?', a: 'Online modules are useful. They are not the same as being corrected while you teach a real body. Ask for the number of in-person days and the cohort size.' },
+  { q: 'How big is the cohort?', a: 'Twenty students and one trainer means little individual coaching. Ask how many students each trainer works with.' },
+  { q: 'Are exams and certification included in the price?', a: 'Some providers charge extra for assessment, resits or the certificate. Ask for the all-in figure.' },
+  { q: 'What support do you get for practice hours and after the course?', a: 'Ask how observation and practice teaching hours are supported, whether you can hire studio space, and what happens after you qualify.' },
+  { q: 'Which traditions do they teach?', a: 'Some courses teach one style. Ask whether you will learn Contrology, Classical and Contemporary repertoire so you can work in any studio.' },
+];
+---
+<Base title="Pilates Instructor Qualifications Explained | The Pilates Programme" description="What our ITTAP, Pilates Method Alliance and CIMSPA accreditation means, what it does for your career, and the questions to ask any Pilates teacher training provider.">
+  <Hero eyebrow="Accreditation" title="Pilates instructor qualifications, explained honestly" lead="What our accreditation is, what it means for where you can teach, and how to compare any provider without the marketing.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Accreditation', url: '/accreditation' }]} />
+  </Hero>
+
+  <Section>
+    <div class="grid">
+      <div class="col-7"><AnswerBox question="Is The Pilates Programme accredited?" answer={`${statements.join(' ')} Accreditation tells a studio that the course content, hours and assessment meet an external standard. Our graduates teach in boutique studios, gyms, community venues and their own businesses.`} /></div>
+      <div class="col-5"><AccreditationStrip settings={settings} /></div>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">What it is</p><h2>What is our accreditation?</h2></header>
+    <ul class="bodies" role="list">
+      <li>
+        <h3>ITTAP through the Pilates Method Alliance</h3>
+        <p class="secondary">{statements[0] ?? ''}</p>
+        <p class="secondary">The Pilates Method Alliance is the international professional association for Pilates teachers. ITTAP accreditation means our teacher training programmes have been reviewed against its standards for content, hours and assessment.</p>
+      </li>
+      <li>
+        <h3>CIMSPA Training Partner</h3>
+        <p class="secondary">{statements[1] ?? ''}</p>
+        <p class="secondary">CIMSPA is the Chartered Institute for the Management of Sport and Physical Activity, the professional body for the UK sport and physical activity sector.</p>
+      </li>
+    </ul>
+  </Section>
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Your career</p><h2>What does it mean for where you can teach?</h2></header>
+    {settings.accreditationCareer ? (
+      <p class="lead">{settings.accreditationCareer}</p>
+    ) : (
+      <p class="lead">Our graduates teach in boutique studios, for private clients, in their own classes and internationally. Employers look for a recognised accreditation, practice hours and the ability to teach well in a trial class. Our training is built around all three.</p>
+    )}
+    {settings.accreditationEmployerNote && <p class="secondary mt-4">{settings.accreditationEmployerNote}</p>}
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Compare any provider</p><h2>Choosing a Pilates course: questions to ask any provider</h2><p class="lead">Including us. The answers tell you more than any badge.</p></header>
+    <ol class="questions" role="list">{questions.map((q) => <li><h3>{q.q}</h3><p class="secondary">{q.a}</p></li>)}</ol>
+  </Section>
+
+  <Section><FaqAccordion faqs={faqs} heading="Questions about accreditation" /></Section>
+
+  <Section tone="inverse">
+    <p class="eyebrow">Next</p>
+    <h2>See how the training is built</h2>
+    <div class="actions"><a href="/become-a-pilates-instructor" class="btn btn-primary">How to become a Pilates instructor</a><a href="/become-a-pilates-instructor/road-to-certification" class="btn btn-secondary">Road to Certification</a></div>
+  </Section>
+</Base>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; align-self: center; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .bodies, .questions { list-style: none; display: grid; gap: var(--space-6); }
+  @media (min-width: 768px) { .bodies { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .bodies li, .questions li { display: grid; gap: var(--space-3); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); align-content: start; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+  .mt-4 { margin-top: var(--space-4); }
+</style>

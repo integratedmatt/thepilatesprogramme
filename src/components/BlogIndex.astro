@@ -1,0 +1,53 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import PostCard from '@/components/PostCard.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import type { Category, Post } from '@/lib/types';
+interface Props { posts: Post[]; categories: Category[]; active?: Category; page: number; totalPages: number; basePath: string }
+const { posts, categories, active, page, totalPages, basePath } = Astro.props;
+const [featured, ...rest] = page === 1 ? posts : [undefined, ...posts];
+const title = active ? `${active.title}: Pilates Teaching Articles` : 'The Journal: Honest Guides to Teaching Pilates';
+const crumbs = active ? [{ name: 'Journal', url: '/blog' }, { name: active.title, url: `/blog/category/${active.slug}` }] : [{ name: 'Journal', url: '/blog' }];
+const pageUrl = (n: number) => (n === 1 ? basePath : `${basePath}/page/${n}`);
+---
+<Base title={`${title} | The Pilates Programme`} description={active?.description ?? 'Guides to becoming a Pilates teacher, teaching craft, careers and continuing education, written by the trainers at The Pilates Programme, Altrincham.'} canonicalPath={page === 1 ? basePath : pageUrl(page)}>
+  <Hero eyebrow="Journal" title={active ? active.title : 'The journal'} lead={active?.description ?? 'Guides written by the people who train teachers every week. No fluff, no shortcuts.'}>
+    <Breadcrumbs slot="breadcrumbs" items={crumbs} />
+    <nav class="cats" aria-label="Categories"><ul role="list"><li><a href="/blog" aria-current={!active ? 'page' : undefined}>All</a></li>{categories.map((c) => <li><a href={`/blog/category/${c.slug}`} aria-current={active?.slug === c.slug ? 'page' : undefined}>{c.title}</a></li>)}</ul></nav>
+  </Hero>
+  <Section>
+    {posts.length === 0 ? (
+      <p class="lead">No articles here yet. New guides are published regularly; the first ones are on the way.</p>
+    ) : (
+      <>
+        {featured && <div class="featured"><PostCard post={featured} featured /></div>}
+        {rest.filter(Boolean).length > 0 && <ul class="card-grid" role="list">{rest.filter((p): p is Post => Boolean(p)).map((p) => <li><PostCard post={p} /></li>)}</ul>}
+        {totalPages > 1 && (
+          <nav class="pagination" aria-label="Pagination">
+            {page > 1 ? <a href={pageUrl(page - 1)} class="btn btn-secondary">Newer</a> : <span />}
+            <span class="small muted">Page {page} of {totalPages}</span>
+            {page < totalPages ? <a href={pageUrl(page + 1)} class="btn btn-secondary">Older</a> : <span />}
+          </nav>
+        )}
+      </>
+    )}
+  </Section>
+  <Section tone="inverse">
+    <div class="grid"><div class="col-7"><p class="eyebrow">Free guide</p><h2>The Pilates Teacher Career Guide</h2><p class="lead">Costs, hours, accreditation and your first job, in one honest guide.</p></div><div class="col-5"><EmailCapture formId="blog_index_guide" path="qualify" tag="career-guide" successText="Thanks. The guide is on its way to your inbox." /></div></div>
+  </Section>
+</Base>
+<style>
+  .cats ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+  .cats a { display: inline-flex; align-items: center; min-height: var(--touch-target); padding: var(--space-2) var(--space-4); border: var(--border-width) solid var(--border-subtle); text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); }
+  .cats a:hover, .cats a[aria-current="page"] { border-color: var(--border-strong); color: var(--text-primary); }
+  .featured { margin-bottom: var(--space-8); padding-bottom: var(--space-8); border-bottom: var(--border-width) solid var(--border-subtle); }
+  .card-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+  @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pagination { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-8); }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+</style>

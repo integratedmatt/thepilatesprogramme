@@ -1,0 +1,88 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Turnstile from '@/components/Turnstile.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import { getSiteSettings } from '@/lib/content';
+const settings = await getSiteSettings();
+const eo = settings.elevatingOthers;
+---
+<Base title="Elevating Others: Funded Pilates Teacher Training | The Pilates Programme" description="Two fully funded Mat Pilates teacher trainings a year for people facing barriers to access. How it works, who it is for, and how to apply.">
+  <Hero eyebrow="Elevating Others" title="Two fully funded places a year" lead="Every year we fund two Mat Pilates teacher trainings in full for people who face barriers to access. No catch, no strings.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Elevating Others', url: '/elevating-others' }]} />
+  </Hero>
+
+  <Section>
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Mission</p><h2>Why we do this</h2></div>
+      <div class="col-7">
+        <p class="lead">Pilates teaching changed our lives. The cost of training should not decide who gets that chance. Elevating Others gives {eo.placesPerYear ?? 'two'} people a year the full Mat teacher training, including the in-person days, the online platform and all exams, at no cost.</p>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Graduate story</p><h2>Samhar, founder of Bilisti</h2></div>
+      <div class="col-7">
+        {eo.story ? <p class="secondary">{eo.story}</p> : <p class="secondary">Samhar trained with us through Elevating Others and went on to found Bilisti. Her full story will be shared here with her permission.</p>}
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Eligibility</p><h2>Who can apply</h2></div>
+      <div class="col-7">
+        {eo.eligibility && eo.eligibility.length > 0 ? (
+          <ul class="rule-list plain" role="list">{eo.eligibility.map((e) => <li>{e}</li>)}</ul>
+        ) : (
+          <ul class="rule-list plain" role="list">
+            <li>You face a financial, social or health-related barrier to paying for training.</li>
+            <li>You practise Pilates and want to teach it.</li>
+            <li>You can attend five in-person days in Altrincham and complete the practice hours.</li>
+          </ul>
+        )}
+        {eo.windowNote && <p class="secondary mt-4">{eo.windowNote}</p>}
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle" id="apply">
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Apply</p><h2>{eo.open ? 'Applications are open' : 'Applications are closed'}</h2></div>
+      <div class="col-7">
+        {eo.open ? (
+          <form class="form-grid" method="post" action="/api/elevating-others" data-form="elevating" data-form-id="elevating_others" data-path="qualify" novalidate>
+            <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+            <div class="field"><label for="eo-name">Full name</label><input class="input" id="eo-name" name="name" required autocomplete="name" /><p class="error" hidden></p></div>
+            <div class="field"><label for="eo-email">Email</label><input class="input" id="eo-email" name="email" type="email" required autocomplete="email" /><p class="error" hidden></p></div>
+            <div class="field"><label for="eo-town">Town or city</label><input class="input" id="eo-town" name="town" /></div>
+            <div class="field"><label for="eo-why">Tell us about you and why this place would matter</label><textarea class="input" id="eo-why" name="story" required maxlength="3000"></textarea><p class="hint">Up to 3,000 characters. There are no right answers.</p><p class="error" hidden></p></div>
+            <div class="field"><label for="eo-barriers">What barriers do you face to paying for training?</label><textarea class="input" id="eo-barriers" name="barriers" required maxlength="2000"></textarea><p class="error" hidden></p></div>
+            <label class="checkbox"><input type="checkbox" name="consent" value="yes" required /><span>I agree to The Pilates Programme storing my application to assess it. <a href="/privacy">Privacy policy</a></span></label>
+            <Turnstile />
+            <button type="submit" class="btn btn-primary">Send my application</button>
+            <div class="form-status" role="status" aria-live="polite" hidden data-success="Thank you. We have your application and will reply by email."></div>
+          </form>
+        ) : (
+          <div class="closed">
+            <p class="lead">The next application window has not opened yet. Leave your email and we will tell you the moment it does.</p>
+            <EmailCapture formId="elevating_others_notify" path="qualify" tag="elevating-others" buttonLabel="Get notified" compact successText="Thanks. We will email you when applications open." />
+          </div>
+        )}
+      </div>
+    </div>
+  </Section>
+</Base>
+<style>
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-5 { grid-column: span 4; } .col-7 { grid-column: 6 / span 7; } }
+  .col-5 h2 { margin-top: var(--space-3); }
+  .plain { list-style: none; } .plain li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .form-grid { display: grid; gap: var(--space-5); }
+  .closed { display: grid; gap: var(--space-5); }
+  .mt-4 { margin-top: var(--space-4); }
+</style>

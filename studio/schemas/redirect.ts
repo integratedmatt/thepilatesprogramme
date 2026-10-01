@@ -1,0 +1,2 @@
+import { defineField, defineType } from 'sanity';
+export default defineType({ name: 'redirect', title: 'Redirect', type: 'document', fields: [defineField({ name: 'from', title: 'Old path', type: 'string', validation: (r) => r.required().regex(/^\//) }), defineField({ name: 'to', title: 'New path', type: 'string', validation: (r) => r.required() }), defineField({ name: 'permanent', type: 'boolean', initialValue: true })], preview: { select: { title: 'from', subtitle: 'to' } } });

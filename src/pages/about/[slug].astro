@@ -1,0 +1,52 @@
+---
+/** Author pages for E-E-A-T (Section 8.4). */
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import Picture from '@/components/Picture.astro';
+import PostCard from '@/components/PostCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getTeam, getAuthors, getPosts } from '@/lib/content';
+export async function getStaticPaths() {
+  const [team, authors] = await Promise.all([getTeam(), getAuthors()]);
+  const slugs = new Set([...team.map((t) => t.slug), ...authors.map((a) => a.slug)]);
+  return Array.from(slugs).map((slug) => ({ params: { slug }, props: { member: team.find((t) => t.slug === slug), author: authors.find((a) => a.slug === slug) } }));
+}
+const { member, author } = Astro.props;
+const name = member?.name ?? author?.name ?? '';
+const role = member?.role ?? author?.role ?? '';
+const bio = member?.bio || author?.bio || '';
+const credentials = member?.credentials?.length ? member.credentials : author?.credentials ?? [];
+const image = member?.image ?? author?.image;
+const posts = (await getPosts()).filter((p) => p.author?.slug === Astro.params.slug);
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+---
+<Base title={`${name}, ${role} | The Pilates Programme`} description={bio ? bio.slice(0, 155) : `${name} is ${role.toLowerCase()} at The Pilates Programme, Altrincham, training Pilates and Barre teachers in small in-person cohorts.`}>
+  <Fragment slot="head"><JsonLd data={{ '@context': 'https://schema.org', '@type': 'Person', name, jobTitle: role, description: credentials.join(', ') || undefined, worksFor: { '@type': 'Organization', '@id': `${siteUrl}/#organization` }, url: `${siteUrl}/about/${Astro.params.slug}` }} /></Fragment>
+  <Hero eyebrow={role} title={name}>
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'About', url: '/about' }, { name, url: `/about/${Astro.params.slug}` }]} />
+  </Hero>
+  <Section>
+    <div class="grid">
+      <div class="col-4">{image && <Picture image={image} aspect="portrait" sizes="(min-width: 1024px) 33vw, 100vw" />}</div>
+      <div class="col-8">
+        {credentials.length > 0 && <p class="eyebrow">{credentials.join(' · ')}</p>}
+        {bio ? <div class="prose"><p>{bio}</p></div> : <p class="secondary">{name} trains Pilates and Barre teachers at The Pilates Programme, Altrincham. Full bio coming soon.</p>}
+      </div>
+    </div>
+  </Section>
+  {posts.length > 0 && (
+    <Section tone="subtle">
+      <header class="section-heading"><p class="eyebrow">Journal</p><h2>Articles by {name}</h2></header>
+      <ul class="card-grid" role="list">{posts.map((p) => <li><PostCard post={p} /></li>)}</ul>
+    </Section>
+  )}
+</Base>
+<style>
+  .col-4 { grid-column: span 12; } .col-8 { grid-column: span 12; display: grid; gap: var(--space-4); align-content: start; }
+  @media (min-width: 1024px) { .col-4 { grid-column: span 4; } .col-8 { grid-column: 6 / span 7; } }
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .card-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+</style>
