@@ -22,7 +22,7 @@ const bundle = applicable.find((r) => r.slug === 'apparatus-bundle');
         <li>{f.instalments && f.amount ? `${f.instalments} × ${gbp(f.amount)} ${f.label.toLowerCase().includes('interest') ? 'interest-free' : ''}`.trim() : f.label}</li>
       ))}
     </ul>
-    <p class="small muted">No extra fees: exams, manual and assessment included. All payments are non-refundable and non-transferable.</p>
+    <p class="small muted">No extra fees: exams, manual and assessment included{course.path === 'continue' ? ', with online platform access on a 6-week free trial' : ''}. All payments are non-refundable and non-transferable.</p>
   </div>
   <div class="price-side">
     {dbl && (

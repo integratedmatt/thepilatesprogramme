@@ -251,6 +251,7 @@ export interface SiteSettings {
   freeGuide: { title: string; bullets: string[]; coverImage?: ImageRef; fileUrl?: string };
   cohortCap?: number;
   weekendCohorts?: boolean;
+  continueInclusions: string[];                // "What's included" on the Continuing Education hub
   heroTrustLine?: string;                      // e.g. "Trusted by 850+ students"
   pressLogos: { name: string; image?: ImageRef; url?: string }[];   // "As seen in"; image optional, text wordmark fallback
 }

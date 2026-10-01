@@ -16,8 +16,14 @@
     "bestFor": "Best first course if you want to teach anywhere, with no equipment needed for your practice hours.",
     "price": 2200,
     "financeOptions": [
-      { "label": "Pay in full" },
-      { "label": "4 monthly interest-free payments", "instalments": 4, "amount": 550 }
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "4 monthly interest-free payments",
+        "instalments": 4,
+        "amount": 550
+      }
     ],
     "prerequisites": [],
     "inclusions": [
@@ -30,15 +36,54 @@
       "All exams at no extra cost"
     ],
     "curriculum": [
-      { "title": "Repertoire", "items": ["Beginner, intermediate and advanced Mat repertoire", "Contrology: the original 34 exercises", "Classical and Contemporary variations and modifications", "Props and progressions"] },
-      { "title": "Teaching skills", "items": ["Anatomy and human movement", "Cueing and inclusive language", "Classroom management", "Programming a class", "Teaching to music", "Prenatal guidelines"] },
-      { "title": "Career", "items": ["Finding your first job", "Starting your own classes", "Insurance and setting up as self-employed"] }
+      {
+        "title": "Repertoire",
+        "items": [
+          "Beginner, intermediate and advanced Mat repertoire",
+          "Contrology: the original 34 exercises",
+          "Classical and Contemporary variations and modifications",
+          "Props and progressions"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Anatomy and human movement",
+          "Cueing and inclusive language",
+          "Classroom management",
+          "Programming a class",
+          "Teaching to music",
+          "Prenatal guidelines"
+        ]
+      },
+      {
+        "title": "Career",
+        "items": [
+          "Finding your first job",
+          "Starting your own classes",
+          "Insurance and setting up as self-employed"
+        ]
+      }
     ],
-    "hoursBreakdown": { "observation": 30, "personalStudy": 25, "practiceTeaching": 25, "inPersonDays": 5 },
+    "hoursBreakdown": {
+      "observation": 30,
+      "personalStudy": 25,
+      "practiceTeaching": 25,
+      "inPersonDays": 5
+    },
     "exams": [
-      { "title": "Human Movement exam", "detail": "50 multiple choice questions, online." },
-      { "title": "Theory exam", "detail": "30 multiple choice questions, online." },
-      { "title": "Practical exam", "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom." }
+      {
+        "title": "Human Movement exam",
+        "detail": "50 multiple choice questions, online."
+      },
+      {
+        "title": "Theory exam",
+        "detail": "30 multiple choice questions, online."
+      },
+      {
+        "title": "Practical exam",
+        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+      }
     ],
     "forYou": [
       "You want to teach Pilates properly, not learn a routine",
@@ -52,9 +97,29 @@
       "You plan to run your own teacher trainings from this course"
     ],
     "afterBooking": [],
-    "unlocks": ["reformer-pilates-teacher-training", "chair", "cadillac", "barrels", "prenatal-postpartum"],
-    "heroImage": { "url": "/images/placeholder-mat.svg", "alt": "A trainer coaching a small group through Mat repertoire at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-mat-experience", "faq-hours", "faq-cost", "faq-finance", "faq-accreditation", "faq-mat-reformer-first", "faq-exams", "faq-after"],
+    "unlocks": [
+      "reformer-pilates-teacher-training",
+      "chair",
+      "cadillac",
+      "barrels",
+      "prenatal-postpartum"
+    ],
+    "heroImage": {
+      "url": "/images/placeholder-mat.svg",
+      "alt": "A trainer coaching a small group through Mat repertoire at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-mat-experience",
+      "faq-hours",
+      "faq-cost",
+      "faq-finance",
+      "faq-accreditation",
+      "faq-mat-reformer-first",
+      "faq-exams",
+      "faq-after"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Mat Pilates Teacher Training Manchester | The Pilates Programme",
@@ -81,8 +146,14 @@
     "bestFor": "Best first course if you want to work in Reformer studios and have access to a Reformer for practice hours.",
     "price": 2200,
     "financeOptions": [
-      { "label": "Pay in full" },
-      { "label": "4 monthly interest-free payments", "instalments": 4, "amount": 550 }
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "4 monthly interest-free payments",
+        "instalments": 4,
+        "amount": 550
+      }
     ],
     "prerequisites": [],
     "inclusions": [
@@ -95,15 +166,53 @@
       "All exams at no extra cost"
     ],
     "curriculum": [
-      { "title": "Repertoire", "items": ["Beginner and intermediate Reformer repertoire", "Classical order and Contemporary programming", "Spring settings, safety and set-up", "Modifications for common client needs"] },
-      { "title": "Teaching skills", "items": ["Anatomy and human movement", "Cueing on the apparatus", "Managing a group Reformer class", "Programming for strength and mobility", "Teaching to music"] },
-      { "title": "Career", "items": ["Finding your first studio job", "Covering classes and building a timetable", "Insurance and self-employment"] }
+      {
+        "title": "Repertoire",
+        "items": [
+          "Beginner and intermediate Reformer repertoire",
+          "Classical order and Contemporary programming",
+          "Spring settings, safety and set-up",
+          "Modifications for common client needs"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Anatomy and human movement",
+          "Cueing on the apparatus",
+          "Managing a group Reformer class",
+          "Programming for strength and mobility",
+          "Teaching to music"
+        ]
+      },
+      {
+        "title": "Career",
+        "items": [
+          "Finding your first studio job",
+          "Covering classes and building a timetable",
+          "Insurance and self-employment"
+        ]
+      }
     ],
-    "hoursBreakdown": { "observation": 30, "personalStudy": 25, "practiceTeaching": 25, "inPersonDays": 5 },
+    "hoursBreakdown": {
+      "observation": 30,
+      "personalStudy": 25,
+      "practiceTeaching": 25,
+      "inPersonDays": 5
+    },
     "exams": [
-      { "title": "Human Movement exam", "detail": "50 multiple choice questions, online." },
-      { "title": "Theory exam", "detail": "30 multiple choice questions, online." },
-      { "title": "Practical exam", "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom." }
+      {
+        "title": "Human Movement exam",
+        "detail": "50 multiple choice questions, online."
+      },
+      {
+        "title": "Theory exam",
+        "detail": "30 multiple choice questions, online."
+      },
+      {
+        "title": "Practical exam",
+        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+      }
     ],
     "forYou": [
       "You want to teach in boutique Reformer studios",
@@ -117,9 +226,29 @@
       "You have no way to practise on a Reformer between the course and your exam"
     ],
     "afterBooking": [],
-    "unlocks": ["advanced-reformer", "chair", "cadillac", "barrels", "jumpboard-online"],
-    "heroImage": { "url": "/images/placeholder-reformer.svg", "alt": "A trainer adjusting a student's position on a Reformer during a practical day", "width": 1600, "height": 1000 },
-    "faqs": ["faq-reformer-access", "faq-hours", "faq-cost", "faq-finance", "faq-accreditation", "faq-mat-reformer-first", "faq-exams", "faq-after"],
+    "unlocks": [
+      "advanced-reformer",
+      "chair",
+      "cadillac",
+      "barrels",
+      "jumpboard-online"
+    ],
+    "heroImage": {
+      "url": "/images/placeholder-reformer.svg",
+      "alt": "A trainer adjusting a student's position on a Reformer during a practical day",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-reformer-access",
+      "faq-hours",
+      "faq-cost",
+      "faq-finance",
+      "faq-accreditation",
+      "faq-mat-reformer-first",
+      "faq-exams",
+      "faq-after"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Reformer Pilates Instructor Course Manchester | The Pilates Programme",
@@ -145,8 +274,14 @@
     "bestFor": "Best if you love music-led classes and want to add a high-demand group format to your timetable.",
     "price": 2200,
     "financeOptions": [
-      { "label": "Pay in full" },
-      { "label": "4 monthly interest-free payments", "instalments": 4, "amount": 550 }
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "4 monthly interest-free payments",
+        "instalments": 4,
+        "amount": 550
+      }
     ],
     "prerequisites": [],
     "inclusions": [
@@ -159,15 +294,53 @@
       "All exams at no extra cost"
     ],
     "curriculum": [
-      { "title": "Repertoire", "items": ["Barre fundamentals and ballet positions", "Pilates-based core and conditioning sequences", "Props and progressions", "Class formats from beginner to athletic"] },
-      { "title": "Teaching skills", "items": ["Anatomy and human movement", "Cueing to the beat", "Building a playlist and class flow", "Classroom management", "Prenatal guidelines"] },
-      { "title": "Career", "items": ["Finding your first job", "Launching your own Barre classes", "Insurance and self-employment"] }
+      {
+        "title": "Repertoire",
+        "items": [
+          "Barre fundamentals and ballet positions",
+          "Pilates-based core and conditioning sequences",
+          "Props and progressions",
+          "Class formats from beginner to athletic"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Anatomy and human movement",
+          "Cueing to the beat",
+          "Building a playlist and class flow",
+          "Classroom management",
+          "Prenatal guidelines"
+        ]
+      },
+      {
+        "title": "Career",
+        "items": [
+          "Finding your first job",
+          "Launching your own Barre classes",
+          "Insurance and self-employment"
+        ]
+      }
     ],
-    "hoursBreakdown": { "observation": 30, "personalStudy": 25, "practiceTeaching": 25, "inPersonDays": 5 },
+    "hoursBreakdown": {
+      "observation": 30,
+      "personalStudy": 25,
+      "practiceTeaching": 25,
+      "inPersonDays": 5
+    },
     "exams": [
-      { "title": "Human Movement exam", "detail": "50 multiple choice questions, online." },
-      { "title": "Theory exam", "detail": "30 multiple choice questions, online." },
-      { "title": "Practical exam", "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom." }
+      {
+        "title": "Human Movement exam",
+        "detail": "50 multiple choice questions, online."
+      },
+      {
+        "title": "Theory exam",
+        "detail": "30 multiple choice questions, online."
+      },
+      {
+        "title": "Practical exam",
+        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+      }
     ],
     "forYou": [
       "You love music-led, energetic classes",
@@ -179,9 +352,25 @@
       "You would rather learn entirely online"
     ],
     "afterBooking": [],
-    "unlocks": ["mat-pilates-teacher-training", "reformer-pilates-teacher-training"],
-    "heroImage": { "url": "/images/placeholder-barre.svg", "alt": "A Barre class at the Altrincham training centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-barre-experience", "faq-hours", "faq-cost", "faq-finance", "faq-accreditation", "faq-exams", "faq-after"],
+    "unlocks": [
+      "mat-pilates-teacher-training",
+      "reformer-pilates-teacher-training"
+    ],
+    "heroImage": {
+      "url": "/images/placeholder-barre.svg",
+      "alt": "A Barre class at the Altrincham training centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-barre-experience",
+      "faq-hours",
+      "faq-cost",
+      "faq-finance",
+      "faq-accreditation",
+      "faq-exams",
+      "faq-after"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Barre Instructor Training UK | The Pilates Programme",
@@ -207,26 +396,76 @@
     "outcome": "Add the advanced Reformer repertoire and teach progressions your strongest clients ask for.",
     "bestFor": "For qualified Reformer teachers ready to teach advanced classes.",
     "price": null,
-    "financeOptions": [{ "label": "Pay in full" }],
-    "prerequisites": ["An existing Reformer teaching qualification"],
-    "inclusions": ["In-person practical days", "Training manual", "Video library", "Assessment at no extra cost"],
-    "curriculum": [
-      { "title": "Repertoire", "items": ["Advanced Classical Reformer order", "Contemporary advanced progressions", "Spring and safety considerations at advanced level"] },
-      { "title": "Teaching skills", "items": ["Spotting and hands-on assistance", "Programming an advanced class", "Regressions when a client is not ready"] }
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2
+      }
     ],
-    "exams": [{ "title": "Practical assessment", "detail": "Teach a sequence of advanced exercises to the group." }],
-    "forYou": ["You already teach Reformer and want to extend your repertoire", "You want to run advanced or athletic Reformer classes"],
-    "notForYou": ["You are not yet qualified to teach Reformer. Start with the Reformer teacher training."],
+    "prerequisites": [
+      "An existing Reformer teaching qualification"
+    ],
+    "inclusions": [
+      "In-person practical days on full apparatus",
+      "Course manual",
+      "Video library",
+      "Online learning platform access, with a 6-week free trial",
+      "Exams and assessment at no extra cost",
+      "Pay in full or in interest-free instalments"
+    ],
+    "curriculum": [
+      {
+        "title": "Repertoire",
+        "items": [
+          "Advanced Classical Reformer order",
+          "Contemporary advanced progressions",
+          "Spring and safety considerations at advanced level"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Spotting and hands-on assistance",
+          "Programming an advanced class",
+          "Regressions when a client is not ready"
+        ]
+      }
+    ],
+    "exams": [
+      {
+        "title": "Practical exam",
+        "detail": "Teach a sequence of advanced exercises to the group."
+      }
+    ],
+    "forYou": [
+      "You already teach Reformer and want to extend your repertoire",
+      "You want to run advanced or athletic Reformer classes"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Reformer. Start with the Reformer teacher training."
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-reformer.svg", "alt": "Advanced Reformer repertoire being coached at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-prereq-apparatus", "faq-returning-discount", "faq-cpd-finance"],
+    "heroImage": {
+      "url": "/images/placeholder-reformer.svg",
+      "alt": "Advanced Reformer repertoire being coached at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-prereq-apparatus",
+      "faq-returning-discount",
+      "faq-cpd-finance"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Advanced Reformer Pilates Training UK | The Pilates Programme",
       "description": "Advanced Reformer teacher training in Altrincham for qualified Reformer teachers. Extend your repertoire with in-person coaching on full apparatus."
     },
     "answerQuestion": "What is the Advanced Reformer training?",
-    "answerSummary": "An in-person Advanced Reformer course in Altrincham, Greater Manchester, for teachers who already hold a Reformer qualification. It covers the advanced Classical order and Contemporary progressions, spotting and programming, with assessment included. Returning students receive 10% off.",
+    "answerSummary": "An in-person Advanced Reformer course in Altrincham, Greater Manchester, for teachers who already hold a Reformer qualification. It covers the advanced Classical order and Contemporary progressions, spotting and programming. The manual, exam, online platform access with a 6-week free trial and an interest-free payment plan are all included. Returning students receive 10% off.",
     "arketaFallbackUrl": "schedule?serviceId=jP1em8jJ5F496TV5mwTN"
   },
   {
@@ -244,19 +483,70 @@
     "outcome": "Teach the Wunda Chair, the most space-efficient apparatus for private sessions and small groups.",
     "bestFor": "For Mat or Reformer teachers moving into full apparatus work.",
     "price": 1200,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 600 }],
-    "prerequisites": ["An existing Mat or Reformer teaching certification"],
-    "inclusions": ["In-person practical days", "Training manual", "Video library", "Assessment at no extra cost"],
-    "curriculum": [
-      { "title": "Repertoire", "items": ["Classical Chair repertoire", "Contemporary variations", "Spring settings and safety"] },
-      { "title": "Teaching skills", "items": ["Private session programming", "Integrating Chair into a studio timetable"] }
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 600
+      }
     ],
-    "exams": [{ "title": "Practical assessment", "detail": "Teach a short Chair session to the group." }],
-    "forYou": ["You teach Mat or Reformer and want to work on full apparatus", "You want to offer private sessions"],
-    "notForYou": ["You are not yet qualified to teach Mat or Reformer. Start with a teacher training."],
+    "prerequisites": [
+      "An existing Mat or Reformer teaching certification"
+    ],
+    "inclusions": [
+      "In-person practical days on full apparatus",
+      "Course manual",
+      "Video library",
+      "Online learning platform access, with a 6-week free trial",
+      "Exams and assessment at no extra cost",
+      "Pay in full or in interest-free instalments"
+    ],
+    "curriculum": [
+      {
+        "title": "Repertoire",
+        "items": [
+          "Classical Chair repertoire",
+          "Contemporary variations",
+          "Spring settings and safety"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Private session programming",
+          "Integrating Chair into a studio timetable"
+        ]
+      }
+    ],
+    "exams": [
+      {
+        "title": "Practical exam",
+        "detail": "Teach a short Chair session to the group."
+      }
+    ],
+    "forYou": [
+      "You teach Mat or Reformer and want to work on full apparatus",
+      "You want to offer private sessions"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-apparatus.svg", "alt": "Wunda Chair training at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-prereq-apparatus", "faq-bundle", "faq-returning-discount", "faq-cpd-finance"],
+    "heroImage": {
+      "url": "/images/placeholder-apparatus.svg",
+      "alt": "Wunda Chair training at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-prereq-apparatus",
+      "faq-bundle",
+      "faq-returning-discount",
+      "faq-cpd-finance"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Pilates Chair Training UK | The Pilates Programme",
@@ -281,19 +571,70 @@
     "outcome": "Teach the Cadillac, the apparatus that opens up rehabilitation-minded and one-to-one work.",
     "bestFor": "For Mat or Reformer teachers building a private client practice.",
     "price": 1500,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 750 }],
-    "prerequisites": ["An existing Mat or Reformer teaching certification"],
-    "inclusions": ["In-person practical days", "Training manual", "Video library", "Assessment at no extra cost"],
-    "curriculum": [
-      { "title": "Repertoire", "items": ["Classical Cadillac repertoire", "Springs, bars and straps", "Contemporary variations"] },
-      { "title": "Teaching skills", "items": ["Programming for private clients", "Working with common conditions within scope"] }
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 750
+      }
     ],
-    "exams": [{ "title": "Practical assessment", "detail": "Teach a short Cadillac session to the group." }],
-    "forYou": ["You teach Mat or Reformer and want to work on full apparatus", "You want to build a private client practice"],
-    "notForYou": ["You are not yet qualified to teach Mat or Reformer. Start with a teacher training."],
+    "prerequisites": [
+      "An existing Mat or Reformer teaching certification"
+    ],
+    "inclusions": [
+      "In-person practical days on full apparatus",
+      "Course manual",
+      "Video library",
+      "Online learning platform access, with a 6-week free trial",
+      "Exams and assessment at no extra cost",
+      "Pay in full or in interest-free instalments"
+    ],
+    "curriculum": [
+      {
+        "title": "Repertoire",
+        "items": [
+          "Classical Cadillac repertoire",
+          "Springs, bars and straps",
+          "Contemporary variations"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Programming for private clients",
+          "Working with common conditions within scope"
+        ]
+      }
+    ],
+    "exams": [
+      {
+        "title": "Practical exam",
+        "detail": "Teach a short Cadillac session to the group."
+      }
+    ],
+    "forYou": [
+      "You teach Mat or Reformer and want to work on full apparatus",
+      "You want to build a private client practice"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-apparatus.svg", "alt": "Cadillac training at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-prereq-apparatus", "faq-bundle", "faq-returning-discount", "faq-cpd-finance"],
+    "heroImage": {
+      "url": "/images/placeholder-apparatus.svg",
+      "alt": "Cadillac training at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-prereq-apparatus",
+      "faq-bundle",
+      "faq-returning-discount",
+      "faq-cpd-finance"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Pilates Cadillac Training UK | The Pilates Programme",
@@ -318,19 +659,69 @@
     "outcome": "Teach the Ladder Barrel, Spine Corrector and Arc, the apparatus for extension and mobility work.",
     "bestFor": "For Mat or Reformer teachers who want mobility and extension tools for every client.",
     "price": 800,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 400 }],
-    "prerequisites": ["An existing Mat or Reformer teaching certification"],
-    "inclusions": ["In-person practical days", "Training manual", "Video library", "Assessment at no extra cost"],
-    "curriculum": [
-      { "title": "Repertoire", "items": ["Ladder Barrel", "Spine Corrector", "Arc Barrel"] },
-      { "title": "Teaching skills", "items": ["Using barrels for extension and mobility", "Integrating barrels into Mat and Reformer classes"] }
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 400
+      }
     ],
-    "exams": [{ "title": "Practical assessment", "detail": "Teach a short barrels sequence to the group." }],
-    "forYou": ["You teach Mat or Reformer and want extension and mobility tools"],
-    "notForYou": ["You are not yet qualified to teach Mat or Reformer. Start with a teacher training."],
+    "prerequisites": [
+      "An existing Mat or Reformer teaching certification"
+    ],
+    "inclusions": [
+      "In-person practical days on full apparatus",
+      "Course manual",
+      "Video library",
+      "Online learning platform access, with a 6-week free trial",
+      "Exams and assessment at no extra cost",
+      "Pay in full or in interest-free instalments"
+    ],
+    "curriculum": [
+      {
+        "title": "Repertoire",
+        "items": [
+          "Ladder Barrel",
+          "Spine Corrector",
+          "Arc Barrel"
+        ]
+      },
+      {
+        "title": "Teaching skills",
+        "items": [
+          "Using barrels for extension and mobility",
+          "Integrating barrels into Mat and Reformer classes"
+        ]
+      }
+    ],
+    "exams": [
+      {
+        "title": "Practical exam",
+        "detail": "Teach a short barrels sequence to the group."
+      }
+    ],
+    "forYou": [
+      "You teach Mat or Reformer and want extension and mobility tools"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-apparatus.svg", "alt": "Ladder Barrel training at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-prereq-apparatus", "faq-bundle", "faq-returning-discount", "faq-cpd-finance"],
+    "heroImage": {
+      "url": "/images/placeholder-apparatus.svg",
+      "alt": "Ladder Barrel training at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-prereq-apparatus",
+      "faq-bundle",
+      "faq-returning-discount",
+      "faq-cpd-finance"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Pilates Barrels Training UK | The Pilates Programme",
@@ -355,18 +746,63 @@
     "outcome": "Become a full apparatus teacher. Book Cadillac, Chair and Barrels together and Barrels is free.",
     "bestFor": "For Mat or Reformer teachers committing to full apparatus work.",
     "price": 2700,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 1350 }],
-    "prerequisites": ["An existing Mat or Reformer teaching certification"],
-    "inclusions": ["Cadillac teacher training (£1,500)", "Chair teacher training (£1,200)", "Barrels teacher training (£800, included free)", "Manuals, video library and assessments for all three"],
-    "curriculum": [
-      { "title": "What you cover", "items": ["Everything in the Cadillac, Chair and Barrels courses", "Programming across the full studio"] }
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 1350
+      }
     ],
-    "exams": [{ "title": "Practical assessments", "detail": "One per apparatus, during each course." }],
-    "forYou": ["You want to teach on every piece of apparatus", "You want the best value route to a full apparatus qualification"],
-    "notForYou": ["You are not yet qualified to teach Mat or Reformer."],
+    "prerequisites": [
+      "An existing Mat or Reformer teaching certification"
+    ],
+    "inclusions": [
+      "Cadillac teacher training (£1,500)",
+      "Chair teacher training (£1,200)",
+      "Barrels teacher training (£800, included free)",
+      "Course manual for each apparatus",
+      "Online learning platform access, with a 6-week free trial",
+      "Exams and assessments for all three at no extra cost",
+      "Pay in full or in interest-free instalments"
+    ],
+    "curriculum": [
+      {
+        "title": "What you cover",
+        "items": [
+          "Everything in the Cadillac, Chair and Barrels courses",
+          "Programming across the full studio"
+        ]
+      }
+    ],
+    "exams": [
+      {
+        "title": "Practical assessments",
+        "detail": "One per apparatus, during each course."
+      }
+    ],
+    "forYou": [
+      "You want to teach on every piece of apparatus",
+      "You want the best value route to a full apparatus qualification"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Mat or Reformer."
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-apparatus.svg", "alt": "Full apparatus studio at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-bundle", "faq-prereq-apparatus", "faq-returning-discount", "faq-cpd-finance"],
+    "heroImage": {
+      "url": "/images/placeholder-apparatus.svg",
+      "alt": "Full apparatus studio at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-bundle",
+      "faq-prereq-apparatus",
+      "faq-returning-discount",
+      "faq-cpd-finance"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Pilates Apparatus Training Bundle UK | The Pilates Programme",
@@ -391,18 +827,56 @@
     "outcome": "Teach pregnant and postpartum clients with confidence, within scope and with current guidelines.",
     "bestFor": "For qualified teachers who have pregnant or postpartum clients in their classes.",
     "price": 250,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 125 }],
-    "prerequisites": ["A Pilates or Barre teaching qualification from any provider"],
-    "inclusions": ["One in-person day", "Course notes", "Certificate of attendance"],
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 125
+      }
+    ],
+    "prerequisites": [
+      "A Pilates or Barre teaching qualification from any provider"
+    ],
+    "inclusions": [
+      "One in-person day",
+      "Course manual and notes",
+      "Online learning platform access, with a 6-week free trial",
+      "Certificate on completion",
+      "Pay in full or in interest-free instalments"
+    ],
     "curriculum": [
-      { "title": "What you cover", "items": ["Anatomy and physiology of pregnancy and recovery", "Trimester-by-trimester modifications", "Postpartum return to movement", "Red flags and when to refer"] }
+      {
+        "title": "What you cover",
+        "items": [
+          "Anatomy and physiology of pregnancy and recovery",
+          "Trimester-by-trimester modifications",
+          "Postpartum return to movement",
+          "Red flags and when to refer"
+        ]
+      }
     ],
     "exams": [],
-    "forYou": ["You already teach and want to work safely with this client group"],
-    "notForYou": ["You are not yet qualified to teach"],
+    "forYou": [
+      "You already teach and want to work safely with this client group"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach"
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-mat.svg", "alt": "Prenatal Pilates CPD at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-cpd-who", "faq-cpd-finance", "faq-returning-discount"],
+    "heroImage": {
+      "url": "/images/placeholder-mat.svg",
+      "alt": "Prenatal Pilates CPD at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-cpd-who",
+      "faq-cpd-finance",
+      "faq-returning-discount"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Prenatal & Postpartum Pilates CPD | The Pilates Programme",
@@ -427,18 +901,56 @@
     "outcome": "Programme Pilates classes that build measurable strength and endurance.",
     "bestFor": "For teachers whose clients want to feel stronger, not just more mobile.",
     "price": 250,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 125 }],
-    "prerequisites": ["A Pilates or Barre teaching qualification from any provider"],
-    "inclusions": ["One in-person day", "Course notes", "Certificate of attendance"],
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 125
+      }
+    ],
+    "prerequisites": [
+      "A Pilates or Barre teaching qualification from any provider"
+    ],
+    "inclusions": [
+      "One in-person day",
+      "Course manual and notes",
+      "Online learning platform access, with a 6-week free trial",
+      "Certificate on completion",
+      "Pay in full or in interest-free instalments"
+    ],
     "curriculum": [
-      { "title": "What you cover", "items": ["Principles of progressive overload in Pilates", "Programming for strength and endurance", "Load, tempo and spring choices", "Tracking client progress"] }
+      {
+        "title": "What you cover",
+        "items": [
+          "Principles of progressive overload in Pilates",
+          "Programming for strength and endurance",
+          "Load, tempo and spring choices",
+          "Tracking client progress"
+        ]
+      }
     ],
     "exams": [],
-    "forYou": ["You already teach and want to programme for strength"],
-    "notForYou": ["You are not yet qualified to teach"],
+    "forYou": [
+      "You already teach and want to programme for strength"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach"
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-reformer.svg", "alt": "Strength-focused Reformer class at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-cpd-who", "faq-cpd-finance", "faq-returning-discount"],
+    "heroImage": {
+      "url": "/images/placeholder-reformer.svg",
+      "alt": "Strength-focused Reformer class at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-cpd-who",
+      "faq-cpd-finance",
+      "faq-returning-discount"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Strength & Endurance Pilates CPD | The Pilates Programme",
@@ -463,18 +975,57 @@
     "outcome": "Add safe, well-programmed Jumpboard sections to your Reformer classes.",
     "bestFor": "For Reformer teachers who want cardio and plyometric options on the Reformer.",
     "price": 250,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 125 }],
-    "prerequisites": ["A Reformer teaching qualification from any provider"],
-    "inclusions": ["On-demand video course", "Course notes", "Certificate of completion"],
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 125
+      }
+    ],
+    "prerequisites": [
+      "A Reformer teaching qualification from any provider"
+    ],
+    "inclusions": [
+      "On-demand video course",
+      "Course manual and notes",
+      "Online learning platform access, with a 6-week free trial",
+      "Certificate on completion",
+      "Pay in full or in interest-free instalments"
+    ],
     "curriculum": [
-      { "title": "What you cover", "items": ["Jumpboard set-up and safety", "Foot positions and landing mechanics", "Programming cardio blocks", "Modifications and contraindications"] }
+      {
+        "title": "What you cover",
+        "items": [
+          "Jumpboard set-up and safety",
+          "Foot positions and landing mechanics",
+          "Programming cardio blocks",
+          "Modifications and contraindications"
+        ]
+      }
     ],
     "exams": [],
-    "forYou": ["You teach Reformer and want to add Jumpboard"],
-    "notForYou": ["You are not yet qualified to teach Reformer"],
+    "forYou": [
+      "You teach Reformer and want to add Jumpboard"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach Reformer"
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-reformer.svg", "alt": "Jumpboard on a Reformer", "width": 1600, "height": 1000 },
-    "faqs": ["faq-cpd-who", "faq-cpd-online", "faq-cpd-finance", "faq-returning-discount"],
+    "heroImage": {
+      "url": "/images/placeholder-reformer.svg",
+      "alt": "Jumpboard on a Reformer",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-cpd-who",
+      "faq-cpd-online",
+      "faq-cpd-finance",
+      "faq-returning-discount"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Jumpboard Pilates CPD Online | The Pilates Programme",
@@ -499,18 +1050,56 @@
     "outcome": "Understand modern pain science so you can teach clients living with persistent pain, within scope.",
     "bestFor": "For teachers with clients who come to Pilates for back, neck or joint pain.",
     "price": 250,
-    "financeOptions": [{ "label": "Pay in full" }, { "label": "2 interest-free instalments", "instalments": 2, "amount": 125 }],
-    "prerequisites": ["A Pilates or Barre teaching qualification from any provider"],
-    "inclusions": ["One in-person day", "Course notes", "Certificate of attendance"],
+    "financeOptions": [
+      {
+        "label": "Pay in full"
+      },
+      {
+        "label": "2 interest-free instalments",
+        "instalments": 2,
+        "amount": 125
+      }
+    ],
+    "prerequisites": [
+      "A Pilates or Barre teaching qualification from any provider"
+    ],
+    "inclusions": [
+      "One in-person day",
+      "Course manual and notes",
+      "Online learning platform access, with a 6-week free trial",
+      "Certificate on completion",
+      "Pay in full or in interest-free instalments"
+    ],
     "curriculum": [
-      { "title": "What you cover", "items": ["Current models of pain", "Language that helps rather than harms", "Graded exposure in a Pilates setting", "Scope of practice and referral"] }
+      {
+        "title": "What you cover",
+        "items": [
+          "Current models of pain",
+          "Language that helps rather than harms",
+          "Graded exposure in a Pilates setting",
+          "Scope of practice and referral"
+        ]
+      }
     ],
     "exams": [],
-    "forYou": ["You already teach and have clients living with persistent pain"],
-    "notForYou": ["You are not yet qualified to teach"],
+    "forYou": [
+      "You already teach and have clients living with persistent pain"
+    ],
+    "notForYou": [
+      "You are not yet qualified to teach"
+    ],
     "unlocks": [],
-    "heroImage": { "url": "/images/placeholder-mat.svg", "alt": "Small group CPD session at the Altrincham centre", "width": 1600, "height": 1000 },
-    "faqs": ["faq-cpd-who", "faq-cpd-finance", "faq-returning-discount"],
+    "heroImage": {
+      "url": "/images/placeholder-mat.svg",
+      "alt": "Small group CPD session at the Altrincham centre",
+      "width": 1600,
+      "height": 1000
+    },
+    "faqs": [
+      "faq-cpd-who",
+      "faq-cpd-finance",
+      "faq-returning-discount"
+    ],
     "testimonials": [],
     "seo": {
       "title": "Pain Science Pilates CPD | The Pilates Programme",

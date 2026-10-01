@@ -8,9 +8,10 @@ import CourseCard from '@/components/CourseCard.astro';
 import DatesList from '@/components/DatesList.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import JobRow from '@/components/JobRow.astro';
-import { getContinueCourses, getUpcomingDates, getPricingRules, getFaqsByIds, getLiveJobs, courseUrl } from '@/lib/content';
+import { getSiteSettings, getContinueCourses, getUpcomingDates, getPricingRules, getFaqsByIds, getLiveJobs, courseUrl } from '@/lib/content';
 import { gbp } from '@/lib/format';
-const [courses, allDates, rules, faqs, jobs] = await Promise.all([getContinueCourses(), getUpcomingDates(), getPricingRules(), getFaqsByIds(['faq-prereq-apparatus', 'faq-bundle', 'faq-returning-discount', 'faq-cpd-who', 'faq-cpd-finance']), getLiveJobs()]);
+const [settings, courses, allDates, rules, faqs, jobs] = await Promise.all([getSiteSettings(), getContinueCourses(), getUpcomingDates(), getPricingRules(), getFaqsByIds(['faq-prereq-apparatus', 'faq-bundle', 'faq-returning-discount', 'faq-cpd-who', 'faq-cpd-finance']), getLiveJobs()]);
+const included = settings.continueInclusions ?? [];
 const apparatus = courses.filter((c) => c.kind === 'apparatus');
 const bundle = courses.find((c) => c.kind === 'bundle');
 const cpd = courses.filter((c) => c.kind === 'cpd');
@@ -19,7 +20,7 @@ const dates = allDates.filter((d) => ids.has(d.course));
 const nextFor = (id: string) => allDates.find((d) => d.course === id);
 const returning = rules.find((r) => r.slug === 'returning-student');
 const apparatusJobs = jobs.filter((j) => j.disciplines.some((d) => /reformer|chair|cadillac|barrel|apparatus/i.test(d))).slice(0, 3);
-const answer = `The Pilates Programme, Altrincham offers continuing education for qualified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three apparatus courses for £2,700 with Barrels free, plus one-day CPD at £250. Past students receive 10% off. Everything is taught in person on full apparatus.`;
+const answer = `The Pilates Programme, Altrincham offers continuing education for qualified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three for £2,700 with Barrels free, plus CPD at £250. Every course includes the manual, exams, an interest-free payment plan and online platform access with a 6-week free trial. Past students receive 10% off.`;
 ---
 <Base title="Pilates CPD Courses UK and Apparatus Training | The Pilates Programme" description="Continuing education for qualified Pilates teachers: Advanced Reformer, Chair, Cadillac, Barrels and CPD days in Altrincham. Open to teachers from any provider. Returning students save 10%.">
   <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for qualified teachers from any provider, taught in person on full apparatus in Altrincham.">
@@ -27,10 +28,20 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
     <div class="hero-actions"><a href="#apparatus" class="btn btn-primary">Apparatus courses</a><a href="#cpd" class="btn btn-secondary">CPD days</a></div>
   </Hero>
 
-  <Section><AnswerBox question="What continuing education do you offer qualified teachers?" answer={answer} /></Section>
+  <Section>
+    <div class="grid">
+      <div class="col-7"><AnswerBox question="What continuing education do you offer qualified teachers?" answer={answer} /></div>
+      {included.length > 0 && (
+        <div class="col-5">
+          <p class="eyebrow">Included in every course</p>
+          <ul class="included" role="list" data-stagger>{included.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      )}
+    </div>
+  </Section>
 
   <Section tone="subtle" id="apparatus">
-    <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer qualification.</p></header>
+    <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer qualification. Manual, exam, interest-free instalments and online platform access are included in every course.</p></header>
     <ul class="card-grid" role="list" data-stagger>{apparatus.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
     {bundle && (
       <div class="bundle">
@@ -41,7 +52,7 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
   </Section>
 
   <Section id="cpd">
-    <header class="section-heading"><p class="eyebrow">CPD</p><h2>One-day CPD for working teachers</h2><p class="lead">£250 each, pay in full or in two interest-free instalments. In person at the centre, or online on demand.</p></header>
+    <header class="section-heading"><p class="eyebrow">CPD</p><h2>One-day CPD for working teachers</h2><p class="lead">£250 each, pay in full or in two interest-free instalments. Manual, certificate and online platform access included. In person at the centre, or online on demand.</p></header>
     <ul class="card-grid" role="list" data-stagger>{cpd.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
   </Section>
 
@@ -66,6 +77,9 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
 </Base>
 <style>
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .included { list-style: none; display: grid; gap: var(--space-3); margin-top: var(--space-4); }
+  .included li { padding-left: var(--space-5); position: relative; color: var(--text-secondary); font-weight: var(--weight-regular); }
+  .included li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); font-weight: var(--weight-medium); }
   .card-grid { list-style: none; display: grid; gap: var(--space-7); }
   @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
   @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
