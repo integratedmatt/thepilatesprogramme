@@ -109,5 +109,17 @@
     "fileUrl": ""
   },
   "cohortCap": null,
-  "weekendCohorts": false
+  "weekendCohorts": false,
+  "heroTrustLine": "Trusted by 850+ students",
+  "pressLogos": [
+    {
+      "name": "Marie Claire"
+    },
+    {
+      "name": "Stylist"
+    },
+    {
+      "name": "Cosmopolitan"
+    }
+  ]
 }

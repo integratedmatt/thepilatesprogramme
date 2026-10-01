@@ -31,6 +31,8 @@ export default defineType({
     defineField({ name: 'partnerStudios', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'elevatingOthers', type: 'object', fields: [defineField({ name: 'open', title: 'Applications open', type: 'boolean' }), defineField({ name: 'windowNote', type: 'string' }), defineField({ name: 'placesPerYear', type: 'number' }), defineField({ name: 'story', title: "Samhar's story", type: 'text', rows: 6 }), defineField({ name: 'eligibility', type: 'array', of: [{ type: 'string' }] })] }),
     defineField({ name: 'freeGuide', type: 'object', fields: [defineField({ name: 'title', type: 'string' }), defineField({ name: 'bullets', type: 'array', of: [{ type: 'string' }] }), defineField({ name: 'coverImage', type: 'imageWithAlt' }), defineField({ name: 'file', title: 'Guide PDF', type: 'file' })] }),
+    defineField({ name: 'heroTrustLine', title: 'Hero trust line', type: 'string', description: 'Shown under the hero buttons, e.g. Trusted by 850+ students. Leave empty to hide.' }),
+    defineField({ name: 'pressLogos', title: '"As seen in" logos', type: 'array', of: [{ type: 'object', fields: [defineField({ name: 'name', type: 'string' }), defineField({ name: 'image', title: 'Logo (PNG or SVG, dark on transparent)', type: 'imageWithAlt' }), defineField({ name: 'url', type: 'url' })] }], description: 'Shown in greyscale at the bottom of the home hero. Without an image the name renders as a text wordmark.' }),
     defineField({ name: 'cohortCap', title: 'Maximum cohort size', type: 'number' }),
     defineField({ name: 'weekendCohorts', type: 'boolean' }),
   ],

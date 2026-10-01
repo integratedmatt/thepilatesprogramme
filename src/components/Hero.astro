@@ -13,6 +13,7 @@ const { eyebrow, title, lead, image, display = false, tone = image ? 'inverse' :
     {lead && <p class="lead">{lead}</p>}
     <slot />
   </div>
+  <slot name="footer" />
 </section>
 <style>
   .hero { position: relative; padding-block: var(--space-8) var(--space-8); overflow: hidden; }

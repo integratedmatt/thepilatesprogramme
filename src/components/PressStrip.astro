@@ -1,0 +1,34 @@
+---
+/** "As seen in" strip. Greyscale logos from CMS; text wordmarks until logo files are supplied. */
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings; tone?: 'light' | 'dark'; class?: string }
+const { settings, tone = 'dark', class: className = '' } = Astro.props;
+const logos = (settings.pressLogos ?? []).filter((l) => l.name);
+---
+{logos.length > 0 && (
+  <div class={`press-strip ${tone} ${className}`.trim()}>
+    <div class="container press-inner">
+      <p class="eyebrow">As seen in</p>
+      <ul role="list" aria-label="Publications that have featured The Pilates Programme">
+        {logos.map((l) => (
+          <li>
+            {l.image?.url
+              ? <img src={l.image.url} alt={l.image.alt || l.name} height="28" width={l.image.width && l.image.height ? Math.round((l.image.width / l.image.height) * 28) : undefined} loading="lazy" />
+              : <span class="wordmark">{l.name}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
+<style>
+  .press-strip { position: relative; z-index: 1; border-top: var(--border-width) solid color-mix(in srgb, currentColor 20%, transparent); margin-top: var(--space-7); padding-top: var(--space-5); }
+  .press-inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-7); }
+  .press-strip ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-7); }
+  .press-strip img { height: var(--space-6); width: auto; filter: grayscale(1); opacity: 0.8; }
+  .press-strip.dark img { filter: grayscale(1) invert(1); }
+  .wordmark { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); letter-spacing: var(--tracking-h2); text-transform: uppercase; opacity: 0.75; filter: grayscale(1); white-space: nowrap; }
+  .press-strip.dark { color: var(--stone-100); }
+  .press-strip.dark .eyebrow { color: var(--text-inverse-accent); }
+  .press-strip.light { color: var(--text-muted); }
+</style>

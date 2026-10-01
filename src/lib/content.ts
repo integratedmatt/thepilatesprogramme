@@ -59,6 +59,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     `*[_type == "siteSettings"][0]{
       ..., "logo": logo${IMAGE},
       "accreditationBadges": accreditationBadges[]{ name, url, "image": image${IMAGE} },
+      "pressLogos": pressLogos[]{ name, url, "image": image${IMAGE} },
       "freeGuide": { "title": freeGuide.title, "bullets": freeGuide.bullets, "coverImage": freeGuide.coverImage${IMAGE}, "fileUrl": freeGuide.file.asset->url }
     }`,
     () => seedSettings as unknown as SiteSettings,

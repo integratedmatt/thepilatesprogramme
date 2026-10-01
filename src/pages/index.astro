@@ -11,6 +11,7 @@ import PostCard from '@/components/PostCard.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import AccreditationStrip from '@/components/AccreditationStrip.astro';
+import PressStrip from '@/components/PressStrip.astro';
 import { getSiteSettings, getQualifyCourses, getUpcomingDates, getTestimonials, getLiveJobs, getPosts, getFaqsByIds } from '@/lib/content';
 
 const [settings, qualify, dates, testimonials, jobs, posts, faqs] = await Promise.all([
@@ -26,6 +27,8 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
       <a href="/become-a-pilates-instructor" class="btn btn-primary">I want to qualify</a>
       <a href="/continuing-education" class="btn btn-secondary">I'm already a teacher</a>
     </div>
+    {settings.heroTrustLine && <p class="trust-line small">{settings.heroTrustLine}</p>}
+    <PressStrip slot="footer" settings={settings} tone="dark" />
   </Hero>
 
   <Section>
@@ -147,6 +150,8 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
 </Base>
 <style>
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .trust-line { color: var(--stone-100); font-weight: var(--weight-regular); display: inline-flex; align-items: center; gap: var(--space-2); }
+  .trust-line::before { content: ""; width: var(--space-2); height: var(--space-2); border-radius: var(--radius-pill); background: var(--text-inverse-accent); }
   .paths { display: grid; gap: var(--space-4); }
   @media (min-width: 768px) { .paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
   .proof-bar { display: grid; gap: var(--space-5); grid-template-columns: repeat(2, minmax(0, 1fr)); text-align: center; }
