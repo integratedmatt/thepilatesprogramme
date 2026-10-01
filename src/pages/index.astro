@@ -4,7 +4,7 @@ import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
 import PathTile from '@/components/PathTile.astro';
 import CourseCard from '@/components/CourseCard.astro';
-import Testimonials from '@/components/Testimonials.astro';
+import TestimonialWall from '@/components/TestimonialWall.astro';
 import Picture from '@/components/Picture.astro';
 import JobRow from '@/components/JobRow.astro';
 import PostCard from '@/components/PostCard.astro';
@@ -91,7 +91,7 @@ const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching
     </div>
   </Section>
 
-  <Testimonials items={testimonials.slice(0, 3)} linkHref="/graduates" linkLabel="See where our graduates teach" />
+  <TestimonialWall items={testimonials} settings={settings} />
 
   <Section>
     <div class="grid centre">

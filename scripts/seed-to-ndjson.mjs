@@ -20,6 +20,7 @@ for (const t of await read('teamMembers.json')) docs.push({ ...t, slug: slug(t.s
 for (const c of await read('categories.json')) docs.push({ ...c, slug: slug(c.slug) });
 for (const a of await read('authors.json')) docs.push({ ...a, slug: slug(a.slug) });
 for (const p of await read('posts.json')) { const { body, image, ...rest } = p; docs.push({ ...rest, slug: slug(p.slug), bodyHtml: body, category: { _type: 'reference', _ref: p.category }, author: { _type: 'reference', _ref: p.author } }); }
+for (const t of await read('testimonials.json')) docs.push(t);
 for (const r of await read('redirects.json')) docs.push(r);
 await writeFile(new URL('../seed.ndjson', import.meta.url), docs.map((d) => JSON.stringify(d)).join('\n') + '\n');
 console.log(`[seed] wrote seed.ndjson with ${docs.length} documents`);

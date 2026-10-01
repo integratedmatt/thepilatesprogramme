@@ -1,1 +1,7 @@
-[]
+[
+  { "_id": "testimonial-anna-h", "_type": "testimonial", "approved": true, "name": "Anna H.", "quote": "The facilities are amazing and your instruction was super warm, friendly and completely non intimidating" },
+  { "_id": "testimonial-anonymous-1", "_type": "testimonial", "approved": true, "name": "Anonymous", "quote": "As someone with a learning disability, I found the experience extremely helpful and accommodating. The way the material was delivered made it accessible and encouraging, which means a lot to me" },
+  { "_id": "testimonial-tom-b", "_type": "testimonial", "approved": true, "name": "Tom B.", "quote": "I'm SO pleased I chose to train with you! I feel set up for success and can't wait for the journey ahead" },
+  { "_id": "testimonial-zaina-m", "_type": "testimonial", "approved": true, "name": "Zaina M.", "quote": "Thank you for creating an environment where I felt capable, supported & confident in my growth" },
+  { "_id": "testimonial-karolina-h", "_type": "testimonial", "approved": true, "name": "Karolina H.", "quote": "I've been blown away by the course. It's been transformational and I can't thank you and your team enough" }
+]
