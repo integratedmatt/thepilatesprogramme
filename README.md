@@ -25,6 +25,7 @@ Anything marked `[CLIENT TO CONFIRM]` in the spec is an empty CMS field that the
 | Area | Path |
 |---|---|
 | Tokens (Section 4) | `src/styles/tokens.css`, mapped into Tailwind in `src/styles/global.css` |
+| Fonts | `public/fonts`: Fifty Fifty Bold, Light and Fine Italic (client brand face, replaces Acumin Pro) and Poppins 300/400/500 |
 | Layout, header, footer, cookie banner, GTM | `src/layouts/Base.astro`, `src/components/{Header,Footer,CookieBanner,Analytics}.astro` |
 | Course page template (7.3) | `src/components/CoursePage.astro` used by the three course routes |
 | Pages | `src/pages/**` matching the IA in Section 5 |
@@ -65,4 +66,4 @@ See `.env.example`. Nothing is required to build locally. For production: Sanity
 
 ## Still needed from the client (Section 10)
 
-Vector logo and Adobe Fonts kit ID; photography (placeholders are in `public/images`); graduate outcomes and testimonials with consent; founder bios, credentials and headshots; single studio hire rate; Advanced Reformer price; whether Pain Science CPD stays; approved accreditation wording; the free guide PDF; Google Business Profile and review links; and the Arketa link for each specific course date (seeded dates carry a note where this needs checking).
+Vector logo and confirmation that the Fifty Fifty licence covers self-hosted web use; photography (placeholders are in `public/images`); graduate outcomes and testimonials with consent; founder bios, credentials and headshots; single studio hire rate; Advanced Reformer price; whether Pain Science CPD stays; approved accreditation wording; the free guide PDF; Google Business Profile and review links; and the Arketa link for each specific course date (seeded dates carry a note where this needs checking).

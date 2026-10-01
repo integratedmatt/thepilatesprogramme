@@ -52,7 +52,28 @@
   --breakpoint-xl: 1440px;
 }
 
-/* Fonts: Poppins self-hosted (files in /public/fonts). Acumin Pro via Adobe Fonts kit. */
+/* Fonts, all self-hosted in /public/fonts. Fifty Fifty (client brand face) for display, Poppins for body and UI. */
+@font-face {
+  font-family: "Fifty Fifty";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/fiftyfifty-bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fifty Fifty";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/fiftyfifty-light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fifty Fifty";
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/fonts/fiftyfifty-fine-italic.woff2") format("woff2");
+}
 @font-face {
   font-family: "Poppins";
   font-style: normal;
@@ -121,7 +142,8 @@
   .h1 { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h1); line-height: var(--leading-h1); letter-spacing: var(--tracking-h1); }
   .h2 { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h2); line-height: var(--leading-h2); letter-spacing: var(--tracking-h2); }
   .h3 { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); line-height: var(--leading-h3); }
-  .lead { font-size: var(--type-lead); line-height: var(--leading-lead); font-weight: var(--weight-body); color: var(--text-secondary); }
+  .lead { font-family: var(--font-display); font-size: var(--type-lead); line-height: var(--leading-lead); font-weight: var(--weight-display-light); color: var(--text-secondary); }
+  .quote { font-family: var(--font-display); font-style: italic; font-weight: var(--weight-quote); font-size: var(--type-h3); line-height: var(--leading-quote); color: var(--text-primary); }
   .small { font-size: var(--type-small); line-height: var(--leading-small); font-weight: var(--weight-regular); }
   .muted { color: var(--text-muted); }
   .secondary { color: var(--text-secondary); }
@@ -213,7 +235,7 @@
   .prose li + li { margin-top: var(--space-2); }
   .prose p { color: var(--text-secondary); }
   .prose strong { font-weight: var(--weight-medium); color: var(--text-primary); }
-  .prose blockquote { border-left: var(--focus-width) solid var(--bronze-700); padding-left: var(--space-5); font-size: var(--type-lead); line-height: var(--leading-lead); margin-block: var(--space-6); }
+  .prose blockquote { border-left: var(--focus-width) solid var(--bronze-700); padding-left: var(--space-5); font-family: var(--font-display); font-style: italic; font-weight: var(--weight-quote); font-size: var(--type-h3); line-height: var(--leading-quote); margin-block: var(--space-6); }
 
   /* Motion (spec 4.7 + UI/UX playbook 5.6): purposeful, spatial, eased. Values come only from tokens. */
   .reveal { opacity: 0; transform: translateY(var(--rise)); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }

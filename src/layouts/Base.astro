@@ -24,7 +24,6 @@ const settings = await getSiteSettings();
 const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
 const canonicalUrl = canonical(Astro.site, canonicalPath ?? Astro.url.pathname);
 const og = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}${DEFAULT_OG}`;
-const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
 ---
 <!doctype html>
 <html lang="en-GB" class="no-js">
@@ -49,9 +48,8 @@ const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
     <meta name="theme-color" content="#FAF8F5" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/fiftyfifty-bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/poppins-300.woff2" as="font" type="font/woff2" crossorigin />
-    {typekit && <link rel="preconnect" href="https://use.typekit.net" crossorigin />}
-    {typekit && <link rel="stylesheet" href={`https://use.typekit.net/${typekit}.css`} />}
     <script is:inline>document.documentElement.classList.remove('no-js');</script>
     <Analytics />
     <JsonLd data={organizationSchema(settings, siteUrl)} />
