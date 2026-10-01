@@ -1,0 +1,17 @@
+---
+interface Props {
+  tone?: 'page' | 'subtle' | 'inverse';
+  id?: string;
+  class?: string;
+  reveal?: boolean;
+  as?: 'section' | 'div' | 'aside';
+  labelledby?: string;
+}
+const { tone = 'page', id, class: className = '', reveal = true, as: Tag = 'section', labelledby } = Astro.props;
+const toneClass = tone === 'subtle' ? 'section-subtle' : tone === 'inverse' ? 'section-inverse inverse' : '';
+---
+<Tag id={id} class={`section ${toneClass} ${className}`.trim()} aria-labelledby={labelledby}>
+  <div class:list={['container', { reveal }]}>
+    <slot />
+  </div>
+</Tag>

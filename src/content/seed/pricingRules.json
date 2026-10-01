@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "pricing-double-booking",
+    "_type": "pricingRule",
+    "slug": "double-booking",
+    "title": "Double booking",
+    "summary": "Book any two of Mat, Reformer and Barre together for £3,400 and save £1,000.",
+    "detail": "Pay in full or spread the cost over 6 monthly interest-free payments.",
+    "amount": 3400,
+    "saving": 1000,
+    "appliesTo": ["mat-pilates-teacher-training", "reformer-pilates-teacher-training", "barre-teacher-training"],
+    "howToClaim": "Choose the double booking option at checkout, or email us and we will set it up."
+  },
+  {
+    "_id": "pricing-level3-fitness",
+    "_type": "pricingRule",
+    "slug": "fitness-qualification-discount",
+    "title": "Fitness qualification discount",
+    "summary": "Students with an existing Level 3 fitness qualification receive £400 off.",
+    "amount": 400,
+    "appliesTo": ["mat-pilates-teacher-training", "reformer-pilates-teacher-training", "barre-teacher-training"],
+    "howToClaim": "Email a copy of your certificate to info@thepilatesprogramme.co.uk and we will send you a discount code."
+  },
+  {
+    "_id": "pricing-returning-student",
+    "_type": "pricingRule",
+    "slug": "returning-student",
+    "title": "Returning student discount",
+    "summary": "Past graduates receive 10% off further training and CPD.",
+    "percent": 10,
+    "appliesTo": ["all"],
+    "howToClaim": "Email us with the course you trained on and we will send your code."
+  },
+  {
+    "_id": "pricing-apparatus-bundle",
+    "_type": "pricingRule",
+    "slug": "apparatus-bundle",
+    "title": "Cadillac, Chair and Barrels bundle",
+    "summary": "Book Cadillac, Chair and Barrels together for £2,700. Barrels is included free.",
+    "amount": 2700,
+    "saving": 800,
+    "appliesTo": ["cadillac", "chair", "barrels"],
+    "howToClaim": "Book the bundle on the apparatus bundle page."
+  }
+]

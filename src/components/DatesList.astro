@@ -1,0 +1,24 @@
+---
+/** Date rows for one or many courses with the empty state. Section id is the booking anchor. */
+import DateRow from './DateRow.astro';
+import EmailCapture from './EmailCapture.astro';
+import type { Course, CourseDate } from '@/lib/types';
+interface Props { dates: CourseDate[]; courses: Course[]; showCourse?: boolean; course?: Course; emptyText?: string }
+const { dates, courses, showCourse = false, course, emptyText = 'New dates are being scheduled.' } = Astro.props;
+const byId = new Map(courses.map((c) => [c._id, c]));
+const rows = dates.map((d) => ({ d, c: byId.get(d.course) })).filter((r): r is { d: CourseDate; c: Course } => Boolean(r.c));
+---
+{rows.length > 0 ? (
+  <ul class="rule-list rule-top rule-bottom dates-list" role="list">
+    {rows.map(({ d, c }) => <DateRow date={d} course={c} showCourse={showCourse} />)}
+  </ul>
+) : (
+  <div class="dates-empty">
+    <p class="lead">{emptyText}</p>
+    <EmailCapture formId="date_alerts" path={course?.path ?? 'unknown'} tag="date-alerts" course={course?.slug} buttonLabel="Get notified" text="Leave your email and we will let you know as soon as new dates are released." compact successText="Thanks. You will hear from us as soon as dates are released." />
+  </div>
+)}
+<style>
+  .dates-list { list-style: none; }
+  .dates-empty { display: grid; gap: var(--space-5); padding: var(--space-6); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); }
+</style>

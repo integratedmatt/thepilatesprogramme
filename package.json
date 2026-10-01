@@ -1,0 +1,40 @@
+{
+  "name": "thepilatesprogramme",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Pilates Programme, Altrincham. Astro 5 + Sanity website.",
+  "scripts": {
+    "dev": "astro dev",
+    "prebuild": "node scripts/build-redirects.mjs && node scripts/build-llms.mjs",
+    "build": "astro build",
+    "postbuild": "node scripts/check-banned-terms.mjs dist",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test tests/unit/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:schema": "node scripts/validate-schema.mjs",
+    "lint:terms": "node scripts/check-banned-terms.mjs dist",
+    "seed:ndjson": "node scripts/seed-to-ndjson.mjs",
+    "studio": "npm --prefix studio run dev"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^8.2.11",
+    "@sanity/client": "^6.29.1",
+    "@sanity/image-url": "^2.1.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^5.18.2",
+    "resend": "^6.31.0",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@playwright/test": "^1.63.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

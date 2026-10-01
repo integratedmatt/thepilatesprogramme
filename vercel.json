@@ -1,0 +1,119 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/uk-pilates-barre-instructor-courses",
+      "destination": "/become-a-pilates-instructor",
+      "permanent": true
+    },
+    {
+      "source": "/mat-pilates-course",
+      "destination": "/become-a-pilates-instructor/mat-pilates-teacher-training",
+      "permanent": true
+    },
+    {
+      "source": "/reformer-pilates-course",
+      "destination": "/become-a-pilates-instructor/reformer-pilates-teacher-training",
+      "permanent": true
+    },
+    {
+      "source": "/barre-course",
+      "destination": "/become-a-pilates-instructor/barre-teacher-training",
+      "permanent": true
+    },
+    {
+      "source": "/advanced-reformer-pilates-course-1",
+      "destination": "/continuing-education/advanced-reformer",
+      "permanent": true
+    },
+    {
+      "source": "/chair-pilates-course",
+      "destination": "/continuing-education/chair",
+      "permanent": true
+    },
+    {
+      "source": "/cadillac-pilates-course",
+      "destination": "/continuing-education/cadillac",
+      "permanent": true
+    },
+    {
+      "source": "/barrel-pilates-course",
+      "destination": "/continuing-education/barrels",
+      "permanent": true
+    },
+    {
+      "source": "/uk-pilates-cpd-courses",
+      "destination": "/continuing-education/cpd",
+      "permanent": true
+    },
+    {
+      "source": "/prenatalandpostpartumcpd",
+      "destination": "/continuing-education/cpd/prenatal-postpartum",
+      "permanent": true
+    },
+    {
+      "source": "/strengthandendurancecpd",
+      "destination": "/continuing-education/cpd/strength-endurance",
+      "permanent": true
+    },
+    {
+      "source": "/jumpboard",
+      "destination": "/continuing-education/cpd/jumpboard-online",
+      "permanent": true
+    },
+    {
+      "source": "/painscience",
+      "destination": "/continuing-education/cpd/pain-science",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/training-centre",
+      "permanent": true
+    },
+    {
+      "source": "/elevatingothers",
+      "destination": "/elevating-others",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/expire-jobs",
+      "schedule": "15 2 * * *"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+---
+import { gbp, longDate } from '@/lib/format';
+import type { Job } from '@/lib/types';
+interface Props { job: Job }
+const { job } = Astro.props;
+const typeLabel: Record<string, string> = { FULL_TIME: 'Full time', PART_TIME: 'Part time', CONTRACTOR: 'Freelance', TEMPORARY: 'Temporary', INTERN: 'Internship', VOLUNTEER: 'Volunteer', PER_DIEM: 'Cover', OTHER: 'Other' };
+const unit: Record<string, string> = { HOUR: 'hour', DAY: 'day', WEEK: 'week', MONTH: 'month', YEAR: 'year', CLASS: 'class' };
+const pay = job.payMin || job.payMax ? `${job.payMin ? gbp(job.payMin) : ''}${job.payMin && job.payMax && job.payMax !== job.payMin ? ` – ${gbp(job.payMax)}` : !job.payMin && job.payMax ? `Up to ${gbp(job.payMax)}` : ''} per ${unit[job.payUnit ?? 'HOUR']}` : '';
+---
+<li class="job-row">
+  <div class="job-main">
+    <h3><a href={`/jobs/${job.slug}`}>{job.title}</a></h3>
+    <p class="small secondary">{job.studio?.name} · {job.town}</p>
+  </div>
+  <p class="small secondary">{typeLabel[job.employmentType] ?? job.employmentType}</p>
+  <p class="small secondary">{pay}</p>
+  <div class="job-meta">
+    <ul class="tags" role="list">
+      {job.disciplines.map((d) => <li class="tag">{d}</li>)}
+      {job.featuredGraduateFriendly && <li class="tag tag-accent">Graduate friendly</li>}
+    </ul>
+    {job.datePosted && <p class="small muted">Posted {longDate(job.datePosted)}</p>}
+  </div>
+</li>
+<style>
+  .job-row { display: grid; gap: var(--space-2) var(--space-5); padding-block: var(--space-5); align-items: start; }
+  @media (min-width: 768px) { .job-row { grid-template-columns: 5fr 2fr 2fr 3fr; } }
+  .job-main h3 { font-size: var(--type-lead); }
+  .job-main h3 a { color: var(--text-primary); text-decoration: none; }
+  .job-main h3 a:hover { color: var(--text-link); }
+  .job-meta { display: grid; gap: var(--space-2); }
+  .tags { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tag { font-size: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; padding: var(--space-1) var(--space-2); border: var(--border-width) solid var(--border-subtle); color: var(--text-secondary); }
+  .tag-accent { border-color: var(--bronze-700); color: var(--bronze-700); }
+</style>

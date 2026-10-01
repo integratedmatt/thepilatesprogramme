@@ -1,0 +1,24 @@
+---
+import type { HoursBreakdown } from '@/lib/types';
+interface Props { hours: HoursBreakdown }
+const { hours } = Astro.props;
+const total = hours.observation + hours.personalStudy + hours.practiceTeaching;
+const pct = (n: number) => `${(n / total) * 100}%`;
+---
+<div class="hours">
+  <div class="hours-bar" role="img" aria-label={`${total} hours: ${hours.observation} observation, ${hours.personalStudy} personal study, ${hours.practiceTeaching} practice teaching`}>
+    <span class="seg-1" style={`width:${pct(hours.observation)}`}></span>
+    <span class="seg-2" style={`width:${pct(hours.personalStudy)}`}></span>
+    <span class="seg-3" style={`width:${pct(hours.practiceTeaching)}`}></span>
+  </div>
+  <ul class="hours-legend small" role="list">
+    <li><span class="legend-dot" style="background: var(--ink-900)"></span>{hours.observation} observation</li>
+    <li><span class="legend-dot" style="background: var(--bronze-700)"></span>{hours.personalStudy} personal study</li>
+    <li><span class="legend-dot" style="background: var(--bronze-300)"></span>{hours.practiceTeaching} practice teaching</li>
+    <li><strong>= {total} hours</strong></li>
+  </ul>
+</div>
+<style>
+  .hours { display: grid; gap: var(--space-3); }
+  .hours-legend { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--text-secondary); }
+</style>

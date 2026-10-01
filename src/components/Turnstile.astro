@@ -1,0 +1,10 @@
+---
+/** Cloudflare Turnstile widget. Renders nothing when the site key is not configured (local/preview). */
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+{siteKey && (
+  <>
+    <div class="cf-turnstile" data-sitekey={siteKey} data-size="flexible" data-theme="light"></div>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </>
+)}

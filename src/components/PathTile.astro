@@ -1,0 +1,26 @@
+---
+import Picture from './Picture.astro';
+import type { ImageRef } from '@/lib/types';
+interface Props { eyebrow: string; title: string; promise: string; href: string; image?: ImageRef; cta?: string }
+const { eyebrow, title, promise, href, image, cta = 'Start here' } = Astro.props;
+---
+<a href={href} class="path-tile">
+  <Picture image={image} aspect="portrait" sizes="(min-width: 768px) 50vw, 100vw" class="path-img" />
+  <span class="path-overlay">
+    <span class="eyebrow">{eyebrow}</span>
+    <span class="h2">{title}</span>
+    <span class="path-promise">{promise}</span>
+    <span class="arrow-link">{cta}</span>
+  </span>
+</a>
+<style>
+  .path-tile { position: relative; display: block; text-decoration: none; color: var(--text-inverse); background: var(--bg-inverse); overflow: hidden; }
+  .path-tile :global(.path-img) { position: absolute; inset: 0; opacity: 0.55; transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out); }
+  .path-tile:hover :global(.path-img) { transform: scale(1.02); opacity: 0.45; }
+  .path-overlay { position: relative; display: grid; gap: var(--space-3); padding: var(--space-7) var(--space-5); min-height: clamp(var(--space-11), 40vw, calc(var(--space-11) * 2.5)); align-content: end; }
+  @media (min-width: 768px) { .path-overlay { padding: var(--space-8) var(--space-7); } }
+  .path-overlay .eyebrow { color: var(--text-inverse-accent); }
+  .path-overlay .h2 { color: var(--text-inverse); }
+  .path-promise { color: var(--stone-300); max-width: var(--measure-body); }
+  .path-overlay .arrow-link { color: var(--text-inverse); margin-top: var(--space-2); }
+</style>

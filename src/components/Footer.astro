@@ -1,0 +1,78 @@
+---
+import AccreditationStrip from './AccreditationStrip.astro';
+import EmailCapture from './EmailCapture.astro';
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings }
+const { settings } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer section-inverse inverse" id="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-about">
+        <p class="h3">{settings.siteName}</p>
+        <p class="small">{settings.entityName}. Pilates and Barre teacher training at {settings.address.street}, {settings.address.town}, {settings.address.postcode}.</p>
+        <p class="small"><a href={settings.mapUrl} target="_blank" rel="noopener">Open in Google Maps</a></p>
+        <p class="small"><a href={`mailto:${settings.email}`}>{settings.email}</a><br /><a href={settings.instagramUrl} target="_blank" rel="noopener">Instagram {settings.instagram}</a></p>
+      </div>
+      <nav class="footer-col" aria-label="Qualify">
+        <p class="eyebrow">Qualify</p>
+        <ul>
+          <li><a href="/become-a-pilates-instructor">Become a Pilates instructor</a></li>
+          <li><a href="/become-a-pilates-instructor/mat-pilates-teacher-training">Mat teacher training</a></li>
+          <li><a href="/become-a-pilates-instructor/reformer-pilates-teacher-training">Reformer teacher training</a></li>
+          <li><a href="/become-a-pilates-instructor/barre-teacher-training">Barre teacher training</a></li>
+          <li><a href="/become-a-pilates-instructor/which-course">Which course?</a></li>
+          <li><a href="/become-a-pilates-instructor/road-to-certification">Road to Certification</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/accreditation">Accreditation</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Continue learning and more">
+        <p class="eyebrow">Continue learning</p>
+        <ul>
+          <li><a href="/continuing-education">Continuing education</a></li>
+          <li><a href="/continuing-education/cpd">CPD</a></li>
+          <li><a href="/course-dates">Course dates</a></li>
+          <li><a href="/jobs">Jobs board</a></li>
+          <li><a href="/graduates">Graduates</a></li>
+          <li><a href="/blog">Journal</a></li>
+          <li><a href="/training-centre">Training centre</a></li>
+          <li><a href="/elevating-others">Elevating Others</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col footer-capture">
+        <EmailCapture formId="footer_guide" path="unknown" heading="Get the free career guide" text="Costs, hours, accreditation and your first job, in one honest guide." buttonLabel="Send it" compact successText="Thanks. The guide is on its way to your inbox." />
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <AccreditationStrip settings={settings} tone="dark" />
+      <ul class="legal small">
+        <li>© {year} {settings.siteName}</li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/cookies">Cookies</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/faqs">FAQs</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<style>
+  .site-footer { padding-block: var(--space-8); }
+  .footer-grid { display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1024px) { .footer-grid { grid-template-columns: 4fr 2fr 2fr 4fr; } }
+  .footer-col { display: grid; gap: var(--space-3); align-content: start; }
+  .footer-col ul { list-style: none; display: grid; gap: var(--space-2); font-size: var(--type-small); }
+  .footer-col a { text-decoration: none; color: var(--stone-300); }
+  .footer-col a:hover { color: var(--white); text-decoration: underline; }
+  .footer-about .small { color: var(--stone-300); }
+  .footer-capture :global(.input) { background: transparent; color: var(--white); border-color: var(--ink-700); }
+  .footer-capture :global(.checkbox) { color: var(--stone-300); }
+  .footer-bottom { display: grid; gap: var(--space-5); margin-top: var(--space-8); padding-top: var(--space-5); border-top: var(--border-width) solid var(--ink-700); }
+  @media (min-width: 1024px) { .footer-bottom { grid-template-columns: 1fr auto; align-items: center; } }
+  .legal { display: flex; flex-wrap: wrap; gap: var(--space-4); list-style: none; color: var(--stone-300); }
+  .legal a { color: var(--stone-300); text-decoration: none; }
+  .legal a:hover { color: var(--white); text-decoration: underline; }
+</style>

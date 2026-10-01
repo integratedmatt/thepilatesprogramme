@@ -1,0 +1,15 @@
+---
+interface Props { eyebrow?: string; title: string; lead?: string; id?: string; level?: 2 | 3; align?: 'left' | 'center' }
+const { eyebrow, title, lead, id, level = 2, align = 'left' } = Astro.props;
+const Tag = level === 3 ? 'h3' : 'h2';
+---
+<header class:list={['section-heading', { 'is-center': align === 'center' }]}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag id={id}>{title}</Tag>
+  {lead && <p class="lead">{lead}</p>}
+</header>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .section-heading.is-center { text-align: center; justify-items: center; }
+  .section-heading .lead { margin-top: var(--space-2); }
+</style>

@@ -1,0 +1,170 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import PathTile from '@/components/PathTile.astro';
+import CourseCard from '@/components/CourseCard.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import Picture from '@/components/Picture.astro';
+import JobRow from '@/components/JobRow.astro';
+import PostCard from '@/components/PostCard.astro';
+import EmailCapture from '@/components/EmailCapture.astro';
+import FaqAccordion from '@/components/FaqAccordion.astro';
+import AccreditationStrip from '@/components/AccreditationStrip.astro';
+import { getSiteSettings, getQualifyCourses, getUpcomingDates, getTestimonials, getLiveJobs, getPosts, getFaqsByIds } from '@/lib/content';
+
+const [settings, qualify, dates, testimonials, jobs, posts, faqs] = await Promise.all([
+  getSiteSettings(), getQualifyCourses(), getUpcomingDates(), getTestimonials(), getLiveJobs(), getPosts(), getFaqsByIds(['faq-cost', 'faq-hours', 'faq-mat-experience', 'faq-accreditation', 'faq-finance']),
+]);
+const nextFor = (id: string) => dates.find((d) => d.course === id);
+const stats = settings.proofStats.filter((s) => s.value);
+const heroImage = { url: '/images/placeholder-mat.svg', alt: 'A trainer coaching a small cohort through Mat repertoire at the Altrincham training centre', width: 1600, height: 1000 };
+---
+<Base title="Pilates Teacher Training Manchester | The Pilates Programme" description="Become a Pilates or Barre teacher studios want to hire. Small cohorts, in-person coaching in Altrincham, every tradition from Contrology to Contemporary. £2,200 all in.">
+  <Hero title="Become a Pilates teacher studios want to hire." lead="Small cohorts, individual coaching at our Altrincham training centre, and a method that covers every tradition: Contrology, Classical and Contemporary." image={heroImage} display>
+    <div class="hero-actions">
+      <a href="/become-a-pilates-instructor" class="btn btn-primary">I want to qualify</a>
+      <a href="/continuing-education" class="btn btn-secondary">I'm already a teacher</a>
+    </div>
+  </Hero>
+
+  <Section>
+    <div class="paths">
+      <PathTile eyebrow="I want to qualify" title="Become a Pilates or Barre teacher" promise="Mat, Reformer and Barre teacher training with 5 in-person days, supported practice hours and exams included." href="/become-a-pilates-instructor" image={{ url: '/images/placeholder-reformer.svg', alt: 'Students on Reformers during a practical day' }} cta="Start your route" />
+      <PathTile eyebrow="I'm already qualified" title="Continue learning" promise="Advanced Reformer, Chair, Cadillac, Barrels and CPD for teachers from any provider. Returning students save 10%." href="/continuing-education" image={{ url: '/images/placeholder-apparatus.svg', alt: 'Full apparatus studio at the Altrincham centre' }} cta="See apparatus and CPD" />
+    </div>
+  </Section>
+
+  {stats.length > 0 && (
+    <Section tone="subtle" reveal={false}>
+      <dl class="proof-bar">
+        {stats.map((s) => <div><dd class="h2">{s.value}</dd><dt class="small muted">{s.label}</dt></div>)}
+      </dl>
+    </Section>
+  )}
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Why train with us</p><h2>Depth over speed, and a job at the end of it</h2></header>
+    <ul class="why-grid" role="list">
+      <li>
+        <Picture image={{ url: '/images/placeholder-team.svg', alt: 'A trainer giving hands-on feedback to one student' }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <h3>Small cohorts, individual coaching</h3>
+        <p class="secondary">Every student is seen, corrected and coached in person. You leave teaching, not just knowing.</p>
+      </li>
+      <li>
+        <Picture image={{ url: '/images/placeholder-mat.svg', alt: 'Classical Mat repertoire being demonstrated' }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <h3>Every tradition</h3>
+        <p class="secondary">Contrology, Classical and Contemporary in one training, so you can teach any studio's style.</p>
+      </li>
+      <li>
+        <Picture image={{ url: '/images/placeholder-barre.svg', alt: 'A graduate teaching a group class' }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <h3>Industry ready</h3>
+        <p class="secondary">Programming, teaching to music, inclusive cueing and a first-job workshop are built in.</p>
+      </li>
+    </ul>
+  </Section>
+
+  <Section tone="inverse">
+    <div class="grid">
+      <div class="col-7">
+        <p class="eyebrow">The method</p>
+        <h2>Not contemporary only. Not classical only. The whole method.</h2>
+      </div>
+      <div class="col-5">
+        <p class="lead">Joseph Pilates called his work Contrology. We teach the original repertoire, the Classical order that grew from it and the Contemporary variations studios use today. You graduate able to teach wherever you are hired.</p>
+        <p class="mt-4"><a href="/about" class="arrow-link">Read about our approach</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Teacher training</p><h2>Choose your first course</h2></header>
+    <ul class="card-grid" role="list">
+      {qualify.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}
+    </ul>
+    <div class="quiz-cta">
+      <p class="lead">Not sure where to start?</p>
+      <a href="/become-a-pilates-instructor/which-course" class="btn btn-secondary">Take the 60-second quiz</a>
+    </div>
+  </Section>
+
+  <Testimonials items={testimonials.slice(0, 3)} linkHref="/graduates" linkLabel="See where our graduates teach" />
+
+  <Section>
+    <div class="grid centre">
+      <div class="col-7">
+        <Picture image={{ url: '/images/placeholder-centre.svg', alt: 'The two-floor training centre at 23 Central Way, Altrincham' }} aspect="landscape" sizes="(min-width: 1024px) 58vw, 100vw" />
+      </div>
+      <div class="col-5">
+        <p class="eyebrow">The training centre</p>
+        <h2>Two floors of apparatus in Altrincham</h2>
+        <p class="secondary">{settings.address.street}, {settings.address.town}, {settings.address.postcode}. Full apparatus and Barre fit-out, seminar screens, study spaces and a kitchen, a short walk from the train and tram.</p>
+        <p class="mt-4"><a href="/training-centre" class="arrow-link">Visit the centre</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <header class="section-heading"><p class="eyebrow">Jobs board</p><h2>Where the work is</h2></header>
+    {jobs.length > 0 ? (
+      <ul class="rule-list rule-top rule-bottom jobs" role="list">{jobs.slice(0, 3).map((j) => <JobRow job={j} />)}</ul>
+    ) : (
+      <p class="lead">Studios across Manchester, Cheshire and the North West list Pilates and Barre roles here, free.</p>
+    )}
+    <div class="jobs-links">
+      <a href="/jobs" class="arrow-link">See all roles</a>
+      <a href="/jobs/post" class="arrow-link">Studios: list a role free</a>
+    </div>
+  </Section>
+
+  <Section tone="inverse" id="guide">
+    <div class="grid">
+      <div class="col-7">
+        <p class="eyebrow">Free guide</p>
+        <h2>{settings.freeGuide.title}</h2>
+        <ul class="plain-list" role="list">{settings.freeGuide.bullets.map((b) => <li>{b}</li>)}</ul>
+      </div>
+      <div class="col-5"><EmailCapture formId="home_guide" path="qualify" tag="career-guide" successText="Thanks. The guide is on its way to your inbox." /></div>
+    </div>
+  </Section>
+
+  {posts.length > 0 && (
+    <Section>
+      <header class="section-heading"><p class="eyebrow">From the journal</p><h2>Honest guides to becoming a teacher</h2></header>
+      <ul class="card-grid" role="list">{posts.slice(0, 3).map((p) => <li><PostCard post={p} /></li>)}</ul>
+      <p class="mt-6"><a href="/blog" class="arrow-link">Read the journal</a></p>
+    </Section>
+  )}
+
+  <Section tone="subtle">
+    <FaqAccordion faqs={faqs} heading="Five questions people ask first" />
+    <p class="mt-6"><a href="/faqs" class="arrow-link">All questions</a></p>
+  </Section>
+
+  <Section reveal={false}>
+    <AccreditationStrip settings={settings} />
+  </Section>
+</Base>
+<style>
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .paths { display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+  .proof-bar { display: grid; gap: var(--space-5); grid-template-columns: repeat(2, minmax(0, 1fr)); text-align: center; }
+  @media (min-width: 768px) { .proof-bar { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .proof-bar dd { margin: 0; }
+  .why-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+  .why-grid li { display: grid; gap: var(--space-3); align-content: start; }
+  .why-grid h3 { margin-top: var(--space-2); }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .centre { align-items: center; }
+  .card-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+  .quiz-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin-top: var(--space-7); padding-top: var(--space-6); border-top: var(--border-width) solid var(--border-subtle); }
+  .jobs { list-style: none; }
+  .jobs-links { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-6); }
+  .plain-list { list-style: none; display: grid; gap: var(--space-2); margin-top: var(--space-4); color: var(--stone-300); }
+  .plain-list li::before { content: "·"; margin-right: var(--space-2); color: var(--text-inverse-accent); }
+  .mt-4 { margin-top: var(--space-4); } .mt-6 { margin-top: var(--space-6); }
+</style>

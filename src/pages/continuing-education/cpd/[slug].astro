@@ -1,0 +1,10 @@
+---
+import CoursePage from '@/components/CoursePage.astro';
+import { getCpdCourses } from '@/lib/content';
+export async function getStaticPaths() {
+  const courses = await getCpdCourses();
+  return courses.map((course) => ({ params: { slug: course.slug }, props: { course } }));
+}
+const { course } = Astro.props;
+---
+<CoursePage course={course} />

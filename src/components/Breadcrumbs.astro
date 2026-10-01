@@ -1,0 +1,25 @@
+---
+import JsonLd from './JsonLd.astro';
+import { breadcrumbSchema } from '@/lib/schema';
+interface Props { items: { name: string; url: string }[]; class?: string }
+const { items, class: className = '' } = Astro.props;
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+const all = [{ name: 'Home', url: '/' }, ...items];
+---
+<nav aria-label="Breadcrumb" class={`breadcrumbs small ${className}`.trim()}>
+  <ol>
+    {all.map((item, i) => (
+      <li>
+        {i < all.length - 1 ? <a href={item.url}>{item.name}</a> : <span aria-current="page">{item.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<JsonLd data={breadcrumbSchema(all, siteUrl)} />
+<style>
+  .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; color: var(--text-muted); }
+  .breadcrumbs li + li::before { content: "/"; margin-right: var(--space-2); color: var(--border-subtle); }
+  .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumbs a:hover { color: var(--text-link); text-decoration: underline; }
+  .breadcrumbs span { color: var(--text-secondary); }
+</style>

@@ -1,0 +1,39 @@
+---
+/** CMS only. Hides entirely when empty. */
+import Picture from './Picture.astro';
+import type { Testimonial } from '@/lib/types';
+interface Props { items: Testimonial[]; heading?: string; linkHref?: string; linkLabel?: string }
+const { items, heading = 'Graduate stories', linkHref, linkLabel = 'Meet more graduates' } = Astro.props;
+---
+{items.length > 0 && (
+  <section class="section section-subtle" aria-labelledby="testimonials-heading">
+    <div class="container reveal">
+      <header class="section-heading"><p class="eyebrow">In their words</p><h2 id="testimonials-heading">{heading}</h2></header>
+      <ul class="testimonial-grid" role="list">
+        {items.map((t) => (
+          <li class="testimonial">
+            <blockquote>
+              <p class="lead">“{t.quote}”</p>
+              <footer class="small">
+                <strong>{t.name}</strong>
+                {t.course && <span> · {t.course}</span>}
+                {t.teachesAt && <span> · Now teaching at {t.teachesAt}</span>}
+              </footer>
+            </blockquote>
+            {t.image && <Picture image={t.image} aspect="square" sizes="96px" class="testimonial-img" widths={[96, 192]} />}
+          </li>
+        ))}
+      </ul>
+      {linkHref && <p class="mt"><a href={linkHref} class="arrow-link">{linkLabel}</a></p>}
+    </div>
+  </section>
+)}
+<style>
+  .section-heading { margin-bottom: var(--space-7); display: grid; gap: var(--space-3); }
+  .testimonial-grid { list-style: none; display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) { .testimonial-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .testimonial blockquote { margin: 0; display: grid; gap: var(--space-4); border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-5); }
+  .testimonial footer { color: var(--text-muted); }
+  .testimonial :global(.testimonial-img) { width: var(--space-9); margin-top: var(--space-4); }
+  .mt { margin-top: var(--space-7); }
+</style>

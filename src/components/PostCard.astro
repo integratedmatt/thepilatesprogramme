@@ -1,0 +1,24 @@
+---
+import Picture from './Picture.astro';
+import { longDate, readingTime } from '@/lib/format';
+import type { Post } from '@/lib/types';
+interface Props { post: Post; featured?: boolean }
+const { post, featured = false } = Astro.props;
+---
+<article class:list={['post-card', { 'is-featured': featured }]}>
+  <a href={`/blog/${post.slug}`} tabindex="-1" aria-hidden="true"><Picture image={post.image} aspect="landscape" sizes={featured ? '(min-width: 1024px) 58vw, 100vw' : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'} /></a>
+  <div class="post-body">
+    <p class="eyebrow">{post.category?.title}</p>
+    <h3 class:list={{ h2: featured }}><a href={`/blog/${post.slug}`}>{post.title}</a></h3>
+    {featured && <p class="secondary">{post.summary}</p>}
+    <p class="small muted">{post.author?.name} · {longDate(post.publishedAt)} · {readingTime(post.body)} min read</p>
+  </div>
+</article>
+<style>
+  .post-card { display: grid; gap: var(--space-4); align-content: start; }
+  .post-card.is-featured { gap: var(--space-5); }
+  @media (min-width: 1024px) { .post-card.is-featured { grid-template-columns: 7fr 5fr; align-items: center; gap: var(--space-7); } }
+  .post-body { display: grid; gap: var(--space-2); }
+  .post-body h3 a { color: var(--text-primary); text-decoration: none; }
+  .post-body h3 a:hover { color: var(--text-link); }
+</style>

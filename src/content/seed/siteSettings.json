@@ -1,0 +1,67 @@
+{
+  "_id": "siteSettings",
+  "_type": "siteSettings",
+  "siteName": "The Pilates Programme",
+  "entityName": "The Pilates Programme, Altrincham",
+  "tagline": "Pilates and Barre teacher training in Altrincham, Greater Manchester. Small cohorts, in-person coaching, Contrology to Contemporary.",
+  "email": "info@thepilatesprogramme.co.uk",
+  "instagram": "@the_pilatesprogramme",
+  "instagramUrl": "https://www.instagram.com/the_pilatesprogramme/",
+  "address": { "street": "23 Central Way", "town": "Altrincham", "postcode": "WA14 1RF", "country": "GB" },
+  "geo": { "lat": 53.3881, "lng": -2.3503 },
+  "mapUrl": "https://www.google.com/maps/search/?api=1&query=23+Central+Way+Altrincham+WA14+1RF",
+  "logo": { "url": "/images/logo.svg", "alt": "The Pilates Programme", "width": 220, "height": 40 },
+  "accreditationBadges": [
+    { "name": "ITTAP", "url": "" },
+    { "name": "Pilates Method Alliance", "url": "" },
+    { "name": "CIMSPA Training Partner", "url": "" }
+  ],
+  "accreditationStatements": [
+    "Our courses are internationally accredited by ITTAP through the Pilates Method Alliance (PMA).",
+    "The Pilates Programme is a CIMSPA Training Partner."
+  ],
+  "accreditationCareer": "",
+  "accreditationEmployerNote": "",
+  "proofStats": [
+    { "label": "Graduates teaching", "value": "" },
+    { "label": "Studios our graduates teach in", "value": "" },
+    { "label": "Maximum cohort size", "value": "" },
+    { "label": "Google rating", "value": "" }
+  ],
+  "googleReviewUrl": "",
+  "googleBusinessUrl": "",
+  "studioHireRate": null,
+  "equipmentHireRate": 5,
+  "appMonthlyPrice": 10,
+  "appStoreUrl": "https://apps.apple.com/app/id6769811698",
+  "typicalClassRate": null,
+  "insuranceNote": "You will need teacher insurance before you teach paid classes. Budget for an annual policy from a specialist fitness insurer.",
+  "travelTimes": [
+    { "from": "Manchester Piccadilly", "mode": "train" },
+    { "from": "Stockport", "mode": "train" },
+    { "from": "Warrington", "mode": "car" },
+    { "from": "Chester", "mode": "car" }
+  ],
+  "parkingNote": "Parking is available nearby. The centre is a short walk from Altrincham train and tram interchange.",
+  "accessibilityNote": "",
+  "partnerStudios": ["RESET by Form, Manchester City Centre"],
+  "elevatingOthers": {
+    "open": false,
+    "windowNote": "",
+    "placesPerYear": 2,
+    "story": "",
+    "eligibility": []
+  },
+  "freeGuide": {
+    "title": "The Pilates Teacher Career Guide: costs, hours, accreditation and your first job",
+    "bullets": [
+      "The real total cost of qualifying, with nothing left out",
+      "How the 80 practice hours fit around a job and a family",
+      "What our accreditation means and the questions to ask any provider",
+      "How graduates find their first paid class"
+    ],
+    "fileUrl": ""
+  },
+  "cohortCap": null,
+  "weekendCohorts": false
+}

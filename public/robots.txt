@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /studio
+Disallow: /api/
+Disallow: /thank-you
+
+Sitemap: https://www.thepilatesprogramme.co.uk/sitemap-index.xml

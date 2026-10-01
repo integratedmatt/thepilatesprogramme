@@ -1,0 +1,25 @@
+---
+/** Definition-list facts block for AI extraction (Section 8.4). */
+interface Props { facts: { label: string; value?: string | number | null }[]; heading?: string }
+const { facts, heading = 'At a glance' } = Astro.props;
+const visible = facts.filter((f) => f.value !== undefined && f.value !== null && f.value !== '');
+---
+{visible.length > 0 && (
+  <div class="facts-block">
+    <p class="eyebrow">{heading}</p>
+    <dl class="facts">
+      {visible.map((f) => (
+        <div class="fact">
+          <dt>{f.label}</dt>
+          <dd>{f.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+)}
+<style>
+  .facts-block { display: grid; gap: var(--space-4); }
+  .facts { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 768px) { .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .fact { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
+</style>

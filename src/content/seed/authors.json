@@ -1,0 +1,4 @@
+[
+  { "_id": "author-georgie", "_type": "author", "name": "Georgie", "slug": "georgie", "role": "Co-founder, The Pilates Programme", "bio": "", "credentials": [] },
+  { "_id": "author-sarah", "_type": "author", "name": "Sarah", "slug": "sarah", "role": "Co-founder, The Pilates Programme", "bio": "", "credentials": [] }
+]

@@ -1,0 +1,77 @@
+---
+/** Bottom sheet. Accept all / Reject non-essential / Manage. Consent mode v2 defaults to denied. */
+---
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie consent" hidden>
+  <div class="container cookie-inner">
+    <div class="cookie-copy">
+      <p class="small"><strong>Cookies.</strong> We use analytics and marketing cookies to understand how the site is used and to measure our advertising. Nothing non-essential runs until you choose. <a href="/cookies">Cookie policy</a></p>
+      <form id="cookie-manage" class="cookie-manage" hidden>
+        <label class="checkbox"><input type="checkbox" name="analytics" checked /> Analytics (Google Analytics)</label>
+        <label class="checkbox"><input type="checkbox" name="marketing" /> Marketing (Meta Pixel)</label>
+      </form>
+    </div>
+    <div class="cookie-actions">
+      <button type="button" class="btn btn-primary" data-consent="all">Accept all</button>
+      <button type="button" class="btn btn-secondary" data-consent="none">Reject non-essential</button>
+      <button type="button" class="btn btn-secondary" data-consent="manage">Manage</button>
+      <button type="button" class="btn btn-primary" data-consent="save" hidden>Save choices</button>
+    </div>
+  </div>
+</div>
+<style>
+  .cookie-banner { position: fixed; inset-inline: 0; bottom: 0; z-index: 90; background: var(--bg-surface); border-top: var(--border-width) solid var(--border-subtle); padding-block: var(--space-5); box-shadow: none; }
+  .cookie-inner { display: grid; gap: var(--space-4); }
+  @media (min-width: 1024px) { .cookie-inner { grid-template-columns: 1fr auto; align-items: center; } }
+  .cookie-copy p { max-width: none; }
+  .cookie-manage { display: flex; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-3); }
+  .cookie-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .cookie-actions .btn { min-height: var(--touch-target); padding-block: var(--space-3); }
+</style>
+<script>
+  const banner = document.getElementById('cookie-banner') as HTMLElement | null;
+  const manage = document.getElementById('cookie-manage') as HTMLFormElement | null;
+  if (banner && manage) {
+    let stored: string | null = null;
+    try { stored = localStorage.getItem('tpp-consent'); } catch {}
+    if (!stored) banner.hidden = false;
+
+    function apply(analytics: boolean, marketing: boolean) {
+      const c = { analytics, marketing, at: Date.now() };
+      try { localStorage.setItem('tpp-consent', JSON.stringify(c)); } catch {}
+      const w = window as any;
+      w.gtag?.('consent', 'update', {
+        ad_storage: marketing ? 'granted' : 'denied',
+        ad_user_data: marketing ? 'granted' : 'denied',
+        ad_personalization: marketing ? 'granted' : 'denied',
+        analytics_storage: analytics ? 'granted' : 'denied',
+      });
+      w.dataLayer = w.dataLayer || [];
+      w.dataLayer.push({ event: 'consent_update', consent_analytics: analytics, consent_marketing: marketing });
+      banner!.hidden = true;
+    }
+
+    banner.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-consent]');
+      if (!btn) return;
+      const mode = btn.dataset.consent;
+      if (mode === 'all') apply(true, true);
+      else if (mode === 'none') apply(false, false);
+      else if (mode === 'manage') {
+        manage.hidden = false;
+        btn.hidden = true;
+        (banner.querySelector('[data-consent="save"]') as HTMLElement).hidden = false;
+      } else if (mode === 'save') {
+        const fd = new FormData(manage);
+        apply(fd.get('analytics') === 'on', fd.get('marketing') === 'on');
+      }
+    });
+
+    // Allow the cookies page to reopen the banner.
+    document.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('[data-open-cookie-banner]')) {
+        e.preventDefault();
+        banner.hidden = false;
+      }
+    });
+  }
+</script>

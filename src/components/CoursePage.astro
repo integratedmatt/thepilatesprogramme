@@ -1,0 +1,274 @@
+---
+/** Section 7.3 course page template. Shared by Qualify, apparatus, bundle and CPD pages. */
+import Base from '@/layouts/Base.astro';
+import Hero from './Hero.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import AccreditationStrip from './AccreditationStrip.astro';
+import AnswerBox from './AnswerBox.astro';
+import FactsBlock from './FactsBlock.astro';
+import HoursBar from './HoursBar.astro';
+import TeamCards from './TeamCards.astro';
+import Testimonials from './Testimonials.astro';
+import DatesList from './DatesList.astro';
+import PriceBlock from './PriceBlock.astro';
+import FaqAccordion from './FaqAccordion.astro';
+import StickyBookingBar from './StickyBookingBar.astro';
+import CourseCard from './CourseCard.astro';
+import EmailCapture from './EmailCapture.astro';
+import JsonLd from './JsonLd.astro';
+import Section from './Section.astro';
+import { getSiteSettings, getUpcomingDates, getPricingRules, getFaqsByIds, getTeam, getTestimonialsByIds, getCourses, courseUrl, hubUrl } from '@/lib/content';
+import { courseSchema } from '@/lib/schema';
+import { pageTitle, pageDescription } from '@/lib/seo';
+import { gbp, priceLine } from '@/lib/format';
+import { arketaUrl } from '@/lib/arketa';
+import type { Course } from '@/lib/types';
+
+interface Props { course: Course }
+const { course } = Astro.props;
+const [settings, dates, rules, faqs, team, testimonials, allCourses] = await Promise.all([
+  getSiteSettings(), getUpcomingDates(course._id), getPricingRules(), getFaqsByIds(course.faqs ?? []), getTeam(), getTestimonialsByIds(course.testimonials ?? []), getCourses(),
+]);
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+const url = courseUrl(course);
+const nextDate = dates[0];
+const isQualify = course.path === 'qualify';
+const hubName = isQualify ? 'Become a Pilates instructor' : 'Continuing education';
+const crumbs = course.kind === 'cpd'
+  ? [{ name: hubName, url: hubUrl(course.path) }, { name: 'CPD', url: '/continuing-education/cpd' }, { name: course.shortTitle, url }]
+  : [{ name: hubName, url: hubUrl(course.path) }, { name: course.shortTitle, url }];
+const unlocks = (course.unlocks ?? []).map((slug) => allCourses.find((c) => c.slug === slug)).filter((c): c is Course => Boolean(c));
+const allDates = await getUpcomingDates();
+const nextFor = (id: string) => allDates.find((d) => d.course === id);
+const hours = course.hoursBreakdown;
+const totalHours = hours ? hours.observation + hours.personalStudy + hours.practiceTeaching : undefined;
+const title = pageTitle(course.title, course.seo);
+const description = pageDescription(course.answerSummary.slice(0, 155), course.seo);
+const financeLine = course.financeOptions.find((f) => f.instalments && f.amount);
+const facts = [
+  { label: 'Format', value: course.format === 'online' ? 'Online, on demand' : hours?.inPersonDays ? `${hours.inPersonDays} in-person days` : 'In person' },
+  { label: 'Practice hours', value: totalHours ? `${totalHours} supported hours` : undefined },
+  { label: 'Exams', value: course.exams.length ? `${course.exams.length} included` : undefined },
+  { label: 'Price', value: course.price != null ? (financeLine ? `${gbp(course.price)} or ${financeLine.instalments} × ${gbp(financeLine.amount)}` : gbp(course.price)) : undefined },
+  { label: 'Location', value: course.format === 'online' ? 'Anywhere' : `${settings.address.town}, Greater Manchester` },
+  { label: 'Accreditation', value: 'ITTAP via PMA · CIMSPA Training Partner' },
+  { label: 'Prerequisite', value: course.prerequisites?.length ? course.prerequisites.join('; ') : isQualify ? 'None' : undefined },
+];
+const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, path: course.path, kind: course.kind });
+---
+<Base title={title} description={description} ogImage={course.seo.ogImage?.url ?? course.heroImage?.url} bodyClass="course-page">
+  <Fragment slot="head">
+    <JsonLd data={courseSchema(course, dates, settings, siteUrl, url)} />
+  </Fragment>
+  <div data-track="scroll" data-page-event={pageEvent} hidden></div>
+
+  <Hero eyebrow={course.eyebrow} title={course.title} lead={course.outcome} image={course.heroImage}>
+    <Breadcrumbs slot="breadcrumbs" items={crumbs} />
+    {course.price != null && (
+      <p class="hero-price">{priceLine(course.price, course.financeOptions)}{course.kind === 'teacher-training' ? '. Exams, manual and assessment included.' : ''}</p>
+    )}
+    <div class="hero-actions">
+      <a href="#dates" class="btn btn-primary">See dates</a>
+      {course.guideUrl
+        ? <a href={course.guideUrl} class="btn btn-secondary" target="_blank" rel="noopener">Download the course guide</a>
+        : <a href="#guide" class="btn btn-secondary">Download the course guide</a>}
+    </div>
+    <AccreditationStrip settings={settings} tone="dark" class="hero-accred" />
+  </Hero>
+
+  {!isQualify && course.prerequisites && course.prerequisites.length > 0 && (
+    <div class="container prereq-wrap">
+      <aside class="prereq" aria-label="Prerequisite">
+        <p class="eyebrow">Prerequisite</p>
+        <p>You'll need {course.prerequisites.map((p) => p.charAt(0).toLowerCase() + p.slice(1)).join(' and ')}.</p>
+        <p class="small"><a href="/become-a-pilates-instructor">Not qualified yet? Start here.</a></p>
+      </aside>
+    </div>
+  )}
+
+  <Section>
+    <div class="grid">
+      <div class="col-answer">
+        <AnswerBox question={course.answerQuestion ?? `What is the ${course.shortTitle} course?`} answer={course.answerSummary} />
+      </div>
+      <div class="col-facts"><FactsBlock facts={facts} /></div>
+    </div>
+  </Section>
+
+  {(course.forYou?.length || course.notForYou?.length) && (
+    <Section tone="subtle">
+      <header class="section-heading"><p class="eyebrow">Is this for you?</p><h2>Honest fit, before you book</h2></header>
+      <div class="two-col">
+        {course.forYou && course.forYou.length > 0 && (
+          <div>
+            <h3>This is for you if</h3>
+            <ul class="tick-list" role="list">{course.forYou.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        )}
+        {course.notForYou && course.notForYou.length > 0 && (
+          <div>
+            <h3>This isn't for you if</h3>
+            <ul class="cross-list" role="list">{course.notForYou.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        )}
+      </div>
+    </Section>
+  )}
+
+  {course.curriculum.length > 0 && (
+    <Section>
+      <header class="section-heading"><p class="eyebrow">Curriculum</p><h2>What you'll learn</h2></header>
+      <div class="curriculum">
+        {course.curriculum.map((g) => (
+          <div class="curriculum-group">
+            <h3>{g.title}</h3>
+            <ul class="rule-list" role="list">{g.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  {course.inclusions.length > 0 && (
+    <Section tone="subtle">
+      <header class="section-heading"><p class="eyebrow">Included</p><h2>What's included</h2></header>
+      <ul class="included-grid" role="list">
+        {course.inclusions.map((i) => <li><span class="tick" aria-hidden="true">✓</span><span>{i}</span></li>)}
+      </ul>
+    </Section>
+  )}
+
+  {hours && totalHours && (
+    <Section id="road">
+      <div class="grid">
+        <div class="col-7">
+          <header class="section-heading"><p class="eyebrow">Road to Certification</p><h2>These hours are why studios hire our graduates</h2><p class="lead">After the intensive you complete {totalHours} supported hours, then three exams. Most students finish in eight weeks alongside a job.</p></header>
+          <HoursBar hours={hours} />
+          <h3 class="mt-7">A suggested 8-week plan</h3>
+          <ol class="plan" role="list">
+            <li><strong>Weeks 1 to 2.</strong> Observation heavy: book onto classes locally, at the centre or through the video library.</li>
+            <li><strong>Weeks 3 to 5.</strong> Start teaching short sections to friends and fellow students. Keep observing. Begin revision.</li>
+            <li><strong>Weeks 6 to 8.</strong> Teach full classes. Hire the studio if you need a room and equipment. Sit your exams.</li>
+          </ol>
+          <p class="small"><a href="/become-a-pilates-instructor/road-to-certification">Read the full Road to Certification guide</a></p>
+        </div>
+        <div class="col-5">
+          <h3>How to complete your hours</h3>
+          <ul class="rule-list how-list" role="list">
+            <li><strong>Studio hire at the centre.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour.` : 'Rates on the pricing page.'}</li>
+            <li><strong>Equipment hire.</strong> {settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour.` : ''}</li>
+            <li><strong>Your local studio.</strong> Many studios welcome trainees to observe and cover.</li>
+            <li><strong>Online observation.</strong> Through the video library and the app.</li>
+          </ul>
+          <h3 class="mt-7">The three exams</h3>
+          <ul class="rule-list how-list" role="list">
+            {course.exams.map((e) => <li><strong>{e.title}.</strong> {e.detail}</li>)}
+          </ul>
+        </div>
+      </div>
+    </Section>
+  )}
+
+  {team.length > 0 && <Section tone="subtle"><TeamCards members={team} /></Section>}
+
+  <Testimonials items={testimonials} heading={`What ${course.shortTitle} graduates say`} linkHref="/graduates" />
+
+  <Section id="dates" data-course={course.slug}>
+    <header class="section-heading"><p class="eyebrow">Dates</p><h2>Choose your {course.shortTitle} date</h2>{course.format !== 'online' && <p class="lead">Booking opens in Arketa in a new tab. Pay in full or choose instalments at checkout.</p>}</header>
+    {course.format === 'online' ? (
+      <div class="online-book">
+        <p class="lead">This course is on demand. Book now and start straight away.</p>
+        <a href={arketaUrl(course.arketaFallbackUrl ?? '', { courseSlug: course.slug })} class="btn btn-primary" target="_blank" rel="noopener" data-book data-course={course.slug} data-price={course.price ?? ''} data-path={course.path} data-location="online">Book the online course</a>
+      </div>
+    ) : (
+      <DatesList dates={dates} courses={[course]} course={course} emptyText={`New ${course.shortTitle} dates are being scheduled.`} />
+    )}
+  </Section>
+
+  <Section tone="subtle" id="pricing">
+    <header class="section-heading"><p class="eyebrow">Pricing</p><h2>What it costs, with nothing hidden</h2></header>
+    <PriceBlock course={course} rules={rules} />
+    <p class="mt-5 small"><a href="/pricing">See the full pricing breakdown, including cost per in-person hour</a></p>
+  </Section>
+
+  {course.afterBooking && course.afterBooking.length > 0 && (
+    <Section>
+      <header class="section-heading"><p class="eyebrow">Next steps</p><h2>What happens after you book</h2></header>
+      <ol class="plan" role="list">{course.afterBooking.map((s) => <li>{s}</li>)}</ol>
+    </Section>
+  )}
+
+  <Section id="guide" tone="inverse">
+    <div class="grid">
+      <div class="col-7">
+        <p class="eyebrow">Free guide</p>
+        <h2>{settings.freeGuide.title}</h2>
+        <ul class="plain-list" role="list">{settings.freeGuide.bullets.map((b) => <li>{b}</li>)}</ul>
+      </div>
+      <div class="col-5">
+        <EmailCapture formId={`course_guide_${course.slug}`} path={course.path} course={course.slug} tag="course-guide" buttonLabel="Send me the guide" successText="Thanks. The guide is on its way to your inbox." />
+      </div>
+    </div>
+  </Section>
+
+  {unlocks.length > 0 && (
+    <Section>
+      <header class="section-heading"><p class="eyebrow">{isQualify ? 'Continue learning' : 'Keep going'}</p><h2>What this course unlocks</h2></header>
+      <ul class="card-grid" role="list">{unlocks.slice(0, 3).map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} /></li>)}</ul>
+    </Section>
+  )}
+
+  <Section tone="subtle"><FaqAccordion faqs={faqs} heading={`${course.shortTitle} questions`} /></Section>
+
+  <Section>
+    <nav class="related-links" aria-label="Related pages">
+      <a href={hubUrl(course.path)} class="arrow-link">{isQualify ? 'How to become a Pilates instructor' : 'All continuing education'}</a>
+      <a href="/become-a-pilates-instructor/road-to-certification" class="arrow-link">Road to Certification</a>
+      <a href="/pricing" class="arrow-link">Pricing and finance</a>
+      <a href="/accreditation" class="arrow-link">Our accreditation</a>
+    </nav>
+  </Section>
+
+  <StickyBookingBar course={course} nextDate={nextDate} />
+</Base>
+<style>
+  .hero-price { font-weight: var(--weight-regular); color: var(--stone-300); }
+  :global(.hero-accred) { margin-top: var(--space-4); }
+  .prereq-wrap { margin-top: calc(-1 * var(--space-6)); position: relative; z-index: 2; }
+  .prereq { background: var(--bg-surface); border: var(--border-width) solid var(--border-strong); padding: var(--space-5); display: grid; gap: var(--space-2); }
+  .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .col-answer { grid-column: span 12; }
+  .col-facts { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-answer { grid-column: span 7; } .col-facts { grid-column: 9 / span 4; } }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
+  .two-col { display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .two-col h3 { margin-bottom: var(--space-4); }
+  .tick-list, .cross-list { list-style: none; display: grid; gap: var(--space-3); color: var(--text-secondary); }
+  .tick-list li, .cross-list li { padding-left: var(--space-5); position: relative; }
+  .tick-list li::before { content: "\2713"; position: absolute; left: 0; color: var(--status-open); }
+  .cross-list li::before { content: "\00d7"; position: absolute; left: 0; color: var(--text-muted); }
+  .curriculum { display: grid; gap: var(--space-7); }
+  @media (min-width: 768px) { .curriculum { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+  .curriculum-group h3 { margin-bottom: var(--space-4); }
+  .curriculum-group ul { list-style: none; }
+  .curriculum-group li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .included-grid { list-style: none; display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .included-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .included-grid li { display: flex; gap: var(--space-3); color: var(--text-secondary); padding: var(--space-4); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); }
+  .tick { color: var(--text-link); font-weight: var(--weight-medium); }
+  .plan { list-style: none; display: grid; gap: var(--space-3); color: var(--text-secondary); counter-reset: plan; }
+  .plan li { padding-left: var(--space-6); position: relative; }
+  .plan li::before { counter-increment: plan; content: counter(plan); position: absolute; left: 0; color: var(--text-link); font-weight: var(--weight-medium); }
+  .how-list { list-style: none; }
+  .how-list li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .mt-7 { margin-top: var(--space-7); margin-bottom: var(--space-4); }
+  .mt-5 { margin-top: var(--space-5); }
+  .online-book { display: grid; gap: var(--space-5); justify-items: start; }
+  .plain-list { list-style: none; display: grid; gap: var(--space-2); margin-top: var(--space-4); color: var(--stone-300); }
+  .plain-list li::before { content: "·"; margin-right: var(--space-2); color: var(--text-inverse-accent); }
+  .card-grid { list-style: none; display: grid; gap: var(--space-6); }
+  @media (min-width: 768px) { .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
+  .related-links { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-7); }
+</style>

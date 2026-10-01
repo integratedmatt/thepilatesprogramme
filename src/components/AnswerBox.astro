@@ -1,0 +1,9 @@
+---
+/** AEO answer box: question as H2, 40–60 word direct answer from CMS answerSummary. */
+interface Props { question: string; answer: string; class?: string }
+const { question, answer, class: className = '' } = Astro.props;
+---
+<div class={`answer-box ${className}`.trim()}>
+  <h2>{question}</h2>
+  <p>{answer}</p>
+</div>

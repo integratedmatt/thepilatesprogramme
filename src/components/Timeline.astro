@@ -1,0 +1,23 @@
+---
+interface Props { steps: { title: string; text: string; meta?: string }[] }
+const { steps } = Astro.props;
+---
+<ol class="timeline" role="list">
+  {steps.map((s, i) => (
+    <li class="step">
+      <span class="step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+      <div class="step-body">
+        {s.meta && <p class="eyebrow">{s.meta}</p>}
+        <h3>{s.title}</h3>
+        <p class="secondary">{s.text}</p>
+      </div>
+    </li>
+  ))}
+</ol>
+<style>
+  .timeline { list-style: none; display: grid; gap: var(--space-6); counter-reset: step; }
+  @media (min-width: 1024px) { .timeline { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: var(--space-5); } }
+  .step { display: grid; gap: var(--space-3); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); }
+  .step-num { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); color: var(--text-link); }
+  .step-body { display: grid; gap: var(--space-2); }
+</style>

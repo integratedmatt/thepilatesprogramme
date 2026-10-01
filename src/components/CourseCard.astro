@@ -1,0 +1,36 @@
+---
+import Picture from './Picture.astro';
+import { courseUrl } from '@/lib/content';
+import { priceLine, dateRange } from '@/lib/format';
+import { statusLabel, statusClass } from '@/lib/dates';
+import type { Course, CourseDate } from '@/lib/types';
+interface Props { course: Course; nextDate?: CourseDate; showBestFor?: boolean }
+const { course, nextDate, showBestFor = false } = Astro.props;
+const href = courseUrl(course);
+---
+<article class="course-card">
+  <a href={href} class="card-img" tabindex="-1" aria-hidden="true">
+    <Picture image={course.heroImage} aspect="portrait" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
+  </a>
+  <div class="card-body">
+    <p class="eyebrow">{course.kind === 'cpd' ? `CPD · ${course.format === 'online' ? 'online' : 'in person'}` : course.discipline}</p>
+    <h3><a href={href}>{course.shortTitle}{course.kind === 'teacher-training' ? ' teacher training' : ''}</a></h3>
+    <p class="secondary">{showBestFor && course.bestFor ? course.bestFor : course.outcome}</p>
+    {course.price != null ? <p class="price">{priceLine(course.price, course.financeOptions)}</p> : <p class="price muted">Price on request</p>}
+    {nextDate ? (
+      <p class="small next-date">Next: {dateRange(nextDate.startDate, nextDate.endDate)} <span class={`pill ${statusClass(nextDate.status)}`}>{statusLabel(nextDate)}</span></p>
+    ) : (
+      <p class="small muted">New dates being scheduled</p>
+    )}
+    <a href={href} class="arrow-link">View course</a>
+  </div>
+</article>
+<style>
+  .course-card { display: grid; gap: var(--space-4); align-content: start; }
+  .card-img { display: block; }
+  .card-body { display: grid; gap: var(--space-2); }
+  .card-body h3 a { color: var(--text-primary); text-decoration: none; }
+  .card-body h3 a:hover { color: var(--text-link); }
+  .price { font-weight: var(--weight-medium); }
+  .next-date { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; color: var(--text-secondary); }
+</style>

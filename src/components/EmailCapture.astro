@@ -1,0 +1,53 @@
+---
+/**
+ * Single email field + consent + Turnstile. Posts to /api/lead.
+ * Works without JS (full page POST with redirect) and with JS (inline success).
+ */
+import Turnstile from './Turnstile.astro';
+interface Props {
+  formId: string;             // GA4 form_id
+  path?: 'qualify' | 'continue' | 'studio' | 'unknown';
+  heading?: string;
+  text?: string;
+  buttonLabel?: string;
+  tag?: string;               // ESP tag e.g. jobs-alerts, date-alerts
+  course?: string;
+  compact?: boolean;
+  successText?: string;
+  class?: string;
+}
+const { formId, path = 'unknown', heading, text, buttonLabel = 'Send me the guide', tag, course, compact = false, successText = 'Thanks. Check your inbox in the next few minutes.', class: className = '' } = Astro.props;
+const sourcePage = Astro.url.pathname;
+const uid = `${formId}-${Math.random().toString(36).slice(2, 7)}`;
+---
+<form class={`email-capture ${compact ? 'is-compact' : ''} ${className}`.trim()} method="post" action="/api/lead" data-form="lead" data-form-id={formId} data-path={path} novalidate>
+  {heading && <h3 class="h3">{heading}</h3>}
+  {text && <p class="secondary">{text}</p>}
+  <input type="hidden" name="form_id" value={formId} />
+  <input type="hidden" name="path" value={path} />
+  <input type="hidden" name="source_page" value={sourcePage} />
+  {tag && <input type="hidden" name="tag" value={tag} />}
+  {course && <input type="hidden" name="course" value={course} />}
+  <input type="hidden" name="redirect" value={`${sourcePage}?subscribed=1`} />
+  <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <div class="field">
+    <label for={`${uid}-email`}>Email address</label>
+    <div class="row">
+      <input class="input" type="email" id={`${uid}-email`} name="email" required autocomplete="email" inputmode="email" aria-describedby={`${uid}-error`} />
+      <button type="submit" class="btn btn-primary">{buttonLabel}</button>
+    </div>
+    <p class="error" id={`${uid}-error`} hidden></p>
+  </div>
+  <label class="checkbox">
+    <input type="checkbox" name="consent" value="yes" required />
+    <span>I agree to receive emails from The Pilates Programme. Unsubscribe any time. <a href="/privacy">Privacy policy</a></span>
+  </label>
+  <Turnstile />
+  <div class="form-status" role="status" aria-live="polite" hidden data-success={successText}></div>
+</form>
+<style>
+  .email-capture { display: grid; gap: var(--space-4); }
+  .email-capture .row { display: grid; gap: var(--space-2); }
+  @media (min-width: 768px) { .email-capture .row { grid-template-columns: 1fr auto; } }
+  .email-capture.is-compact h3 { font-size: var(--type-lead); }
+</style>

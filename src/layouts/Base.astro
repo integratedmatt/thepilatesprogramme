@@ -1,0 +1,121 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import CookieBanner from '@/components/CookieBanner.astro';
+import Analytics from '@/components/Analytics.astro';
+import FormEnhancer from '@/components/FormEnhancer.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { getSiteSettings } from '@/lib/content';
+import { organizationSchema } from '@/lib/schema';
+import { canonical, DEFAULT_OG } from '@/lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonicalPath?: string;   // filtered views canonicalise to the unfiltered page
+  noindex?: boolean;
+  bodyClass?: string;
+}
+const { title, description, ogImage, ogType = 'website', canonicalPath, noindex = false, bodyClass = '' } = Astro.props;
+const settings = await getSiteSettings();
+const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
+const canonicalUrl = canonical(Astro.site, canonicalPath ?? Astro.url.pathname);
+const og = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}${DEFAULT_OG}`;
+const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
+---
+<!doctype html>
+<html lang="en-GB" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={settings.entityName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={og} />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+    <meta name="theme-color" content="#FAF8F5" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href="/fonts/poppins-300.woff2" as="font" type="font/woff2" crossorigin />
+    {typekit && <link rel="preconnect" href="https://use.typekit.net" crossorigin />}
+    {typekit && <link rel="stylesheet" href={`https://use.typekit.net/${typekit}.css`} />}
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+    <Analytics />
+    <JsonLd data={organizationSchema(settings, siteUrl)} />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header settings={settings} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer settings={settings} />
+    <CookieBanner />
+    <FormEnhancer />
+    <script>
+      // Reveal on entry: fade + rise once, disabled under prefers-reduced-motion.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll<HTMLElement>('.reveal');
+      if (reduce || !('IntersectionObserver' in window)) els.forEach((el) => el.classList.add('is-visible'));
+      else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -10% 0px' });
+        els.forEach((el) => io.observe(el));
+      }
+
+      // GTM data layer events (Section 9.3)
+      const w = window as any;
+      w.dataLayer = w.dataLayer || [];
+      const push = (ev: Record<string, unknown>) => w.dataLayer.push(ev);
+
+      // book_click on any Arketa link
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-book]');
+        if (!a) return;
+        push({ event: 'book_click', course: a.dataset.course, date_id: a.dataset.dateId, price: a.dataset.price ? Number(a.dataset.price) : undefined, path: a.dataset.path, location: a.dataset.location });
+      });
+      // job_apply_click
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-job-apply]');
+        if (a) push({ event: 'job_apply_click', job_id: a.dataset.jobId, studio: a.dataset.studio });
+      });
+      // view_dates when the dates section enters the viewport
+      const dates = document.getElementById('dates');
+      if (dates && 'IntersectionObserver' in window) {
+        const io2 = new IntersectionObserver((entries) => {
+          if (entries.some((en) => en.isIntersecting)) { push({ event: 'view_dates', course: dates.dataset.course }); io2.disconnect(); }
+        }, { threshold: 0.2 });
+        io2.observe(dates);
+      }
+      // scroll_depth 50 / 90 on course and blog pages
+      if (document.body.dataset.track === 'scroll') {
+        const fired = new Set<number>();
+        const check = () => {
+          const h = document.documentElement;
+          const pct = ((window.scrollY + window.innerHeight) / h.scrollHeight) * 100;
+          [50, 90].forEach((m) => { if (pct >= m && !fired.has(m)) { fired.add(m); push({ event: 'scroll_depth', percent: m }); } });
+          if (fired.size === 2) window.removeEventListener('scroll', check);
+        };
+        window.addEventListener('scroll', check, { passive: true });
+      }
+      // page-level events declared by the page
+      const pageEvent = document.body.dataset.pageEvent;
+      if (pageEvent) { try { push(JSON.parse(pageEvent)); } catch {} }
+    </script>
+  </body>
+</html>

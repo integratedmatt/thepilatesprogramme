@@ -1,0 +1,31 @@
+---
+import Picture from './Picture.astro';
+import type { ImageRef } from '@/lib/types';
+interface Props { eyebrow?: string; title: string; lead?: string; image?: ImageRef; display?: boolean; tone?: 'inverse' | 'page'; align?: 'left' | 'center' }
+const { eyebrow, title, lead, image, display = false, tone = image ? 'inverse' : 'page', align = 'left' } = Astro.props;
+---
+<section class:list={['hero', `hero-${tone}`, { 'has-image': Boolean(image), 'is-center': align === 'center', inverse: tone === 'inverse' }]} data-hero>
+  {image && <Picture image={image} aspect="none" priority sizes="100vw" class="hero-img" alt={image.alt} />}
+  <div class="container hero-inner">
+    <slot name="breadcrumbs" />
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1 class:list={{ display, 'heading-hero': !display }}>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+<style>
+  .hero { position: relative; padding-block: var(--space-8) var(--space-8); overflow: hidden; }
+  @media (min-width: 768px) { .hero { padding-block: var(--hero-pad-top) var(--space-9); } }
+  .hero-inverse { background: var(--bg-inverse); color: var(--text-inverse); }
+  .hero-inverse h1 { color: var(--text-inverse); }
+  .hero-inverse .lead { color: var(--stone-300); }
+  .hero-inverse .eyebrow { color: var(--text-inverse-accent); }
+  .hero :global(.hero-img) { position: absolute; inset: 0; z-index: 0; opacity: 0.5; background: var(--bg-inverse); }
+  .hero :global(.hero-img img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero-inner { position: relative; z-index: 1; display: grid; gap: var(--space-5); }
+  .hero.is-center .hero-inner { text-align: center; justify-items: center; }
+  .hero-page .hero-inner { gap: var(--space-4); }
+  .hero :global(.hero-actions) { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+  .hero :global(.breadcrumbs a), .hero-inverse :global(.breadcrumbs span) { color: var(--stone-300); }
+</style>

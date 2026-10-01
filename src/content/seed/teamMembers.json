@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "team-georgie",
+    "_type": "teamMember",
+    "name": "Georgie",
+    "slug": "georgie",
+    "role": "Co-founder and lead trainer",
+    "bio": "",
+    "credentials": [],
+    "founder": true
+  },
+  {
+    "_id": "team-sarah",
+    "_type": "teamMember",
+    "name": "Sarah",
+    "slug": "sarah",
+    "role": "Co-founder and lead trainer",
+    "bio": "",
+    "credentials": [],
+    "founder": true
+  }
+]

@@ -1,0 +1,68 @@
+---
+/** Progressive enhancement for all data-form forms: fetch submit, inline errors, loading state, GA4 events. */
+---
+<script>
+  type Resp = { ok: boolean; message?: string; errors?: Record<string, string>; event?: string; redirect?: string };
+  document.querySelectorAll<HTMLFormElement>('form[data-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>('.form-status');
+      const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      form.querySelectorAll<HTMLElement>('.error').forEach((el) => { el.hidden = true; el.textContent = ''; });
+      form.querySelectorAll<HTMLElement>('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+
+      // Client-side required checks with specific messages.
+      let valid = true;
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('[required]').forEach((input) => {
+        let msg = '';
+        if (input instanceof HTMLInputElement && input.type === 'checkbox') { if (!input.checked) msg = 'Please tick this box to continue.'; }
+        else if (!input.value.trim()) msg = 'This field is required.';
+        else if (input instanceof HTMLInputElement && input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) msg = 'Enter a valid email address, like name@example.com.';
+        if (msg) {
+          valid = false;
+          input.setAttribute('aria-invalid', 'true');
+          const err = input.closest('.field')?.querySelector<HTMLElement>('.error') ?? form.querySelector<HTMLElement>(`#${input.getAttribute('aria-describedby')}`);
+          if (err) { err.textContent = msg; err.hidden = false; }
+        }
+      });
+      if (!valid) {
+        const summary = form.querySelector<HTMLElement>('.error-summary');
+        if (summary) { summary.hidden = false; summary.focus(); }
+        else form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+
+      if (btn) { btn.classList.add('is-loading'); btn.disabled = true; btn.style.width = `${btn.offsetWidth}px`; }
+      const fd = new FormData(form);
+      fd.delete('redirect');
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        const data: Resp = await res.json();
+        if (data.ok) {
+          const w = window as any;
+          w.dataLayer = w.dataLayer || [];
+          w.dataLayer.push({ event: data.event || 'lead_submit', form_id: form.dataset.formId, path: form.dataset.path });
+          if (data.redirect) { window.location.href = data.redirect; return; }
+          form.querySelectorAll<HTMLElement>('.field, .checkbox, .cf-turnstile, button[type="submit"], .form-grid, .form-intro').forEach((el) => (el.hidden = true));
+          if (status) { status.hidden = false; status.dataset.state = 'success'; status.innerHTML = data.message || status.dataset.success || 'Thank you.'; status.focus?.(); }
+        } else {
+          if (data.errors) {
+            Object.entries(data.errors).forEach(([name, msg]) => {
+              const input = form.querySelector<HTMLElement>(`[name="${name}"]`);
+              input?.setAttribute('aria-invalid', 'true');
+              const err = input?.closest('.field')?.querySelector<HTMLElement>('.error');
+              if (err) { err.textContent = msg; err.hidden = false; }
+            });
+          }
+          if (status) { status.hidden = false; status.dataset.state = 'error'; status.textContent = data.message || 'Something went wrong. Please check the form and try again.'; }
+        }
+      } catch {
+        if (status) { status.hidden = false; status.dataset.state = 'error'; status.textContent = 'We could not send that. Your details are still in the form. Please try again in a moment.'; }
+      } finally {
+        if (btn) { btn.classList.remove('is-loading'); btn.disabled = false; btn.style.width = ''; }
+        const w = window as any;
+        if (w.turnstile) try { w.turnstile.reset(); } catch {}
+      }
+    });
+  });
+</script>

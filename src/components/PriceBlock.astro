@@ -1,0 +1,62 @@
+---
+import { gbp } from '@/lib/format';
+import type { Course, PricingRule } from '@/lib/types';
+interface Props { course: Course; rules: PricingRule[] }
+const { course, rules } = Astro.props;
+const applicable = rules.filter((r) => r.appliesTo.includes('all') || r.appliesTo.includes(course.slug));
+const dbl = applicable.find((r) => r.slug === 'double-booking');
+const fitness = applicable.find((r) => r.slug === 'fitness-qualification-discount');
+const returning = applicable.find((r) => r.slug === 'returning-student');
+const bundle = applicable.find((r) => r.slug === 'apparatus-bundle');
+---
+<div class="price-block" id="price">
+  <div class="price-main">
+    <p class="eyebrow">Price</p>
+    {course.price != null ? (
+      <p class="price-figure"><span class="h1">{gbp(course.price)}</span> <span class="secondary">all in</span></p>
+    ) : (
+      <p class="price-figure"><span class="h2">Price on request</span></p>
+    )}
+    <ul class="finance" role="list">
+      {course.financeOptions.map((f) => (
+        <li>{f.instalments && f.amount ? `${f.instalments} × ${gbp(f.amount)} ${f.label.toLowerCase().includes('interest') ? 'interest-free' : ''}`.trim() : f.label}</li>
+      ))}
+    </ul>
+    <p class="small muted">No extra fees: exams, manual and assessment included. All payments are non-refundable and non-transferable.</p>
+  </div>
+  <div class="price-side">
+    {dbl && (
+      <div class="callout">
+        <p class="eyebrow">Double booking</p>
+        <p>{dbl.summary} {dbl.detail}</p>
+      </div>
+    )}
+    {bundle && course.kind === 'apparatus' && (
+      <div class="callout">
+        <p class="eyebrow">Bundle</p>
+        <p>{bundle.summary}</p>
+      </div>
+    )}
+    {fitness && <p class="small secondary">{fitness.summary} {fitness.howToClaim}</p>}
+    {returning && course.path === 'continue' && <p class="small secondary">{returning.summary} {returning.howToClaim}</p>}
+  </div>
+  <div class="price-included">
+    <p class="eyebrow">What's included</p>
+    <ul class="checklist" role="list">
+      {course.inclusions.map((i) => <li>{i}</li>)}
+    </ul>
+  </div>
+</div>
+<style>
+  .price-block { display: grid; gap: var(--space-7); }
+  @media (min-width: 1024px) { .price-block { grid-template-columns: 5fr 4fr; } .price-included { grid-column: 1 / -1; } }
+  .price-main, .price-side, .price-included { display: grid; gap: var(--space-4); align-content: start; }
+  .price-figure { display: flex; align-items: baseline; gap: var(--space-3); }
+  .finance { list-style: none; display: grid; gap: var(--space-2); font-weight: var(--weight-regular); }
+  .finance li::before { content: "·"; margin-right: var(--space-2); color: var(--text-link); }
+  .callout { padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); display: grid; gap: var(--space-2); }
+  .checklist { list-style: none; display: grid; gap: var(--space-3); }
+  @media (min-width: 768px) { .checklist { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-6); } }
+  .checklist li { padding-left: var(--space-5); position: relative; color: var(--text-secondary); }
+  .checklist li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); font-weight: var(--weight-medium); }
+</style>

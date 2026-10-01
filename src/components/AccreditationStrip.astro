@@ -1,0 +1,26 @@
+---
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings; class?: string; tone?: 'light' | 'dark' }
+const { settings, class: className = '', tone = 'light' } = Astro.props;
+const badges = settings.accreditationBadges?.filter((b) => b.name) ?? [];
+---
+{badges.length > 0 && (
+  <a href="/accreditation" class={`accreditation-strip ${tone} ${className}`.trim()} aria-label="Accredited by ITTAP through the Pilates Method Alliance; CIMSPA Training Partner. Read about our accreditation">
+    <span class="eyebrow">Accredited by</span>
+    <ul role="list">
+      {badges.map((b) => (
+        <li>
+          {b.image?.url ? <img src={b.image.url} alt={b.image.alt || b.name} height="40" width={b.image.width && b.image.height ? Math.round((b.image.width / b.image.height) * 40) : undefined} loading="lazy" /> : <span class="badge-text">{b.name}</span>}
+        </li>
+      ))}
+    </ul>
+  </a>
+)}
+<style>
+  .accreditation-strip { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); text-decoration: none; color: inherit; }
+  .accreditation-strip ul { display: flex; flex-wrap: wrap; gap: var(--space-5); list-style: none; align-items: center; }
+  .accreditation-strip img { height: var(--badge-height); width: auto; filter: grayscale(1); opacity: 0.85; }
+  .badge-text { display: inline-flex; align-items: center; height: var(--badge-height); padding-inline: var(--space-3); border: var(--border-width) solid var(--border-subtle); font-size: var(--type-small); font-weight: var(--weight-medium); color: var(--text-secondary); }
+  .accreditation-strip.dark .badge-text { border-color: var(--ink-700); color: var(--stone-300); }
+  .accreditation-strip:hover .badge-text { border-color: currentColor; }
+</style>

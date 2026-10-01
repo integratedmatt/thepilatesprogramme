@@ -1,0 +1,127 @@
+/*
+  Design tokens. Source of truth for every colour, size, radius and motion value.
+  Spec: Section 4. Do not use raw hex, px or ms values outside this file.
+*/
+:root {
+  /* colour primitives */
+  --ink-900: #111111;
+  --ink-700: #4A4744;
+  --ink-500: #6B6763;
+  --stone-300: #D9D3CA;
+  --stone-100: #F2EEE8;
+  --stone-50:  #FAF8F5;
+  --white:     #FFFFFF;
+  --bronze-700: #7A5C43;
+  --bronze-300: #B9A48E;
+  --success-700: #2F6B4F;
+  --warning-700: #8A5A12;
+  --error-700:   #A3362B;
+
+  /* type primitives */
+  --font-display: "acumin-pro", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Poppins", "Helvetica Neue", Arial, sans-serif;
+
+  /* spacing (4/8 scale) */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --space-9: 96px; --space-10: 128px; --space-11: 160px;
+
+  /* radius */
+  --radius-0: 0; --radius-1: 2px; --radius-2: 4px; --radius-pill: 999px;
+
+  /* motion */
+  --dur-fast: 150ms; --dur-base: 250ms; --dur-slow: 500ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* semantic: surfaces */
+  --bg-page: var(--stone-50);
+  --bg-surface: var(--white);
+  --bg-subtle: var(--stone-100);
+  --bg-inverse: var(--ink-900);
+
+  /* semantic: text */
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-700);
+  --text-muted: var(--ink-500);
+  --text-inverse: var(--white);
+  --text-inverse-accent: var(--bronze-300);
+  --text-link: var(--bronze-700);
+
+  /* semantic: borders */
+  --border-subtle: var(--stone-300);
+  --border-strong: var(--ink-900);
+
+  /* semantic: buttons */
+  --button-primary-bg: var(--ink-900);
+  --button-primary-text: var(--white);
+  --button-primary-bg-hover: var(--ink-700);
+  --button-secondary-border: var(--ink-900);
+  --button-secondary-text: var(--ink-900);
+  --button-accent-bg: var(--bronze-700);
+  --button-accent-text: var(--white);
+
+  /* semantic: states */
+  --focus-ring: var(--bronze-700);
+  --status-open: var(--success-700);
+  --status-few: var(--warning-700);
+  --status-full: var(--ink-500);
+  --status-error: var(--error-700);
+
+  /* type scale: fluid between 360px and 1440px viewports */
+  --type-display: clamp(44px, calc(44px + 44 * (100vw - 360px) / 1080), 88px);
+  --type-h1: clamp(36px, calc(36px + 28 * (100vw - 360px) / 1080), 64px);
+  --type-h2: clamp(28px, calc(28px + 16 * (100vw - 360px) / 1080), 44px);
+  --type-h3: clamp(22px, calc(22px + 6 * (100vw - 360px) / 1080), 28px);
+  --type-lead: clamp(18px, calc(18px + 4 * (100vw - 360px) / 1080), 22px);
+  --type-body: clamp(16px, calc(16px + 1 * (100vw - 360px) / 1080), 17px);
+  --type-small: 14px;
+  --type-eyebrow: 12px;
+  --type-button: 15px;
+
+  --leading-display: 1.05;
+  --leading-h1: 1.1;
+  --leading-h2: 1.15;
+  --leading-h3: 1.25;
+  --leading-lead: 1.6;
+  --leading-body: 1.7;
+  --leading-small: 1.6;
+  --leading-eyebrow: 1.4;
+  --leading-button: 1;
+
+  --tracking-display: -0.02em;
+  --tracking-h1: -0.015em;
+  --tracking-h2: -0.01em;
+  --tracking-eyebrow: 0.14em;
+  --tracking-button: 0.04em;
+
+  --weight-display: 500;
+  --weight-body: 300;
+  --weight-medium: 500;
+  --weight-regular: 400;
+
+  /* layout */
+  --measure-body: 68ch;
+  --measure-heading-hero: 20ch;
+  --measure-heading: 28ch;
+  --content-max: 1280px;
+  --gutter: var(--space-5);
+  --gutter-mobile: var(--space-4);
+  --margin-outer: clamp(var(--space-5), 4vw, var(--space-8));
+  --header-height: 80px;
+  --header-height-mobile: 64px;
+  --section-pad: var(--space-9);
+  --section-pad-mobile: var(--space-8);
+  --hero-pad-top: var(--space-11);
+  --touch-target: 44px;
+  --button-min-height: 48px;
+  --badge-height: 40px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --border-width: 1px;
+  --rise: 16px;
+  --scroll-threshold: 24px;
+  --breakpoint-sm: 360px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+}

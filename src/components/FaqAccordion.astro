@@ -1,0 +1,32 @@
+---
+import JsonLd from './JsonLd.astro';
+import { faqSchema } from '@/lib/schema';
+import type { Faq } from '@/lib/types';
+interface Props { faqs: Faq[]; heading?: string; schema?: boolean; eyebrow?: string; id?: string; exclusive?: boolean }
+const { faqs, heading = 'Questions people ask', schema = true, eyebrow = 'FAQ', id = 'faq', exclusive = true } = Astro.props;
+---
+{faqs.length > 0 && (
+  <div class="faq" id={id}>
+    {heading && <header class="faq-heading"><p class="eyebrow">{eyebrow}</p><h2>{heading}</h2></header>}
+    <div class="rule-list rule-top rule-bottom faq-list" data-exclusive={exclusive ? 'true' : undefined}>
+      {faqs.map((f) => (
+        <details class="faq-item" name={exclusive ? 'faq' : undefined}>
+          <summary><span class="h3">{f.question}</span><span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer prose" set:html={f.answer.startsWith('<') ? f.answer : `<p>${f.answer}</p>`} />
+        </details>
+      ))}
+    </div>
+    {schema && <JsonLd data={faqSchema(faqs)} />}
+  </div>
+)}
+<style>
+  .faq-heading { margin-bottom: var(--space-6); display: grid; gap: var(--space-3); }
+  .faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-block: var(--space-5); list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .h3 { font-size: var(--type-lead); }
+  .faq-icon { flex: none; width: var(--space-5); height: var(--space-5); position: relative; }
+  .faq-icon::before, .faq-icon::after { content: ""; position: absolute; inset: 50% auto auto 50%; background: var(--text-link); width: var(--space-4); height: var(--border-width); transform: translate(-50%, -50%); transition: transform var(--dur-fast) var(--ease-out); }
+  .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .faq-item[open] .faq-icon::after { transform: translate(-50%, -50%) rotate(0); }
+  .faq-answer { padding-bottom: var(--space-5); }
+</style>

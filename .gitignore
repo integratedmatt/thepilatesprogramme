@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+!.env.example
+studio/node_modules/
+studio/dist/
+test-results/
+playwright-report/
+seed.ndjson

@@ -1,0 +1,188 @@
+---
+import { getQualifyCourses, getContinueCourses, courseUrl } from '@/lib/content';
+import { priceLine } from '@/lib/format';
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings }
+const { settings } = Astro.props;
+const qualify = await getQualifyCourses();
+const continueCourses = (await getContinueCourses()).filter((c) => c.kind !== 'bundle');
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+const menus = [
+  { id: 'qualify', label: 'Qualify', href: '/become-a-pilates-instructor', intro: 'I want to become a Pilates or Barre teacher', courses: qualify, extra: [{ label: 'Which course is right for me?', href: '/become-a-pilates-instructor/which-course' }, { label: 'Road to Certification', href: '/become-a-pilates-instructor/road-to-certification' }, { label: 'Pricing', href: '/pricing' }, { label: 'Accreditation', href: '/accreditation' }] },
+  { id: 'continue', label: 'Continue Learning', href: '/continuing-education', intro: 'I am already a qualified teacher', courses: continueCourses, extra: [{ label: 'Apparatus bundle', href: '/continuing-education/apparatus-bundle' }, { label: 'All CPD', href: '/continuing-education/cpd' }] },
+];
+const links = [
+  { label: 'Course Dates', href: '/course-dates' },
+  { label: 'Jobs', href: '/jobs' },
+  { label: 'Journal', href: '/blog' },
+  { label: 'About', href: '/about' },
+];
+---
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label={`${settings.siteName} home`}>
+      {settings.logo?.url ? <img src={settings.logo.url} alt="" width={settings.logo.width ?? 220} height={settings.logo.height ?? 40} /> : <span class="logo-text">{settings.siteName}</span>}
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <ul>
+        {menus.map((m) => (
+          <li class="has-menu">
+            <button type="button" class:list={['nav-link', { 'is-active': isActive(m.href) }]} aria-expanded="false" aria-controls={`menu-${m.id}`} data-menu-trigger={m.id}>{m.label}</button>
+            <div class="mega" id={`menu-${m.id}`} hidden data-menu={m.id}>
+              <div class="container mega-inner">
+                <div class="mega-intro">
+                  <p class="eyebrow">{m.intro}</p>
+                  <a href={m.href} class="arrow-link">See the {m.label === 'Qualify' ? 'Qualify' : 'Continue Learning'} path</a>
+                  <ul class="mega-extra">
+                    {m.extra.map((e) => <li><a href={e.href}>{e.label}</a></li>)}
+                  </ul>
+                </div>
+                <ul class="mega-courses" role="list">
+                  {m.courses.map((c) => (
+                    <li>
+                      <a href={courseUrl(c)} class="mega-card">
+                        <span class="eyebrow">{c.kind === 'cpd' ? 'CPD' : c.discipline}</span>
+                        <span class="mega-title">{c.shortTitle}</span>
+                        <span class="small secondary">{c.outcome}</span>
+                        {c.price != null && <span class="small muted">From {priceLine(c.price, c.financeOptions)}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </li>
+        ))}
+        {links.map((l) => (
+          <li><a href={l.href} class:list={['nav-link', { 'is-active': isActive(l.href) }]} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="/course-dates" class="btn btn-primary btn-book">Book a course</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <div class="container mobile-inner">
+      <div class="mobile-tiles">
+        <a href="/become-a-pilates-instructor" class="mobile-tile">
+          <span class="eyebrow">I want to qualify</span>
+          <span class="h3">Become a Pilates or Barre teacher</span>
+        </a>
+        <a href="/continuing-education" class="mobile-tile">
+          <span class="eyebrow">I'm already qualified</span>
+          <span class="h3">Continue learning</span>
+        </a>
+      </div>
+      <ul class="mobile-links rule-list">
+        {qualify.map((c) => <li><a href={courseUrl(c)}>{c.shortTitle} teacher training</a></li>)}
+        <li><a href="/become-a-pilates-instructor/which-course">Which course is right for me?</a></li>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/faqs">FAQs</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 80; background: color-mix(in srgb, var(--bg-page) 95%, transparent); backdrop-filter: blur(var(--space-2)); -webkit-backdrop-filter: blur(var(--space-2)); border-bottom: var(--border-width) solid transparent; transition: border-color var(--dur-base) var(--ease-out); }
+  .site-header.is-scrolled { border-bottom-color: var(--border-subtle); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); height: var(--header-height-mobile); }
+  @media (min-width: 1024px) { .header-inner { height: var(--header-height); } }
+  .logo { display: inline-flex; align-items: center; text-decoration: none; color: var(--text-primary); min-height: var(--touch-target); }
+  .logo img { height: var(--space-6); width: auto; }
+  .logo-text { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); letter-spacing: var(--tracking-h2); }
+  .nav-desktop { display: none; }
+  @media (min-width: 1024px) { .nav-desktop { display: block; } }
+  .nav-desktop > ul { display: flex; gap: var(--space-2); list-style: none; }
+  .nav-link { display: inline-flex; align-items: center; min-height: var(--touch-target); padding: var(--space-2) var(--space-3); background: none; border: 0; cursor: pointer; text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); border-bottom: var(--focus-width) solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .nav-link:hover, .nav-link[aria-expanded="true"], .nav-link.is-active { color: var(--text-primary); border-bottom-color: var(--bronze-700); }
+  .mega { position: absolute; left: 0; right: 0; top: 100%; background: var(--bg-surface); border-bottom: var(--border-width) solid var(--border-subtle); padding-block: var(--space-7); }
+  .mega-inner { display: grid; grid-template-columns: 3fr 9fr; gap: var(--space-7); }
+  .mega-intro { display: grid; gap: var(--space-4); align-content: start; }
+  .mega-extra { list-style: none; display: grid; gap: var(--space-2); font-size: var(--type-small); }
+  .mega-courses { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+  .mega-card { display: grid; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); background: var(--bg-page); text-decoration: none; color: var(--text-primary); min-height: 100%; transition: border-color var(--dur-fast) var(--ease-out); }
+  .mega-card:hover { border-color: var(--border-strong); color: var(--text-primary); }
+  .mega-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); }
+  .header-actions { display: flex; align-items: center; gap: var(--space-3); }
+  .btn-book { min-height: var(--touch-target); padding: var(--space-3) var(--space-4); }
+  .menu-toggle { display: inline-grid; gap: var(--space-1); place-content: center; width: var(--touch-target); height: var(--touch-target); background: none; border: 0; cursor: pointer; }
+  .menu-toggle .bar { display: block; width: var(--space-5); height: var(--focus-width); background: var(--ink-900); transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(calc(var(--space-1) + var(--focus-width))) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(calc(-1 * (var(--space-1) + var(--focus-width)))) rotate(-45deg); }
+  @media (min-width: 1024px) { .menu-toggle { display: none; } }
+  .mobile-nav { position: fixed; inset: 0; top: var(--header-height-mobile); background: var(--bg-page); overflow-y: auto; z-index: 79; }
+  .mobile-inner { padding-block: var(--space-5) var(--space-8); display: grid; gap: var(--space-6); }
+  .mobile-tiles { display: grid; gap: var(--space-3); }
+  .mobile-tile { display: grid; gap: var(--space-2); padding: var(--space-5); background: var(--bg-inverse); color: var(--text-inverse); text-decoration: none; }
+  .mobile-tile .eyebrow { color: var(--text-inverse-accent); }
+  .mobile-links { list-style: none; }
+  .mobile-links a { display: block; padding: var(--space-4) 0; text-decoration: none; color: var(--text-primary); font-size: var(--type-lead); font-family: var(--font-display); font-weight: var(--weight-display); }
+  body.nav-open { overflow: hidden; }
+</style>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const threshold = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scroll-threshold')) || 24;
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > threshold);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mega-menus: button with aria-expanded, Esc closes, focus returns to trigger, arrow keys move between items.
+  const triggers = Array.from(header.querySelectorAll<HTMLButtonElement>('[data-menu-trigger]'));
+  function closeAll(except?: HTMLButtonElement) {
+    triggers.forEach((t) => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      const panel = header.querySelector<HTMLElement>(`[data-menu="${t.dataset.menuTrigger}"]`);
+      if (panel) panel.hidden = true;
+    });
+  }
+  triggers.forEach((t) => {
+    const panel = header.querySelector<HTMLElement>(`[data-menu="${t.dataset.menuTrigger}"]`)!;
+    t.addEventListener('click', () => {
+      const open = t.getAttribute('aria-expanded') === 'true';
+      closeAll(t);
+      t.setAttribute('aria-expanded', String(!open));
+      panel.hidden = open;
+      if (!open) panel.querySelector<HTMLElement>('a')?.focus();
+    });
+    panel.addEventListener('keydown', (e) => {
+      const items = Array.from(panel.querySelectorAll<HTMLElement>('a'));
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); items[(i + 1) % items.length]?.focus(); }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); items[(i - 1 + items.length) % items.length]?.focus(); }
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = triggers.find((t) => t.getAttribute('aria-expanded') === 'true');
+    if (open) { closeAll(); open.focus(); }
+    if (toggle.getAttribute('aria-expanded') === 'true') { toggleMobile(false); toggle.focus(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.has-menu')) closeAll();
+  });
+
+  // Mobile nav
+  const toggle = header.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  const mobile = document.getElementById('mobile-nav')!;
+  function toggleMobile(open: boolean) {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mobile.hidden = !open;
+    document.body.classList.toggle('nav-open', open);
+  }
+  toggle.addEventListener('click', () => toggleMobile(toggle.getAttribute('aria-expanded') !== 'true'));
+</script>
