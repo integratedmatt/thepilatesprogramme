@@ -5,12 +5,13 @@ import Section from '@/components/Section.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Turnstile from '@/components/Turnstile.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
+import Picture from '@/components/Picture.astro';
 import { getSiteSettings } from '@/lib/content';
 const settings = await getSiteSettings();
 const eo = settings.elevatingOthers;
 ---
 <Base title="Elevating Others: Funded Pilates Teacher Training | The Pilates Programme" description="Two fully funded Mat Pilates teacher trainings a year for people facing barriers to access. How it works, who it is for, and how to apply.">
-  <Hero eyebrow="Elevating Others" title="Two fully funded places a year" lead="Every year we fund two Mat Pilates teacher trainings in full for people who face barriers to access. No catch, no strings.">
+  <Hero eyebrow="Elevating Others" title="Two fully funded places a year" lead="Every year we fund two Mat Pilates teacher trainings in full for people who face barriers to access. No catch, no strings." image={{ url: '/images/site/elevatingothers-1.jpg', alt: 'A Giving Back sign from The Pilates Programme on a tree-lined street', width: 1080, height: 1080 }}>
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Elevating Others', url: '/elevating-others' }]} />
   </Hero>
 
@@ -28,6 +29,10 @@ const eo = settings.elevatingOthers;
       <div class="col-5"><p class="eyebrow">Graduate story</p><h2>Samhar, founder of Bilisti</h2></div>
       <div class="col-7">
         {eo.story ? <p class="secondary">{eo.story}</p> : <p class="secondary">Samhar trained with us through Elevating Others and went on to found Bilisti. Her full story will be shared here with her permission.</p>}
+        <ul class="eo-gallery" role="list" data-stagger>
+          <li><Picture image={{ url: '/images/site/elevatingothers-2.jpg', alt: 'A Bilisti community group at the Altrincham training centre', width: 2304, height: 1536 }} aspect="landscape" sizes="(min-width: 1024px) 33vw, 100vw" /></li>
+          <li><Picture image={{ url: '/images/site/elevatingothers-3.jpg', alt: 'Bilisti members with their gift bags at the training centre', width: 1536, height: 2049 }} aspect="landscape" sizes="(min-width: 1024px) 33vw, 100vw" /></li>
+        </ul>
       </div>
     </div>
   </Section>
@@ -85,4 +90,6 @@ const eo = settings.elevatingOthers;
   .form-grid { display: grid; gap: var(--space-5); }
   .closed { display: grid; gap: var(--space-5); }
   .mt-4 { margin-top: var(--space-4); }
+  .eo-gallery { list-style: none; display: grid; gap: var(--space-4); margin-top: var(--space-5); }
+  @media (min-width: 768px) { .eo-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

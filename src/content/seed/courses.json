@@ -105,10 +105,10 @@
       "prenatal-postpartum"
     ],
     "heroImage": {
-      "url": "/images/placeholder-mat.svg",
-      "alt": "A trainer coaching a small group through Mat repertoire at the Altrincham centre",
+      "url": "/images/site/about-5.jpg",
+      "alt": "The Reformer studio at the Altrincham training centre, with the sign that reads cool people teach Pilates",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-mat-experience",
@@ -234,10 +234,10 @@
       "jumpboard-online"
     ],
     "heroImage": {
-      "url": "/images/placeholder-reformer.svg",
-      "alt": "A trainer adjusting a student's position on a Reformer during a practical day",
+      "url": "/images/site/about-4.jpg",
+      "alt": "A row of Reformers by the windows at the Altrincham training centre",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-reformer-access",
@@ -357,10 +357,10 @@
       "reformer-pilates-teacher-training"
     ],
     "heroImage": {
-      "url": "/images/placeholder-barre.svg",
-      "alt": "A Barre class at the Altrincham training centre",
+      "url": "/images/site/about-1.jpg",
+      "alt": "The main studio at the Altrincham training centre",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-barre-experience",
@@ -449,10 +449,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-reformer.svg",
-      "alt": "Advanced Reformer repertoire being coached at the Altrincham centre",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/about-9.jpg",
+      "alt": "Reformer and Cadillac by the windows at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -536,10 +536,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-apparatus.svg",
-      "alt": "Wunda Chair training at the Altrincham centre",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/about-7.jpg",
+      "alt": "Wunda Chair reflected in the studio mirror at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -624,10 +624,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-apparatus.svg",
-      "alt": "Cadillac training at the Altrincham centre",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/about-6.jpg",
+      "alt": "The Cadillac at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -711,10 +711,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-apparatus.svg",
-      "alt": "Ladder Barrel training at the Altrincham centre",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/barrel-pilates-course-1.jpg",
+      "alt": "Ladder Barrel and Chair at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -792,10 +792,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-apparatus.svg",
-      "alt": "Full apparatus studio at the Altrincham centre",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/about-9.jpg",
+      "alt": "Full apparatus studio at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-bundle",
@@ -867,10 +867,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-mat.svg",
-      "alt": "Prenatal Pilates CPD at the Altrincham centre",
+      "url": "/images/site/about-3.jpg",
+      "alt": "The study and breakout space at the Altrincham training centre",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-cpd-who",
@@ -941,10 +941,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-reformer.svg",
-      "alt": "Strength-focused Reformer class at the Altrincham centre",
+      "url": "/images/site/about-4.jpg",
+      "alt": "A row of Reformers at the Altrincham training centre",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-cpd-who",
@@ -1015,10 +1015,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-reformer.svg",
-      "alt": "Jumpboard on a Reformer",
-      "width": 1600,
-      "height": 1000
+      "url": "/images/site/about-9.jpg",
+      "alt": "Reformer at the Altrincham training centre",
+      "width": 1068,
+      "height": 1600
     },
     "faqs": [
       "faq-cpd-who",
@@ -1090,10 +1090,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/placeholder-mat.svg",
-      "alt": "Small group CPD session at the Altrincham centre",
+      "url": "/images/site/about-8.jpg",
+      "alt": "The lounge at the Altrincham training centre",
       "width": 1600,
-      "height": 1000
+      "height": 1068
     },
     "faqs": [
       "faq-cpd-who",

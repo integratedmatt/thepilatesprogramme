@@ -12,10 +12,12 @@ const [settings, faqs] = await Promise.all([getSiteSettings(), getFaqsByIds(['fa
 const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
 const travel = settings.travelTimes.filter((t) => t.minutes);
 const gallery = [
-  { url: '/images/placeholder-centre.svg', alt: 'Ground floor apparatus studio at the Altrincham centre' },
-  { url: '/images/placeholder-reformer.svg', alt: 'Row of Reformers ready for a practical day' },
-  { url: '/images/placeholder-apparatus.svg', alt: 'Cadillac, Chair and Barrels on the first floor' },
-  { url: '/images/placeholder-barre.svg', alt: 'Barre studio with mirrors' },
+  { url: '/images/site/about-1.jpg', alt: 'The main Reformer studio at the Altrincham centre', width: 1600, height: 1068 },
+  { url: '/images/site/about-4.jpg', alt: 'A row of Reformers by the windows', width: 1600, height: 1068 },
+  { url: '/images/site/about-13.jpg', alt: 'The seminar room with screens for theory sessions', width: 1600, height: 1068 },
+  { url: '/images/site/about-3.jpg', alt: 'The study and breakout space', width: 1600, height: 1068 },
+  { url: '/images/site/about-14.jpg', alt: 'The kitchen for lunch and breaks', width: 1600, height: 1068 },
+  { url: '/images/site/about-10.jpg', alt: 'Lockers for students', width: 1068, height: 1600 },
 ];
 const facilities = ['Two floors of studio space', 'Full apparatus: Reformers, Cadillac, Chairs and Barrels', 'Barre fit-out with mirrors', 'Seminar screens for theory sessions', 'Study and breakout spaces', 'Kitchen for lunch and breaks'];
 const localSchema = {
@@ -87,6 +89,7 @@ const localSchema = {
 <style>
   .gallery { list-style: none; display: grid; gap: var(--space-4); }
   @media (min-width: 768px) { .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+  @media (min-width: 1024px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
   @media (min-width: 1024px) { .col-5 { grid-column: span 4; } .col-7 { grid-column: 6 / span 7; } }
   .col-5 h2 { margin-block: var(--space-3) var(--space-4); }

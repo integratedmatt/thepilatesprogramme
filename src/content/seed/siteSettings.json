@@ -27,7 +27,13 @@
   "accreditationBadges": [
     {
       "name": "ITTAP",
-      "url": ""
+      "url": "",
+      "image": {
+        "url": "/images/badges/ittap.png",
+        "alt": "ITTAP accredited",
+        "width": 419,
+        "height": 160
+      }
     },
     {
       "name": "Pilates Method Alliance",
@@ -35,7 +41,23 @@
     },
     {
       "name": "CIMSPA Training Partner",
-      "url": ""
+      "url": "",
+      "image": {
+        "url": "/images/badges/cimspa.png",
+        "alt": "CIMSPA Education Partner",
+        "width": 508,
+        "height": 160
+      }
+    },
+    {
+      "name": "bfa",
+      "url": "",
+      "image": {
+        "url": "/images/badges/bfa.png",
+        "alt": "bfa",
+        "width": 250,
+        "height": 160
+      }
     }
   ],
   "accreditationStatements": [
