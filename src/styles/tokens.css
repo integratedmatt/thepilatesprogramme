@@ -18,7 +18,7 @@
   --error-700:   #A3362B;
 
   /* type primitives */
-  --font-display: "Fifty Fifty", "Times New Roman", Georgia, serif;   /* client brand face: Bold, Light, Fine Italic */
+  --font-display: "acumin-pro", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Poppins", "Helvetica Neue", Arial, sans-serif;
 
   /* spacing (4/8 scale) */
@@ -99,10 +99,7 @@
   --tracking-eyebrow: 0.14em;
   --tracking-button: 0.04em;
 
-  --weight-display: 700;        /* Fifty Fifty Bold */
-  --weight-display-light: 300;  /* Fifty Fifty Light: lead paragraphs */
-  --weight-quote: 200;          /* Fifty Fifty Fine Italic: quotes */
-  --leading-quote: 1.3;
+  --weight-display: 500;
   --weight-body: 300;
   --weight-medium: 500;
   --weight-regular: 400;

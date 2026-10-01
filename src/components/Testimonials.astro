@@ -13,7 +13,7 @@ const { items, heading = 'Graduate stories', linkHref, linkLabel = 'Meet more gr
         {items.map((t) => (
           <li class="testimonial">
             <blockquote>
-              <p class="quote">“{t.quote}”</p>
+              <p class="lead">“{t.quote}”</p>
               <footer class="small">
                 <strong>{t.name}</strong>
                 {t.course && <span> · {t.course}</span>}
