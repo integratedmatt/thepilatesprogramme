@@ -157,8 +157,8 @@
   .btn-accent:hover { background: var(--ink-900); border-color: var(--ink-900); color: var(--white); }
   .section-inverse .btn-primary { background: var(--white); color: var(--ink-900); border-color: var(--white); }
   .section-inverse .btn-primary:hover { background: var(--stone-100); border-color: var(--stone-100); }
-  .section-inverse .btn-secondary { color: var(--white); border-color: var(--white); }
-  .section-inverse .btn-secondary:hover { background: var(--white); color: var(--ink-900); }
+  .section-inverse .btn-secondary, .hero-inverse .btn-secondary { color: var(--white); border-color: var(--white); }
+  .section-inverse .btn-secondary:hover, .hero-inverse .btn-secondary:hover { background: var(--white); color: var(--ink-900); }
   .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
   .btn.is-loading { color: transparent; }
   .btn.is-loading::after { content: ""; position: absolute; width: var(--space-4); height: var(--space-4); border: var(--focus-width) solid currentColor; border-color: var(--white) transparent var(--white) transparent; border-radius: var(--radius-pill); animation: spin var(--dur-slow) linear infinite; color: var(--white); }

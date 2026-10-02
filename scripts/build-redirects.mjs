@@ -39,6 +39,7 @@ const base = {
       { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
     ] },
     { source: '/fonts/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
+    { source: '/video/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000' }] },
   ],
   crons: [{ path: '/api/cron/expire-jobs', schedule: '15 2 * * *' }],
 };

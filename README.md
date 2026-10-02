@@ -44,6 +44,7 @@ Follows spec 4.7 and section 5.6 of the UI/UX playbook (Google Drive, "02 UI UX 
 |---|---|---|
 | Entry on scroll, once | every section | `.reveal`: fade + 16px rise, `--dur-slow` / `--ease-out` |
 | Staggered entry | card grids, timelines, value lists | `[data-stagger]` children delayed by `--stagger` in reading order |
+| Home hero video | home page | The old site's header footage, looped from 12.9s so the poster is frame one. Poster is the LCP; video attaches after load, WebM VP9 with MP4 fallback, 720p under 1024px, pauses off screen, pause button for WCAG 2.2.2, never plays under reduced motion or Save-Data. Files in `public/video`. |
 | Spatial open and close | mega-menu, mobile sheet, quiz steps, sticky bar, cookie banner, form status | `.motion-pop` / `.motion-sheet` / `.motion-step` with `@starting-style` and `allow-discrete` on `hidden` |
 | Eased disclosure | FAQ accordion, course date details | `.disclosure::details-content` animates height and opacity |
 | Micro-interactions | buttons, inputs, cards, arrow links | press offset, border and colour eases, image lift, arrow slide |

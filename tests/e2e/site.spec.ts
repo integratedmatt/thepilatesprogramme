@@ -113,3 +113,26 @@ test('course date rows expand to show details', async ({ page }) => {
   await expect(first.locator('.date-detail-body dt', { hasText: 'Price' })).toBeVisible();
   await expect(first.locator('.date-detail-body a.arrow-link')).toHaveAttribute('href', /\/(become-a-pilates-instructor|continuing-education)\//);
 });
+
+test('home hero video plays after load, can be paused, and respects reduced motion', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.goto('/', { waitUntil: 'load' });
+  const toggle = page.locator('[data-hero-video-toggle]');
+  await expect(toggle).toBeVisible({ timeout: 10_000 });
+  const video = page.locator('video[data-hero-video]');
+  await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused && v.currentSrc !== '')).toBe(true);
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(toggle).toHaveAttribute('aria-label', 'Play background video');
+  expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+  await ctx.close();
+
+  const rm = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const p2 = await rm.newPage();
+  await p2.goto('/', { waitUntil: 'load' });
+  await p2.waitForTimeout(1500);
+  expect(await p2.locator('video[data-hero-video]').evaluate((v: HTMLVideoElement) => v.currentSrc)).toBe('');
+  await expect(p2.locator('[data-hero-video-toggle]')).toBeHidden();
+  await rm.close();
+});

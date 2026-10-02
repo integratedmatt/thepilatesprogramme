@@ -1,11 +1,23 @@
 ---
 import Picture from './Picture.astro';
 import type { ImageRef } from '@/lib/types';
-interface Props { eyebrow?: string; title: string; lead?: string; image?: ImageRef; display?: boolean; tone?: 'inverse' | 'page'; align?: 'left' | 'center' }
-const { eyebrow, title, lead, image, display = false, tone = image ? 'inverse' : 'page', align = 'left' } = Astro.props;
+/**
+ * Optional background video. The poster image renders first as the LCP element; the video is attached
+ * after window load, never under prefers-reduced-motion or Save-Data, and fades in over the poster.
+ * A pause control satisfies WCAG 2.2.2 for motion longer than five seconds.
+ */
+export interface HeroVideo { sources: { src: string; type: string; minWidth: number }[] }
+interface Props { eyebrow?: string; title: string; lead?: string; image?: ImageRef; video?: HeroVideo; display?: boolean; tone?: 'inverse' | 'page'; align?: 'left' | 'center' }
+const { eyebrow, title, lead, image, video, display = false, tone = image ? 'inverse' : 'page', align = 'left' } = Astro.props;
+const videoSources = video ? [...video.sources].sort((a, b) => b.minWidth - a.minWidth) : [];
 ---
-<section class:list={['hero', `hero-${tone}`, { 'has-image': Boolean(image), 'is-center': align === 'center', inverse: tone === 'inverse' }]} data-hero>
+<section class:list={['hero', `hero-${tone}`, { 'has-image': Boolean(image), 'has-video': Boolean(video), 'is-center': align === 'center', inverse: tone === 'inverse' }]} data-hero>
   {image && <Picture image={image} aspect="none" priority sizes="100vw" class="hero-img" alt={image.alt} />}
+  {video && (
+    <div class="hero-video" aria-hidden="true">
+      <video data-hero-video data-sources={JSON.stringify(videoSources)} muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+    </div>
+  )}
   <div class="container hero-inner">
     <slot name="breadcrumbs" />
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
@@ -14,6 +26,12 @@ const { eyebrow, title, lead, image, display = false, tone = image ? 'inverse' :
     <slot />
   </div>
   <slot name="footer" />
+  {video && (
+    <button type="button" class="hero-video-toggle" data-hero-video-toggle aria-pressed="false" aria-label="Pause background video" hidden>
+      <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" fill="currentColor" /><rect x="9.5" y="2" width="3.5" height="12" fill="currentColor" /></svg>
+      <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor" /></svg>
+    </button>
+  )}
 </section>
 <style>
   .hero { position: relative; padding-block: var(--space-8) var(--space-8); overflow: hidden; }
@@ -24,9 +42,71 @@ const { eyebrow, title, lead, image, display = false, tone = image ? 'inverse' :
   .hero-inverse .eyebrow { color: var(--text-inverse-accent); }
   .hero :global(.hero-img) { position: absolute; inset: 0; z-index: 0; opacity: 0.5; background: var(--bg-inverse); }
   .hero :global(.hero-img img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero-video { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity var(--dur-slow) var(--ease-out); pointer-events: none; }
+  .hero-video.is-playing { opacity: 0.5; }
+  .hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .hero-inner { position: relative; z-index: 1; display: grid; gap: var(--space-5); }
   .hero.is-center .hero-inner { text-align: center; justify-items: center; }
   .hero-page .hero-inner { gap: var(--space-4); }
   .hero :global(.hero-actions) { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
   .hero :global(.breadcrumbs a), .hero-inverse :global(.breadcrumbs span) { color: var(--stone-300); }
+  .hero-video-toggle { position: absolute; z-index: 2; right: var(--margin-outer); top: var(--space-5); display: inline-grid; place-items: center; width: var(--touch-target); height: var(--touch-target); border-radius: var(--radius-pill); border: var(--border-width) solid color-mix(in srgb, var(--white) 50%, transparent); background: color-mix(in srgb, var(--ink-900) 40%, transparent); color: var(--white); cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .hero-video-toggle:hover { background: var(--ink-900); border-color: var(--white); }
+  .hero-video-toggle svg { width: var(--space-4); height: var(--space-4); }
+  .hero-video-toggle .icon-play, .hero-video-toggle[aria-pressed="true"] .icon-pause { display: none; }
+  .hero-video-toggle[aria-pressed="true"] .icon-play { display: block; }
+  @media (prefers-reduced-motion: reduce) { .hero-video, .hero-video-toggle { display: none; } }
 </style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hero]').forEach((hero) => {
+    const video = hero.querySelector<HTMLVideoElement>('video[data-hero-video]');
+    const toggle = hero.querySelector<HTMLButtonElement>('[data-hero-video-toggle]');
+    const wrap = video?.parentElement;
+    if (!video || !toggle || !wrap) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = Boolean((navigator as any).connection?.saveData);
+    if (reduce || saveData) return;
+
+    let userPaused = false;
+    try { userPaused = localStorage.getItem('tpp-hero-video') === 'paused'; } catch {}
+    let inView = true;
+
+    const setPressed = (paused: boolean) => {
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.setAttribute('aria-label', paused ? 'Play background video' : 'Pause background video');
+    };
+    const play = () => { if (!userPaused && inView) video.play().catch(() => {}); };
+
+    const start = () => {
+      // Keep only formats this browser can decode (WebM VP9 first, MP4 H.264 fallback), then pick by viewport width.
+      const all: { src: string; type: string; minWidth: number }[] = JSON.parse(video.dataset.sources || '[]');
+      const playable = all.filter((s) => video.canPlayType(s.type) !== '');
+      const pick = playable.find((s) => window.innerWidth >= s.minWidth) ?? playable[playable.length - 1];
+      if (!pick) return;
+      video.src = pick.src;
+      video.addEventListener('playing', () => wrap.classList.add('is-playing'), { once: true });
+      video.addEventListener('loadeddata', () => { toggle.hidden = false; setPressed(userPaused); }, { once: true });
+      video.load();
+      play();
+    };
+
+    toggle.addEventListener('click', () => {
+      userPaused = !userPaused;
+      try { localStorage.setItem('tpp-hero-video', userPaused ? 'paused' : 'playing'); } catch {}
+      setPressed(userPaused);
+      if (userPaused) video.pause(); else { wrap.classList.add('is-playing'); play(); }
+    });
+
+    // Pause while the hero is off screen to save battery and CPU.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        if (!inView) video.pause(); else play();
+      }, { threshold: 0.05 }).observe(hero);
+    }
+
+    const idle = (fn: () => void) => ('requestIdleCallback' in window ? (window as any).requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 200));
+    if (document.readyState === 'complete') idle(start);
+    else window.addEventListener('load', () => idle(start), { once: true });
+  });
+</script>
