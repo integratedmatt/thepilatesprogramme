@@ -22,4 +22,8 @@ const all = [{ name: 'Home', url: '/' }, ...items];
   .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
   .breadcrumbs a:hover { color: var(--text-link); text-decoration: underline; }
   .breadcrumbs span { color: var(--text-secondary); }
+  /* On dark heroes (including over photos and video) use light tones that pass AA on --scrim. */
+  :global(.inverse) .breadcrumbs ol, :global(.inverse) .breadcrumbs a, :global(.inverse) .breadcrumbs li + li::before { color: var(--stone-300); }
+  :global(.inverse) .breadcrumbs span { color: var(--stone-100); }
+  :global(.inverse) .breadcrumbs a:hover { color: var(--text-inverse); }
 </style>

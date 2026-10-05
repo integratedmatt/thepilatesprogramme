@@ -31,8 +31,11 @@ const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const toParagraphs = (t: string) => esc(t).split(/\n{2,}/).map((p) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
 const applyHref = job.applyUrl || (job.applyEmail ? `mailto:${job.applyEmail}?subject=${encodeURIComponent(`Application: ${job.title}`)}` : '#');
 const desc = `${job.title} at ${job.studio.name}, ${job.town}. ${typeLabel[job.employmentType]}${pay !== 'Pay not stated' ? `, ${pay}` : ''}. ${job.disciplines.join(', ')}. Apply via The Pilates Programme jobs board.`;
+// Long role and studio names drop the brand suffix so the role itself is not truncated in search results.
+const baseTitle = `${job.title} at ${job.studio.name}, ${job.town}`;
+const pageTitle = baseTitle.length > 42 ? baseTitle : `${baseTitle} | The Pilates Programme`;
 ---
-<Base title={`${job.title} at ${job.studio.name}, ${job.town} | The Pilates Programme`} description={desc.slice(0, 155)} noindex={!live}>
+<Base title={pageTitle} description={desc.length > 158 ? `${desc.slice(0, 155).replace(/\s+\S*$/, "")}…` : desc} noindex={!live}>
   <Fragment slot="head">{live && <JsonLd data={jobPostingSchema(job, siteUrl)} />}</Fragment>
   <div data-page-event={JSON.stringify({ event: 'job_view', job_id: job._id, studio: job.studio.name })} hidden></div>
   <Hero eyebrow={`${job.studio.name} · ${job.town}`} title={job.title}>

@@ -23,4 +23,5 @@ const cls = `btn btn-${variant} ${className}`.trim();
 )}
 <style>
   .btn-wrap { display: inline-grid; gap: var(--space-2); }
+  @media (max-width: 767px) { .btn-wrap { display: grid; width: 100%; } }
 </style>

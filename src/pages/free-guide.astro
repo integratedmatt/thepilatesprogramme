@@ -11,7 +11,7 @@ const ids = new Set(courses.map((c) => c._id));
 const dates = allDates.filter((d) => ids.has(d.course)).slice(0, 3);
 const guide = settings.freeGuide;
 ---
-<Base title="Free Pilates Teacher Career Guide | The Pilates Programme" description="A free guide to becoming a Pilates teacher: the real costs, how the practice hours fit around life, what accreditation means and how graduates land their first job." canonicalPath="/free-guide">
+<Base title="Free Pilates Teacher Career Guide | The Pilates Programme" description="A free guide to becoming a Pilates teacher: real costs, fitting practice hours around life, what accreditation means and how graduates land a first job." canonicalPath="/free-guide">
   <Section reveal={false}>
     <Breadcrumbs items={[{ name: 'Free guide', url: '/free-guide' }]} class="crumbs" />
     <div class="grid guide">

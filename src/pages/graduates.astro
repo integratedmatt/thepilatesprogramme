@@ -14,7 +14,7 @@ const areas = Array.from(new Set(graduates.map((g) => g.town).filter(Boolean))) 
 const studios = Array.from(new Set(graduates.flatMap((g) => g.studios ?? []))).sort();
 const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
 ---
-<Base title="Where Our Pilates Graduates Teach | The Pilates Programme" description="Graduate profiles from The Pilates Programme, Altrincham: the studios they teach in, how long their first class took, and what they say about training. Add your own profile.">
+<Base title="Where Our Pilates Graduates Teach | The Pilates Programme" description="Where our graduates teach now, how soon they landed their first class and what they say about training with us. Graduates can add their own profile.">
   <Hero eyebrow="Graduates" title="Where our graduates teach" lead="Outcomes, not promises. Profiles are added by graduates themselves and checked by the team before they go live.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Graduates', url: '/graduates' }]} />
   </Hero>

@@ -40,10 +40,15 @@ const videoSources = video ? [...video.sources].sort((a, b) => b.minWidth - a.mi
   .hero-inverse h1 { color: var(--text-inverse); }
   .hero-inverse .lead { color: var(--stone-100); }
   .hero-inverse .eyebrow { color: var(--text-inverse-accent); }
-  .hero :global(.hero-img) { position: absolute; inset: 0; z-index: 0; opacity: 0.5; background: var(--bg-inverse); }
+  .hero :global(.hero-img) { position: absolute; inset: 0; z-index: 0; background: var(--bg-inverse); }
+  /* Scrim between media and text: never lighter than --scrim behind text. On wide left-aligned heroes it eases
+     off towards the right edge, past the text column, so the footage still reads. */
+  .hero.has-image::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: var(--scrim); }
+  @media (min-width: 1024px) { .hero.has-image:not(.is-center)::after { background: linear-gradient(90deg, var(--scrim-strong) 0%, var(--scrim) 65%, var(--scrim-soft) 100%); } }
+  .hero.has-image :global(.eyebrow) { color: var(--text-on-media-accent); }
   .hero :global(.hero-img img) { width: 100%; height: 100%; object-fit: cover; }
   .hero-video { position: absolute; inset: 0; z-index: 0; opacity: 0; transition: opacity var(--dur-slow) var(--ease-out); pointer-events: none; }
-  .hero-video.is-playing { opacity: 0.5; }
+  .hero-video.is-playing { opacity: 1; }
   /* Crossfade: the poster fades out as the video fades in, so the two never double-expose. */
   .hero.has-video :global(.hero-img) { transition: opacity var(--dur-slow) var(--ease-out); }
   .hero:has(.hero-video.is-playing) :global(.hero-img) { opacity: 0; }

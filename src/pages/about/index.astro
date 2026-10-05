@@ -11,7 +11,7 @@ const [settings, team] = await Promise.all([getSiteSettings(), getTeam()]);
 const founders = team.filter((m) => m.founder);
 const trainers = team.filter((m) => !m.founder);
 ---
-<Base title="About The Pilates Programme, Altrincham | The Pilates Programme" description="Founded by Georgie and Sarah to close the gaps they felt when they qualified: small cohorts, in-person coaching and every Pilates tradition, taught from a two-floor centre in Altrincham.">
+<Base title="About The Pilates Programme, Altrincham | The Pilates Programme" description="Founded by Georgie and Sarah to fix what they missed when they qualified: small cohorts, in-person coaching and every Pilates tradition, taught in Altrincham.">
   <Hero eyebrow="About" title="Built by teachers who wanted a better training" lead="The Pilates Programme, Altrincham was founded by Georgie and Sarah to close the gaps they felt when they qualified: too little time in the room, one style only, and no help finding work.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'About', url: '/about' }]} />
   </Hero>

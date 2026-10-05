@@ -13,6 +13,7 @@
   --white:     #FFFFFF;
   --bronze-700: #7A5C43;
   --bronze-300: #B9A48E;
+  --bronze-200: #DCCFC0;
   --success-700: #2F6B4F;
   --warning-700: #8A5A12;
   --error-700:   #A3362B;
@@ -50,6 +51,13 @@
   --text-muted: var(--ink-500);
   --text-inverse: var(--white);
   --text-inverse-accent: var(--bronze-300);
+  /* Text over photos and video (WCAG 1.4.3). Media renders at full strength under an ink scrim; the alpha
+     is set so text passes even if a pure white pixel sits behind it: at 0.75, white 8.5:1, stone-100 7.4:1,
+     stone-300 5.7:1, bronze-200 5.6:1. Bronze-300 is only 3.6:1 there, so media uses the lighter accent. */
+  --scrim: rgb(17 17 17 / 0.75);
+  --scrim-strong: rgb(17 17 17 / 0.82);
+  --scrim-soft: rgb(17 17 17 / 0.55);
+  --text-on-media-accent: var(--bronze-200);
   --text-link: var(--bronze-700);
 
   /* semantic: borders */

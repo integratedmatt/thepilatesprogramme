@@ -10,7 +10,7 @@ import { getCpdCourses, getUpcomingDates, getFaqsByIds } from '@/lib/content';
 const [cpd, dates, faqs] = await Promise.all([getCpdCourses(), getUpcomingDates(), getFaqsByIds(['faq-cpd-who', 'faq-cpd-online', 'faq-cpd-finance', 'faq-returning-discount'])]);
 const nextFor = (id: string) => dates.find((d) => d.course === id);
 ---
-<Base title="Pilates CPD Courses UK | The Pilates Programme" description="One-day Pilates CPD for qualified teachers from any provider: prenatal and postpartum, strength and endurance, jumpboard online and pain science. £250 each in Altrincham.">
+<Base title="Pilates CPD Courses UK | The Pilates Programme" description="One-day Pilates CPD for teachers from any provider: prenatal and postpartum, strength and endurance, jumpboard online and pain science. £250 each.">
   <Hero eyebrow="CPD" title="Pilates CPD courses for working teachers" lead="One day, one topic, taught by trainers who teach every week. Open to Pilates and Barre teachers from any provider.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Continuing education', url: '/continuing-education' }, { name: 'CPD', url: '/continuing-education/cpd' }]} />
   </Hero>

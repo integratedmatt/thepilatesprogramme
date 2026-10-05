@@ -73,6 +73,7 @@ const year = new Date().getFullYear();
   .footer-bottom { display: grid; gap: var(--space-5); margin-top: var(--space-8); padding-top: var(--space-5); border-top: var(--border-width) solid var(--ink-700); }
   @media (min-width: 1024px) { .footer-bottom { grid-template-columns: 1fr auto; align-items: center; } }
   .legal { display: flex; flex-wrap: wrap; gap: var(--space-4); list-style: none; color: var(--stone-300); }
+  @media (max-width: 767px) { .legal { justify-content: center; text-align: center; } }
   .legal a { color: var(--stone-300); text-decoration: none; }
   .legal a:hover { color: var(--white); text-decoration: underline; }
 </style>

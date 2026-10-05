@@ -3,7 +3,7 @@ import LegalPage from '@/components/LegalPage.astro';
 import { getSiteSettings } from '@/lib/content';
 const s = await getSiteSettings();
 ---
-<LegalPage title="Privacy policy" description="How The Pilates Programme, Altrincham collects, uses and protects your personal data, including form submissions, email lists, analytics and bookings through Arketa." path="/privacy" crumb="Privacy" updated="1 October 2026">
+<LegalPage title="Privacy policy" description="How The Pilates Programme collects, uses and protects your personal data, including form submissions, email lists, analytics and bookings through Arketa." path="/privacy" crumb="Privacy" updated="1 October 2026">
   <h2>Who we are</h2>
   <p>{s.entityName}, {s.address.street}, {s.address.town}, {s.address.postcode}. Contact <a href={`mailto:${s.email}`}>{s.email}</a> for anything about your data.</p>
   <h2>What we collect and why</h2>

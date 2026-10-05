@@ -22,7 +22,7 @@ const returning = rules.find((r) => r.slug === 'returning-student');
 const apparatusJobs = jobs.filter((j) => j.disciplines.some((d) => /reformer|chair|cadillac|barrel|apparatus/i.test(d))).slice(0, 3);
 const answer = `The Pilates Programme, Altrincham offers continuing education for qualified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three for £2,700 with Barrels free, plus CPD at £250. Every course includes the manual, exams, an interest-free payment plan and online platform access with a 6-week free trial. Past students receive 10% off.`;
 ---
-<Base title="Pilates CPD Courses UK and Apparatus Training | The Pilates Programme" description="Continuing education for qualified Pilates teachers: Advanced Reformer, Chair, Cadillac, Barrels and CPD days in Altrincham. Open to teachers from any provider. Returning students save 10%.">
+<Base title="Pilates CPD and Apparatus Courses | The Pilates Programme" description="Advanced Reformer, Chair, Cadillac, Barrels and CPD days for qualified Pilates teachers from any provider, in Altrincham. Returning students save 10%.">
   <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for qualified teachers from any provider, taught in person on full apparatus in Altrincham.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Continuing education', url: '/continuing-education' }]} />
     <div class="hero-actions"><a href="#apparatus" class="btn btn-primary">Apparatus courses</a><a href="#cpd" class="btn btn-secondary">CPD days</a></div>

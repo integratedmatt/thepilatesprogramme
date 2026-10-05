@@ -9,11 +9,11 @@ import type { Category, Post } from '@/lib/types';
 interface Props { posts: Post[]; categories: Category[]; active?: Category; page: number; totalPages: number; basePath: string }
 const { posts, categories, active, page, totalPages, basePath } = Astro.props;
 const [featured, ...rest] = page === 1 ? posts : [undefined, ...posts];
-const title = active ? `${active.title}: Pilates Teaching Articles` : 'The Journal: Honest Guides to Teaching Pilates';
+const title = active ? `${active.title} Articles` : 'Journal: Guides to Teaching Pilates';
 const crumbs = active ? [{ name: 'Journal', url: '/blog' }, { name: active.title, url: `/blog/category/${active.slug}` }] : [{ name: 'Journal', url: '/blog' }];
 const pageUrl = (n: number) => (n === 1 ? basePath : `${basePath}/page/${n}`);
 ---
-<Base title={`${title} | The Pilates Programme`} description={active?.description ?? 'Guides to becoming a Pilates teacher, teaching craft, careers and continuing education, written by the trainers at The Pilates Programme, Altrincham.'} canonicalPath={page === 1 ? basePath : pageUrl(page)}>
+<Base title={`${title} | The Pilates Programme`} description={active ? `${active.description} Articles from the teacher trainers at The Pilates Programme, Altrincham.` : 'Guides to becoming a Pilates teacher, teaching craft, careers and continuing education, written by the trainers at The Pilates Programme, Altrincham.'} canonicalPath={page === 1 ? basePath : pageUrl(page)}>
   <Hero eyebrow="Journal" title={active ? active.title : 'The journal'} lead={active?.description ?? 'Guides written by the people who train teachers every week. No fluff, no shortcuts.'}>
     <Breadcrumbs slot="breadcrumbs" items={crumbs} />
     <nav class="cats" aria-label="Categories"><ul role="list"><li><a href="/blog" aria-current={!active ? 'page' : undefined}>All</a></li>{categories.map((c) => <li><a href={`/blog/category/${c.slug}`} aria-current={active?.slug === c.slug ? 'page' : undefined}>{c.title}</a></li>)}</ul></nav>
