@@ -48,6 +48,9 @@ export interface Exam {
   detail: string;
 }
 
+export interface GoogleReview { author: string; authorUrl?: string; rating: number | null; text: string; publishTime?: string; relativeTime?: string; url?: string }
+export interface GoogleReviews { rating: number | null; count: number | null; url: string; fetchedAt: string; reviews: GoogleReview[] }
+
 export interface Faq {
   _id: string;
   question: string;
@@ -251,7 +254,14 @@ export interface SiteSettings {
   freeGuide: { title: string; bullets: string[]; coverImage?: ImageRef; fileUrl?: string };
   cohortCap?: number;
   weekendCohorts?: boolean;
-  continueInclusions: string[];                // "What's included" on the Continuing Education hub
+  continueInclusions: string[];
+  teachingMap?: {
+    eyebrow?: string;
+    heading: string;
+    lead?: string;
+    home: { name: string; lat: number; lng: number };
+    locations: { name: string; region?: string; lat: number; lng: number; labelDx?: number; labelDy?: number; anchor?: 'start' | 'middle' | 'end' }[];
+  };                // "What's included" on the Continuing Education hub
   heroTrustLine?: string;                      // e.g. "Trusted by 850+ students"
   pressLogos: { name: string; image?: ImageRef; url?: string }[];   // "As seen in"; image optional, text wordmark fallback
 }

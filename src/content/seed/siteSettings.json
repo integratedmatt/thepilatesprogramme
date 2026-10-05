@@ -167,5 +167,98 @@
     "Exams and assessments at no extra cost",
     "Interest-free payment plans on every course",
     "Online learning platform access, with a 6-week free trial"
-  ]
+  ],
+  "teachingMap": {
+    "eyebrow": "Graduates worldwide",
+    "heading": "Where our students are teaching",
+    "lead": "Trained in Altrincham, now teaching across Ireland, Europe, the Middle East and Australia.",
+    "home": {
+      "name": "Altrincham",
+      "lat": 53.3878,
+      "lng": -2.3497
+    },
+    "locations": [
+      {
+        "name": "Cork",
+        "region": "Ireland",
+        "lat": 51.8985,
+        "lng": -8.4756,
+        "labelDx": -14,
+        "labelDy": 10,
+        "anchor": "end"
+      },
+      {
+        "name": "County Derry",
+        "region": "Northern Ireland",
+        "lat": 54.9966,
+        "lng": -7.3086,
+        "labelDx": -14,
+        "labelDy": -8,
+        "anchor": "end"
+      },
+      {
+        "name": "Marbella",
+        "region": "Spain",
+        "lat": 36.5101,
+        "lng": -4.8825,
+        "labelDx": -14,
+        "labelDy": 4,
+        "anchor": "end"
+      },
+      {
+        "name": "Marseille",
+        "region": "France",
+        "lat": 43.2965,
+        "lng": 5.3698,
+        "labelDx": 12,
+        "labelDy": 4,
+        "anchor": "start"
+      },
+      {
+        "name": "Prague",
+        "region": "Czech Republic",
+        "lat": 50.0755,
+        "lng": 14.4378,
+        "labelDx": 12,
+        "labelDy": 4,
+        "anchor": "start"
+      },
+      {
+        "name": "Kuwait",
+        "region": "Kuwait",
+        "lat": 29.3759,
+        "lng": 47.9774,
+        "labelDx": 0,
+        "labelDy": -14,
+        "anchor": "middle"
+      },
+      {
+        "name": "Saudi Arabia",
+        "region": "Saudi Arabia",
+        "lat": 23.9,
+        "lng": 45.1,
+        "labelDx": -12,
+        "labelDy": 16,
+        "anchor": "end"
+      },
+      {
+        "name": "Dubai",
+        "region": "United Arab Emirates",
+        "lat": 25.2048,
+        "lng": 55.2708,
+        "labelDx": 12,
+        "labelDy": 4,
+        "anchor": "start"
+      },
+      {
+        "name": "Australia",
+        "region": "Australia",
+        "lat": -25.6,
+        "lng": 134.4,
+        "labelDx": 12,
+        "labelDy": 4,
+        "anchor": "start"
+      }
+    ]
+  }
 }

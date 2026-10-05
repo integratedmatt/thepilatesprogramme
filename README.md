@@ -52,6 +52,11 @@ Follows spec 4.7 and section 5.6 of the UI/UX playbook (Google Drive, "02 UI UX 
 
 The playbook's 3D transitions and animated 3D clay icons were deliberately not used: they conflict with the spec's quiet, editorial direction. Everything collapses to instant under `prefers-reduced-motion: reduce`.
 
+## World map and Google reviews
+
+- **Where our students are teaching** (home page): locations live in site settings (`teachingMap`) and are editable in Sanity, including label offsets. `scripts/build-world-map.mjs` renders the dot-matrix land layer to `public/images/world-dots.svg` at build; markers, labels and arcs from Altrincham are drawn inline with the same projection (`src/lib/worldmap.mjs`). Phones zoom to the pins and use the list below the map for names.
+- **Google reviews**: `scripts/fetch-google-reviews.mjs` runs at build and calls the official Google Places API (New). Set `GOOGLE_PLACES_API_KEY` and `GOOGLE_PLACE_ID` in Vercel (find the ID with `--find`). The rating badge, the proof bar's Google rating and relevant 4 and 5 star reviews then appear in the testimonial section with Google attribution. The API returns the rating, the total count and up to five reviews Google picks. Without a key nothing Google-related shows. Reviews are never scraped or written by hand into `googleReviews.json`.
+
 ## Analytics
 
 GTM is loaded only when `PUBLIC_GTM_ID` is set. Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, graduate_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.

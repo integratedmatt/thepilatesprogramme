@@ -136,3 +136,22 @@ test('home hero video plays after load, can be paused, and respects reduced moti
   await expect(p2.locator('[data-hero-video-toggle]')).toBeHidden();
   await rm.close();
 });
+
+test('home page shows the world map with every teaching location', async ({ page }) => {
+  await page.goto('/');
+  const map = page.locator('section.world');
+  await expect(map.getByRole('heading', { name: 'Where our students are teaching' })).toBeVisible();
+  const label = await map.locator('svg[role="img"]').getAttribute('aria-label');
+  for (const place of ['Cork', 'County Derry', 'Marseille', 'Prague', 'Marbella', 'Dubai', 'Kuwait', 'Saudi Arabia', 'Australia']) {
+    expect(label).toContain(place);
+    await expect(map.locator('.world-list')).toContainText(place);
+  }
+  await expect(map.locator('.place')).toHaveCount(9);
+  await expect(map.locator('.arc')).toHaveCount(9);
+});
+
+test('no Google review content renders without real data', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.google-badge')).toHaveCount(0);
+  await expect(page.getByText('Google review', { exact: true })).toHaveCount(0);
+});

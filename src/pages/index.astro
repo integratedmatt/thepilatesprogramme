@@ -5,6 +5,7 @@ import Section from '@/components/Section.astro';
 import PathTile from '@/components/PathTile.astro';
 import CourseCard from '@/components/CourseCard.astro';
 import TestimonialWall from '@/components/TestimonialWall.astro';
+import WorldMap from '@/components/WorldMap.astro';
 import Picture from '@/components/Picture.astro';
 import JobRow from '@/components/JobRow.astro';
 import PostCard from '@/components/PostCard.astro';
@@ -12,13 +13,16 @@ import EmailCapture from '@/components/EmailCapture.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import AccreditationStrip from '@/components/AccreditationStrip.astro';
 import PressStrip from '@/components/PressStrip.astro';
-import { getSiteSettings, getQualifyCourses, getUpcomingDates, getTestimonials, getLiveJobs, getPosts, getFaqsByIds } from '@/lib/content';
+import { getSiteSettings, getQualifyCourses, getUpcomingDates, getTestimonials, getLiveJobs, getPosts, getFaqsByIds, getGoogleReviews } from '@/lib/content';
 
 const [settings, qualify, dates, testimonials, jobs, posts, faqs] = await Promise.all([
   getSiteSettings(), getQualifyCourses(), getUpcomingDates(), getTestimonials(), getLiveJobs(), getPosts(), getFaqsByIds(['faq-cost', 'faq-hours', 'faq-mat-experience', 'faq-accreditation', 'faq-finance']),
 ]);
 const nextFor = (id: string) => dates.find((d) => d.course === id);
-const stats = settings.proofStats.filter((s) => s.value);
+const google = getGoogleReviews();
+const stats = settings.proofStats
+  .map((s) => (!s.value && /google/i.test(s.label) && typeof google.rating === 'number' ? { ...s, value: `${google.rating.toFixed(1)}★` } : s))
+  .filter((s) => s.value);
 const heroImage = { url: '/images/site/home-hero.jpg', alt: 'A trainer coaching students on Reformers at the Altrincham training centre', width: 1920, height: 1080 };
 const heroVideo = {
   sources: [
@@ -101,7 +105,9 @@ const heroVideo = {
 
   <TestimonialWall items={testimonials} settings={settings} />
 
-  <Section>
+  <WorldMap settings={settings} />
+
+  <Section tone="subtle">
     <div class="grid centre">
       <div class="col-7">
         <Picture image={{ url: '/images/site/about-1.jpg', alt: 'The main studio at 23 Central Way, Altrincham', width: 1600, height: 1068 }} aspect="landscape" sizes="(min-width: 1024px) 58vw, 100vw" />
@@ -115,7 +121,7 @@ const heroVideo = {
     </div>
   </Section>
 
-  <Section tone="subtle">
+  <Section>
     <header class="section-heading"><p class="eyebrow">Jobs board</p><h2>Where the work is</h2></header>
     {jobs.length > 0 ? (
       <ul class="rule-list rule-top rule-bottom jobs" role="list">{jobs.slice(0, 3).map((j) => <JobRow job={j} />)}</ul>

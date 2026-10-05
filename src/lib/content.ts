@@ -5,7 +5,7 @@
  */
 import { getSanityClient, isSanityConfigured, IMAGE } from './sanity';
 import type {
-  Author, Category, Course, CourseDate, Faq, Graduate, Job, Post, PricingRule, Redirect,
+  Author, Category, Course, CourseDate, Faq, GoogleReviews, Graduate, Job, Post, PricingRule, Redirect,
   SiteSettings, Studio, TeamMember, Testimonial,
 } from './types';
 
@@ -23,6 +23,7 @@ import seedCategories from '../content/seed/categories.json';
 import seedAuthors from '../content/seed/authors.json';
 import seedPosts from '../content/seed/posts.json';
 import seedRedirects from '../content/seed/redirects.json';
+import googleReviewsData from '../content/seed/googleReviews.json';
 
 const cache = new Map<string, Promise<unknown>>();
 function memo<T>(key: string, fn: () => Promise<T>): Promise<T> {
@@ -150,6 +151,17 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 export async function getTestimonialsByIds(ids: string[]): Promise<Testimonial[]> {
   const all = await getTestimonials();
   return ids.map((id) => all.find((t) => t._id === id)).filter((t): t is Testimonial => Boolean(t));
+}
+
+/**
+ * Google rating and reviews, fetched at build time from the official Places API (scripts/fetch-google-reviews.mjs).
+ * Only 4 and 5 star reviews that talk about training, teaching or the centre are shown, so they fit the social proof.
+ */
+const RELEVANT = /\b(course|training|trained|train|teacher|teaching|teach|trainer|instructor|qualif|certif|exam|reformer|mat|barre|cpd|centre|center|studio|learn|knowledge|support)/i;
+export function getGoogleReviews(): GoogleReviews & { relevant: GoogleReviews['reviews'] } {
+  const d = googleReviewsData as unknown as GoogleReviews;
+  const relevant = (d.reviews ?? []).filter((r) => (r.rating ?? 0) >= 4 && r.text && r.text.length >= 40 && RELEVANT.test(r.text));
+  return { ...d, relevant };
 }
 
 export async function getGraduates(): Promise<Graduate[]> {

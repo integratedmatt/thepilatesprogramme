@@ -1,0 +1,26 @@
+---
+/** Star rating, decorative stars with a text equivalent. Fill uses the bronze accent, empty uses the subtle rule. */
+interface Props { rating: number; size?: 'sm' | 'md' }
+const { rating, size = 'sm' } = Astro.props;
+const r = Math.max(0, Math.min(5, rating));
+const uid = Math.random().toString(36).slice(2, 7);
+---
+<span class={`stars stars-${size}`} role="img" aria-label={`Rated ${r} out of 5`}>
+  {[1, 2, 3, 4, 5].map((n) => {
+    // Exact partial fill, so 4.8 shows four full stars and a star 80% filled.
+    const fill = Math.max(0, Math.min(1, r - (n - 1)));
+    const id = `star-${uid}-${n}`;
+    const pct = `${Math.round(fill * 100)}%`;
+    return (
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        {fill > 0 && fill < 1 && <defs><linearGradient id={id}><stop offset={pct} stop-color="currentColor" /><stop offset={pct} stop-color="var(--border-subtle)" /></linearGradient></defs>}
+        <path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" fill={fill >= 1 ? 'currentColor' : fill > 0 ? `url(#${id})` : 'var(--border-subtle)'} />
+      </svg>
+    );
+  })}
+</span>
+<style>
+  .stars { display: inline-flex; gap: var(--space-1); color: var(--bronze-700); vertical-align: middle; }
+  .stars svg { width: var(--space-4); height: var(--space-4); }
+  .stars-md svg { width: var(--space-5); height: var(--space-5); }
+</style>

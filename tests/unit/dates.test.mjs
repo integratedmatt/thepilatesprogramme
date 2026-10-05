@@ -24,3 +24,9 @@ test('no course copy contains banned accreditation wording', () => {
   const text = JSON.stringify(courses);
   assert.doesNotMatch(text, /level\s*3|ofqual|\bNVQ\b|regulated/i);
 });
+
+test('google reviews seed never ships invented reviews', () => {
+  const g = JSON.parse(readFileSync('src/content/seed/googleReviews.json', 'utf8'));
+  for (const r of g.reviews) assert.doesNotMatch(r.text, /LAYOUT TEST|lorem|placeholder/i);
+  if (g.reviews.length) assert.ok(g.fetchedAt && g.placeId, 'reviews must come from a real Places API fetch');
+});

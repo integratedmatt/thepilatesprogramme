@@ -1,16 +1,31 @@
 ---
-/** Home page quote wall. CMS testimonials only; hides entirely when empty. */
+/**
+ * Home page quote wall. CMS testimonials plus relevant Google reviews (fetched at build from the official Places API).
+ * Google reviews show the author's name, rating and a Google attribution, as Google's display policy requires.
+ * Hides entirely when there is nothing real to show.
+ */
+import Stars from './Stars.astro';
+import { getGoogleReviews } from '@/lib/content';
 import type { SiteSettings, Testimonial } from '@/lib/types';
 interface Props { items: Testimonial[]; settings: SiteSettings; heading?: string }
 const { items, settings, heading = 'What students say about training here' } = Astro.props;
+const google = getGoogleReviews();
+const hasRating = typeof google.rating === 'number' && typeof google.count === 'number' && google.count > 0;
+const googleCards = google.relevant;
 ---
-{items.length > 0 && (
+{(items.length > 0 || googleCards.length > 0) && (
   <section class="section section-subtle" aria-labelledby="wall-heading">
     <div class="container reveal">
       <header class="wall-heading">
         <p class="eyebrow">In their words</p>
         <h2 id="wall-heading">{heading}</h2>
         {settings.heroTrustLine && <p class="lead">{settings.heroTrustLine}, in their own words.</p>}
+        {hasRating && (
+          <a class="google-badge" href={google.url || settings.googleReviewUrl || undefined} target="_blank" rel="noopener">
+            <Stars rating={google.rating!} size="md" />
+            <span><strong>{google.rating!.toFixed(1)}</strong> on Google from {google.count} reviews</span>
+          </a>
+        )}
       </header>
       <ul class="wall" role="list" data-stagger tabindex="0" aria-label="Student testimonials, scroll sideways for more">
         {items.map((t) => (
@@ -25,8 +40,23 @@ const { items, settings, heading = 'What students say about training here' } = A
             </blockquote>
           </li>
         ))}
+        {googleCards.map((r) => (
+          <li class="wall-item">
+            <blockquote>
+              <span class="review-head"><Stars rating={r.rating ?? 5} /><span class="tag">Google review</span></span>
+              <p class="wall-quote">{r.text.length > 360 ? `${r.text.slice(0, 357).replace(/\s+\S*$/, '')}…` : r.text}</p>
+              <footer>
+                <cite>{r.authorUrl ? <a href={r.authorUrl} target="_blank" rel="noopener nofollow">{r.author}</a> : r.author}</cite>
+                <span class="small muted">{[r.relativeTime, 'Reviewed on Google'].filter(Boolean).join(' · ')}</span>
+              </footer>
+            </blockquote>
+          </li>
+        ))}
       </ul>
-      <p class="wall-more"><a href="/graduates" class="arrow-link">Meet our graduates</a><span class="small muted wall-hint">Scroll for more</span></p>
+      <p class="wall-more">
+        <span class="wall-links"><a href="/graduates" class="arrow-link">Meet our graduates</a>{hasRating && google.url && <a href={google.url} class="arrow-link" target="_blank" rel="noopener">Read all reviews on Google</a>}</span>
+        <span class="small muted wall-hint">Scroll for more</span>
+      </p>
     </div>
   </section>
 )}
@@ -48,5 +78,13 @@ const { items, settings, heading = 'What students say about training here' } = A
   .wall-quote { font-size: var(--type-body); line-height: var(--leading-lead); font-weight: var(--weight-regular); color: var(--text-primary); max-width: none; }
   .wall-item footer { display: grid; gap: var(--space-1); padding-top: var(--space-3); margin-top: auto; border-top: var(--border-width) solid var(--border-subtle); }
   cite { font-style: normal; font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); color: var(--text-secondary); }
+  .google-badge { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-2); text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); }
+  .google-badge strong { color: var(--text-primary); font-weight: var(--weight-medium); }
+  .google-badge:hover span { color: var(--text-primary); }
+  .review-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--space-4); }
+  .tag { font-size: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--text-muted); font-weight: var(--weight-medium); }
+  cite a { color: inherit; text-decoration: none; }
+  cite a:hover { color: var(--text-link); text-decoration: underline; }
+  .wall-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
   .wall-more { margin-top: var(--space-5); display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); max-width: none; }
 </style>
