@@ -1,0 +1,96 @@
+---
+import Base from '@/layouts/Base.astro';
+import Section from '@/components/Section.astro';
+import { getSanityWriteClient } from '@/lib/sanity';
+import { verifyReviewSignature, plusDays, SITE, type ReviewAction } from '@/lib/server/jobs';
+export const prerender = false;
+
+/**
+ * Approve or decline a submitted job from the link in the review email. GET shows the listing and a
+ * confirm button; only the POST changes anything. The Sanity webhook (/api/revalidate) then emails
+ * the studio and rebuilds, exactly as when the listing is approved in Studio.
+ */
+type Job = { _id: string; slug: string; status: string; title: string; studio?: { name?: string; website?: string }; town?: string; employmentType?: string; disciplines?: string[]; description?: string; payMin?: number; payMax?: number; payUnit?: string; applyUrl?: string; applyEmail?: string; contactName?: string; submitterEmail?: string; validThrough?: string };
+
+const isPost = Astro.request.method === 'POST';
+const form = isPost ? await Astro.request.formData() : null;
+const get = (k: string) => String(form?.get(k) ?? Astro.url.searchParams.get(k) ?? '');
+const id = get('id');
+const action = (get('action') === 'decline' ? 'decline' : get('action') === 'approve' ? 'approve' : '') as ReviewAction | '';
+const sig = get('sig');
+
+let state: 'invalid' | 'unconfigured' | 'missing' | 'confirm' | 'done' | 'already' = 'confirm';
+let job: Job | null = null;
+const client = getSanityWriteClient();
+
+if (!id || !action || !sig || !verifyReviewSignature(id, action, sig)) state = 'invalid';
+else if (!client) state = 'unconfigured';
+else {
+  job = await client.fetch<Job | null>(`*[_type == "job" && _id == $id][0]{ _id, "slug": slug.current, status, title, "studio": coalesce(studio->{name, website}, studioInline), town, employmentType, disciplines, description, payMin, payMax, payUnit, applyUrl, applyEmail, contactName, submitterEmail, validThrough }`, { id });
+  const target = action === 'approve' ? 'approved' : 'rejected';
+  if (!job) state = 'missing';
+  else if (job.status === target) state = 'already';
+  else if (isPost) {
+    const now = new Date();
+    const today = now.toISOString().slice(0, 10);
+    const set = action === 'approve'
+      ? { status: 'approved', datePosted: today, approvedAt: now.toISOString(), validThrough: job.validThrough && job.validThrough > today ? job.validThrough : plusDays(60), rejectReason: '' }
+      : { status: 'rejected', rejectReason: String(form?.get('reason') ?? '').trim().slice(0, 500) };
+    await client.patch(job._id).set(set).commit();
+    state = 'done';
+  }
+}
+if (state === 'invalid') Astro.response.status = 400;
+if (state === 'missing') Astro.response.status = 404;
+if (state === 'unconfigured') Astro.response.status = 503;
+
+const verb = action === 'approve' ? 'Approve' : 'Decline';
+const pay = job && (job.payMin || job.payMax) ? `£${[job.payMin, job.payMax].filter(Boolean).join('–')} per ${(job.payUnit ?? 'hour').toLowerCase()}` : '';
+---
+<Base title="Review job listing | The Pilates Programme" description="Approve or decline a submitted job listing." noindex>
+  <Section>
+    <div class="review stack">
+      <p class="eyebrow">Jobs board review</p>
+      {state === 'invalid' && <><h1 class="h2">This review link is not valid</h1><p class="secondary">Open the link from the review email again, or review the listing in Sanity Studio.</p></>}
+      {state === 'unconfigured' && <><h1 class="h2">Reviewing is not set up yet</h1><p class="secondary">Add the Sanity write token to the site's environment, then use the link again.</p></>}
+      {state === 'missing' && <><h1 class="h2">Listing not found</h1><p class="secondary">It may have been deleted in Sanity Studio.</p></>}
+      {state === 'already' && job && <><h1 class="h2">Already {job.status === 'approved' ? 'approved' : 'declined'}</h1><p class="secondary">{job.title} at {job.studio?.name}. Nothing else to do.</p>{job.status === 'approved' && <a class="arrow-link" href={`/jobs/${job.slug}`}>View the listing</a>}</>}
+      {state === 'done' && job && (
+        <div class="form-status" data-state="success" role="status">
+          <h1 class="h2">{action === 'approve' ? 'Approved and published' : 'Declined'}</h1>
+          <p>{job.title} at {job.studio?.name}. {job.submitterEmail ? `We have emailed ${job.submitterEmail}.` : ''}</p>
+          {action === 'approve' && <p><a class="arrow-link" href={`${SITE}/jobs/${job.slug}`}>View the listing</a></p>}
+        </div>
+      )}
+      {state === 'confirm' && job && (
+        <>
+          <h1 class="h2">{verb} this listing?</h1>
+          <dl class="review-details">
+            <dt>Role</dt><dd>{job.title}</dd>
+            <dt>Studio</dt><dd>{job.studio?.website ? <a href={job.studio.website} rel="noopener nofollow" target="_blank">{job.studio?.name}</a> : job.studio?.name}{job.town && `, ${job.town}`}</dd>
+            {!!job.disciplines?.length && <><dt>Disciplines</dt><dd>{job.disciplines.join(', ')}</dd></>}
+            {pay && <><dt>Pay</dt><dd>{pay}</dd></>}
+            <dt>Submitted by</dt><dd>{job.contactName}{job.submitterEmail && ` (${job.submitterEmail})`}</dd>
+            <dt>Apply via</dt><dd>{job.applyUrl ?? job.applyEmail}</dd>
+            <dt>Description</dt><dd class="pre">{job.description}</dd>
+          </dl>
+          <form method="post" class="stack">
+            <input type="hidden" name="id" value={id} />
+            <input type="hidden" name="action" value={action} />
+            <input type="hidden" name="sig" value={sig} />
+            {action === 'decline' && <div class="field"><label for="reason">Reason sent to the studio (optional)</label><textarea class="input" id="reason" name="reason" rows="3" maxlength="500"></textarea></div>}
+            <div><button class={`btn ${action === 'approve' ? 'btn-primary' : 'btn-secondary'}`} type="submit">{action === 'approve' ? 'Approve and publish' : 'Decline listing'}</button></div>
+          </form>
+        </>
+      )}
+    </div>
+  </Section>
+</Base>
+<style>
+  .review { max-width: var(--measure-body); }
+  .stack > * + * { margin-top: var(--space-5); }
+  .review-details { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-2) var(--space-5); }
+  .review-details dt { color: var(--text-secondary); font-size: var(--type-small); }
+  .review-details .pre { white-space: pre-line; }
+  @media (max-width: 767px) { .review-details { grid-template-columns: 1fr; } .review-details dd + dt { margin-top: var(--space-3); } }
+</style>

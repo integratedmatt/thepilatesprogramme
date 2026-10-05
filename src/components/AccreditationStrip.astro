@@ -20,7 +20,9 @@ const badges = settings.accreditationBadges?.filter((b) => b.name) ?? [];
   .accreditation-strip { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); text-decoration: none; color: inherit; }
   .accreditation-strip ul { display: flex; flex-wrap: wrap; gap: var(--space-5); list-style: none; align-items: center; }
   .accreditation-strip img { height: var(--badge-height); width: auto; filter: grayscale(1); opacity: 0.85; }
-  .badge-text { display: inline-flex; align-items: center; height: var(--badge-height); padding-inline: var(--space-3); border: var(--border-width) solid var(--border-subtle); font-size: var(--type-small); font-weight: var(--weight-medium); color: var(--text-secondary); }
-  .accreditation-strip.dark .badge-text { border-color: var(--ink-700); color: var(--stone-300); }
-  .accreditation-strip:hover .badge-text { border-color: currentColor; }
+  .accreditation-strip.dark img { filter: grayscale(1) invert(1); opacity: 0.8; }
+  .accreditation-strip img, .badge-text { transition: opacity var(--dur-fast) var(--ease-out); }
+  .accreditation-strip:hover img, .accreditation-strip:hover .badge-text { opacity: 1; }
+  .badge-text { display: inline-flex; align-items: center; height: var(--badge-height); max-width: 9em; font-size: var(--type-small); font-weight: var(--weight-medium); line-height: var(--leading-h3); color: var(--text-secondary); opacity: 0.85; }
+  .accreditation-strip.dark .badge-text { color: var(--stone-300); }
 </style>

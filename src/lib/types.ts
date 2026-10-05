@@ -104,7 +104,8 @@ export interface Course {
   notForYou?: string[];
   afterBooking?: string[];
   unlocks?: string[];      // slugs of courses this unlocks
-  heroImage?: ImageRef;
+  heroImage?: ImageRef;   // also the hero video's poster
+  heroVideo?: string;      // base path, e.g. /video/advanced-reformer (see src/lib/video.ts)
   gallery?: ImageRef[];
   faqs: string[];          // faq ids
   testimonials: string[];  // testimonial ids

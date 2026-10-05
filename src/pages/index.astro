@@ -1,4 +1,5 @@
 ---
+import { heroVideoSources } from '@/lib/video';
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
@@ -23,15 +24,8 @@ const google = getGoogleReviews();
 const stats = settings.proofStats
   .map((s) => (!s.value && /google/i.test(s.label) && typeof google.rating === 'number' ? { ...s, value: `${google.rating.toFixed(1)}★` } : s))
   .filter((s) => s.value);
-const heroImage = { url: '/images/site/home-hero.jpg', alt: 'A trainer coaching students on Reformers at the Altrincham training centre', width: 1920, height: 1080 };
-const heroVideo = {
-  sources: [
-    { src: '/video/hero-1080.webm', type: 'video/webm; codecs="vp9"', minWidth: 1024 },
-    { src: '/video/hero-720.webm', type: 'video/webm; codecs="vp9"', minWidth: 0 },
-    { src: '/video/hero-1080.mp4', type: 'video/mp4; codecs="avc1.640028"', minWidth: 1024 },
-    { src: '/video/hero-720.mp4', type: 'video/mp4; codecs="avc1.64001f"', minWidth: 0 },
-  ],
-};
+const heroImage = { url: '/images/site/home-header.jpg', alt: 'A student working through the course manual on a Reformer at the Altrincham training centre', width: 1920, height: 1080 };
+const heroVideo = heroVideoSources('/video/header');
 ---
 <Base title="Pilates Teacher Training Manchester | The Pilates Programme" description="Become a Pilates or Barre teacher studios want to hire. Small cohorts, in-person coaching in Altrincham, every tradition from Contrology to Contemporary. £2,200 all in.">
   <Hero title="Become a Pilates teacher studios want to hire." lead="Small cohorts, individual coaching at our Altrincham training centre, and a method that covers every tradition: Contrology, Classical and Contemporary." image={heroImage} video={heroVideo} display>

@@ -155,3 +155,11 @@ test('no Google review content renders without real data', async ({ page }) => {
   await expect(page.locator('.google-badge')).toHaveCount(0);
   await expect(page.getByText('Google review', { exact: true })).toHaveCount(0);
 });
+
+test('job review links reject a bad signature and are noindexed', async ({ page }) => {
+  const res = await page.goto('/jobs/review?id=abc&action=approve&sig=bad');
+  expect(res?.status()).toBe(400);
+  await expect(page.getByRole('heading', { name: 'This review link is not valid' })).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await expect(page.locator('.review form button[type="submit"]')).toHaveCount(0);
+});

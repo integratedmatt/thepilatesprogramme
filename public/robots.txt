@@ -3,5 +3,6 @@ Allow: /
 Disallow: /studio
 Disallow: /api/
 Disallow: /thank-you
+Disallow: /jobs/review
 
 Sitemap: https://www.thepilatesprogramme.co.uk/sitemap-index.xml

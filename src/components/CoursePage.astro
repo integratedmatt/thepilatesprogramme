@@ -2,6 +2,7 @@
 /** Section 7.3 course page template. Shared by Qualify, apparatus, bundle and CPD pages. */
 import Base from '@/layouts/Base.astro';
 import Hero from './Hero.astro';
+import { heroVideoSources } from '@/lib/video';
 import Breadcrumbs from './Breadcrumbs.astro';
 import AccreditationStrip from './AccreditationStrip.astro';
 import AnswerBox from './AnswerBox.astro';
@@ -62,7 +63,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   </Fragment>
   <div data-track="scroll" data-page-event={pageEvent} hidden></div>
 
-  <Hero eyebrow={course.eyebrow} title={course.title} lead={course.outcome} image={course.heroImage}>
+  <Hero eyebrow={course.eyebrow} title={course.title} lead={course.outcome} image={course.heroImage} video={heroVideoSources(course.heroVideo)}>
     <Breadcrumbs slot="breadcrumbs" items={crumbs} />
     {course.price != null && (
       <p class="hero-price">{priceLine(course.price, course.financeOptions)}{course.kind === 'teacher-training' ? '. Exams, manual and assessment included.' : ''}</p>

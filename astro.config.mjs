@@ -21,7 +21,8 @@ export default defineConfig({
         !page.includes('/studio') &&
         !page.includes('/thank-you') &&
         !page.includes('/404') &&
-        !page.includes('/jobs/expired'),
+        !page.includes('/jobs/expired') &&
+        !page.includes('/jobs/review'),
       changefreq: 'weekly',
     }),
   ],

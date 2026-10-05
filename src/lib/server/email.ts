@@ -14,7 +14,11 @@ export async function sendEmail(opts: { to: string | string[]; subject: string; 
   await resend.emails.send({ from, to: opts.to, subject: opts.subject, text: opts.text, html: opts.html ?? toHtml(opts.text), replyTo: opts.replyTo });
 }
 
+export function escapeHtml(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export function toHtml(text: string): string {
-  const esc = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const esc = escapeHtml(text);
   return `<div style="font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#111">${esc.split(/\n{2,}/).map((p) => `<p>${p.replace(/\n/g, '<br>').replace(/(https?:\/\/\S+)/g, '<a href="$1">$1</a>')}</p>`).join('')}</div>`;
 }

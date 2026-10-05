@@ -6,11 +6,15 @@ import Section from '@/components/Section.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import JobRow from '@/components/JobRow.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
-import { getLiveJobs } from '@/lib/content';
+import { getLiveJobs, getCpdCourses } from '@/lib/content';
+import { gbp } from '@/lib/format';
 export const prerender = false;
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
 
 const jobs = await getLiveJobs();
+const cpd = await getCpdCourses();
+const cpdFrom = Math.min(...cpd.map((c) => c.price ?? Infinity));
+const cpdNames = cpd.map((c) => c.shortTitle);
 const p = Astro.url.searchParams;
 const f = { discipline: p.get('discipline') ?? '', area: p.get('area') ?? '', type: p.get('type') ?? '', graduate: p.get('graduate') === '1' };
 const disciplines = Array.from(new Set(jobs.flatMap((j) => j.disciplines))).sort();
@@ -54,10 +58,10 @@ const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
       </div>
       <aside class="col-side">
         <div class="side-card">
-          <p class="eyebrow">Not qualified yet?</p>
-          <h2 class="h3">Train to teach in Altrincham</h2>
-          <p class="small secondary">Mat, Reformer and Barre teacher training with exams included, from £2,200.</p>
-          <a href="/become-a-pilates-instructor" class="arrow-link">How to become a Pilates instructor</a>
+          <p class="eyebrow">Stand out to studios</p>
+          <h2 class="h3">Add a CPD course</h2>
+          <p class="small secondary">{cpdNames.slice(0, -1).join(', ')}{cpdNames.length > 1 ? ' and ' : ''}{cpdNames.at(-1)}{Number.isFinite(cpdFrom) ? `, from ${gbp(cpdFrom)}` : ''}. In person in Altrincham or online, open to teachers from any provider.</p>
+          <a href="/continuing-education/cpd" class="arrow-link">See CPD courses</a>
         </div>
         <div class="side-card">
           <p class="eyebrow">Hiring?</p>

@@ -449,10 +449,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-9.jpg",
-      "alt": "Reformer and Cadillac by the windows at the Altrincham training centre",
-      "width": 1068,
-      "height": 1600
+      "url": "/images/site/advanced-reformer-header.jpg",
+      "alt": "Teachers practising advanced Reformer repertoire with a trainer at the Altrincham training centre",
+      "width": 1920,
+      "height": 1080
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -466,7 +466,8 @@
     },
     "answerQuestion": "What is the Advanced Reformer training?",
     "answerSummary": "An in-person Advanced Reformer course in Altrincham, Greater Manchester, for teachers who already hold a Reformer qualification. It covers the advanced Classical order and Contemporary progressions, spotting and programming. The manual, exam, online platform access with a 6-week free trial and an interest-free payment plan are all included. Returning students receive 10% off.",
-    "arketaFallbackUrl": "schedule?serviceId=jP1em8jJ5F496TV5mwTN"
+    "arketaFallbackUrl": "schedule?serviceId=jP1em8jJ5F496TV5mwTN",
+    "heroVideo": "/video/advanced-reformer"
   },
   {
     "_id": "course-chair",

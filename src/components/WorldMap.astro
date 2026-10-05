@@ -64,7 +64,6 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
         </div>
         </div>
         <figcaption class="world-list">
-          <p class="small muted legend"><span><span class="key key-home" aria-hidden="true"></span>Trained at our {map.home.name} centre</span><span><span class="key key-place" aria-hidden="true"></span>Now teaching</span></p>
           <ul role="list">
             {regions.map((r) => {
               const names = places.filter((p) => (p.region ?? p.name) === r).map((p) => p.name);
@@ -110,7 +109,9 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
   .place:hover .label { fill: var(--text-primary); }
   /* Labels are too small to read under 768px; the list carries the names there. */
   @media (max-width: 767px) { .label, .leader { display: none; } }
+  /* Names only on phones, where map labels are too small to show. The SVG's aria-label carries them for screen readers everywhere. */
   .world-list { display: grid; gap: var(--space-3); }
+  @media (min-width: 768px) { .world-list { display: none; } }
   .legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
   .legend > span { white-space: nowrap; }
   .world-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }

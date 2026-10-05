@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import { readForm, respond, isHoneypotTripped, verifyTurnstile, zodErrors, email, str } from '@/lib/server/forms';
-import { sendEmail, NOTIFY_EMAIL } from '@/lib/server/email';
+import { sendEmail, NOTIFY_EMAIL, escapeHtml } from '@/lib/server/email';
 import { getSanityWriteClient, sanityConfig } from '@/lib/sanity';
-import { plusDays } from '@/lib/server/jobs';
+import { plusDays, reviewUrl } from '@/lib/server/jobs';
 import { slugify } from '@/lib/format';
 export const prerender = false;
 
@@ -57,7 +57,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     if (client) created = await client.create(doc); else console.info('[job:dry-run]', JSON.stringify(doc));
     const studioUrl = sanityConfig.projectId ? `https://${sanityConfig.projectId}.sanity.studio/structure/jobs;pending;${created._id}` : '(Sanity Studio not configured)';
     await sendEmail({ to: d.contactEmail, subject: 'We have your job listing', text: `Hi ${d.contactName},\n\nThanks for listing "${d.title}" at ${d.studioName}. We review every listing and publish genuine roles within 2 working days. You will get an email with the live link.\n\nThe Pilates Programme, Altrincham` });
-    await sendEmail({ to: NOTIFY_EMAIL, replyTo: d.contactEmail, subject: `New job to review: ${d.title} at ${d.studioName}`, text: `${d.contactName} (${d.contactEmail}) submitted a role.\n\n${d.title} · ${d.studioName} · ${d.town}\n${d.employmentType} · ${d.disciplines.join(', ')}\n\n${d.description}\n\nReview and approve in Sanity Studio: ${studioUrl}\nApprove only genuine roles at real studios.` });
+    const approve = reviewUrl(created._id, 'approve');
+    const decline = reviewUrl(created._id, 'decline');
+    const pay = d.payMin || d.payMax ? `£${[d.payMin, d.payMax].filter(Boolean).join('–')} per ${(d.payUnit ?? 'HOUR').toLowerCase()}` : 'Not given';
+    const rows: [string, string][] = [['Role', d.title], ['Studio', `${d.studioName}, ${d.town}${d.postcode ? ` ${d.postcode}` : ''}`], ['Website', d.studioWebsite ?? 'Not given'], ['Type', d.employmentType], ['Disciplines', d.disciplines.join(', ')], ['Pay', pay], ['Apply via', d.applyUrl ?? d.applyEmail ?? ''], ['Submitted by', `${d.contactName} (${d.contactEmail})`]];
+    const text = `${d.contactName} (${d.contactEmail}) submitted a role for the jobs board.\n\n${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}\n\n${d.description}${d.requirements ? `\n\nRequirements: ${d.requirements}` : ''}\n\nApprove and publish: ${approve}\nDecline: ${decline}\n\nEach link opens a confirmation page. Or review in Sanity Studio: ${studioUrl}\nApprove only genuine roles at real studios.`;
+    const btn = (href: string, label: string, primary: boolean) => `<a href="${href}" style="display:inline-block;padding:14px 24px;margin-right:12px;font-weight:600;text-decoration:none;border:1px solid #111;${primary ? 'background:#111;color:#fff' : 'background:#fff;color:#111'}">${label}</a>`;
+    const html = `<div style="font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#111;max-width:600px"><p>${escapeHtml(d.contactName)} submitted a role for the jobs board.</p><table style="border-collapse:collapse;margin:16px 0">${rows.map(([k, v]) => `<tr><td style="padding:4px 16px 4px 0;color:#666;vertical-align:top">${k}</td><td style="padding:4px 0">${escapeHtml(v)}</td></tr>`).join('')}</table><p style="white-space:pre-line">${escapeHtml(d.description)}</p>${d.requirements ? `<p style="white-space:pre-line"><strong>Requirements</strong><br>${escapeHtml(d.requirements)}</p>` : ''}<p style="margin:28px 0">${btn(approve, 'Approve and publish', true)}${btn(decline, 'Decline', false)}</p><p style="font-size:14px;color:#666">Each button opens a confirmation page, so nothing changes until you confirm. The studio is emailed automatically either way. Approve only genuine roles at real studios.</p></div>`;
+    await sendEmail({ to: NOTIFY_EMAIL, replyTo: d.contactEmail, subject: `New job to review: ${d.title} at ${d.studioName}`, text, html });
     return respond(request, { ok: true, event: 'job_submit', message: `Thanks. We have your listing for ${d.title}. We review within 2 working days and will email ${d.contactEmail} with the live link.`, redirect: '/jobs/post?sent=1' }, back, raw);
   } catch (err) {
     console.error('[job] failed', err);
