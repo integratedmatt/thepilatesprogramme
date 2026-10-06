@@ -48,7 +48,7 @@ const SEO = `"seo": { "title": seo.title, "description": seo.description, "ogIma
 
 const COURSE_PROJECTION = `{
   _id, _type, order, title, shortTitle, "slug": slug.current, path, kind, discipline, level, format, eyebrow,
-  outcome, bestFor, price, financeOptions, prerequisites, inclusions, curriculum, hoursBreakdown, exams,
+  outcome, bestFor, price, financeOptions, prerequisites, inclusions, curriculum, hoursBreakdown, durationDays, exams,
   forYou, notForYou, afterBooking, unlocks, "heroImage": heroImage${IMAGE}, heroVideo, "gallery": gallery[]${IMAGE},
   "faqs": faqs[]._ref, "testimonials": testimonials[]._ref, ${SEO}, answerQuestion, answerSummary,
   arketaFallbackUrl, guideUrl
@@ -61,6 +61,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       ..., "logo": logo${IMAGE},
       "accreditationBadges": accreditationBadges[]{ name, url, "image": image${IMAGE} },
       "pressLogos": pressLogos[]{ name, url, "image": image${IMAGE} },
+      equipmentPartner,
       "freeGuide": { "title": freeGuide.title, "bullets": freeGuide.bullets, "coverImage": freeGuide.coverImage${IMAGE}, "fileUrl": freeGuide.file.asset->url }
     }`,
     () => seedSettings as unknown as SiteSettings,

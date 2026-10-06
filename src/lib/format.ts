@@ -60,3 +60,11 @@ export function priceLine(price: number | null | undefined, finance: { instalmen
   const inst = finance.find((f) => f.instalments && f.amount);
   return inst ? `${gbp(price)} or ${inst.instalments} × ${gbp(inst.amount)}` : gbp(price);
 }
+
+/** "4 in-person days", "1 day online"; undefined when the course length is not set. */
+export function durationLabel(c: { durationDays?: number; format: string }): string | undefined {
+  const n = c.durationDays;
+  if (!n) return undefined;
+  const days = `${n} ${n === 1 ? 'day' : 'days'}`;
+  return c.format === 'online' ? `${days}, online on demand` : `${n} in-person ${n === 1 ? 'day' : 'days'}`;
+}

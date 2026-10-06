@@ -42,7 +42,6 @@ export const hoursBreakdown = defineType({
     defineField({ name: 'observation', title: 'Observation hours', type: 'number' }),
     defineField({ name: 'personalStudy', title: 'Personal study hours', type: 'number' }),
     defineField({ name: 'practiceTeaching', title: 'Practice teaching hours', type: 'number' }),
-    defineField({ name: 'inPersonDays', title: 'In-person days', type: 'number' }),
-    defineField({ name: 'inPersonHours', title: 'In-person hours (for cost per hour)', type: 'number', description: 'Leave empty to assume 7 hours per in-person day.' }),
+    defineField({ name: 'inPersonHours', title: 'In-person hours (for cost per hour)', type: 'number', description: 'Leave empty to assume 7 hours per course day.' }),
   ],
 });

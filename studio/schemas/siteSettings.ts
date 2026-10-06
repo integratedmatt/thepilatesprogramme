@@ -48,6 +48,7 @@ export default defineType({
     ] }),
     defineField({ name: 'continueInclusions', title: 'Continuing education: what is included', type: 'array', of: [{ type: 'string' }], description: 'Shown as a checklist on the Continuing Education hub.' }),
     defineField({ name: 'heroTrustLine', title: 'Hero trust line', type: 'string', description: 'Shown under the hero buttons, e.g. Trusted by 850+ students. Leave empty to hide.' }),
+    defineField({ name: 'equipmentPartner', title: 'Equipment partner (affiliate)', type: 'object', description: 'Shown in the blog and jobs sidebars and on the training centre page. Any link to this website in articles or FAQs automatically gets the tracking parameters from this URL.', fields: [defineField({ name: 'name', type: 'string' }), defineField({ name: 'url', title: 'Affiliate URL', type: 'url' }), defineField({ name: 'blurb', type: 'string' })] }),
     defineField({ name: 'pressLogos', title: '"As seen in" logos', type: 'array', of: [{ type: 'object', fields: [defineField({ name: 'name', type: 'string' }), defineField({ name: 'image', title: 'Logo (PNG or SVG, dark on transparent)', type: 'imageWithAlt' }), defineField({ name: 'url', type: 'url' })] }], description: 'Shown in greyscale at the bottom of the home hero. Without an image the name renders as a text wordmark.' }),
     defineField({ name: 'cohortCap', title: 'Maximum cohort size', type: 'number' }),
     defineField({ name: 'weekendCohorts', type: 'boolean' }),

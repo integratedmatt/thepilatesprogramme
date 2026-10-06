@@ -260,5 +260,10 @@
         "anchor": "start"
       }
     ]
+  },
+  "equipmentPartner": {
+    "name": "Align-Pilates",
+    "url": "https://align-pilates.com/?utm_source=Partner&utm_medium=referral&utm_campaign=Affiliate&utm_id=AMB-1-TPP",
+    "blurb": "Reformers, apparatus and home equipment from our equipment partner, for your studio or your own practice."
   }
 }

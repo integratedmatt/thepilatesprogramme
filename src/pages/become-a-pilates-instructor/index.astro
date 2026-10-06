@@ -27,10 +27,10 @@ const dbl = rules.find((r) => r.slug === 'double-booking');
 const mat = courses.find((c) => c.slug === 'mat-pilates-teacher-training');
 const reformer = courses.find((c) => c.slug === 'reformer-pilates-teacher-training');
 const minPrice = Math.min(...courses.map((c) => c.price ?? Infinity));
-const answer = `To become a Pilates instructor in Manchester you complete a teacher training course, supported practice hours and exams. At The Pilates Programme, Altrincham that is five in-person days, 80 practice hours and three exams, from ${gbp(minPrice)} all in with four interest-free payments. Most students teach their first paid class within three to four months.`;
+const answer = `To become a Pilates instructor in Manchester you complete a teacher training course, supported practice hours and exams. At The Pilates Programme, Altrincham that is four or five in-person days, 80 practice hours and three exams, from ${gbp(minPrice)} all in with four interest-free payments. Most students teach their first paid class within three to four months.`;
 const steps = [
   { title: 'Choose your course', text: 'Mat, Reformer or Barre. Take the quiz if you are unsure, or book two together and save £1,000.', meta: 'Week 0' },
-  { title: '5-day in-person intensive', text: 'Small cohort, individual coaching at the Altrincham centre, after the online Human Movement course.', meta: 'Weeks 1 to 4' },
+  { title: '4 or 5-day in-person intensive', text: 'Small cohort, individual coaching at the Altrincham centre, after the online Human Movement course.', meta: 'Weeks 1 to 4' },
   { title: 'Practice hours with support', text: '30 observation, 25 personal study and 25 practice teaching hours, with a plan and your trainers on hand.', meta: 'Weeks 5 to 12' },
   { title: 'Exams and your first class', text: 'Two online multiple choice exams and a practical over Zoom, all included. Then cover, apply or launch your own.', meta: 'Weeks 12 to 16' },
 ];
@@ -45,8 +45,8 @@ const facts = [
   { label: 'Prerequisite', value: 'None' },
 ];
 ---
-<Base title="Become a Pilates Instructor in Manchester | The Pilates Programme" description="How to qualify as a Pilates or Barre teacher in Manchester: 5 in-person days, 80 supported hours and exams included, from £2,200. Small cohorts.">
-  <Hero eyebrow="Qualify" title="How to become a Pilates instructor in Manchester" lead="One route, no shortcuts: a 5-day in-person intensive, supported practice hours and exams that studios trust. Everything included in one price.">
+<Base title="Become a Pilates Instructor in Manchester | The Pilates Programme" description="How to qualify as a Pilates or Barre teacher in Manchester: 4 or 5 in-person days, 80 supported hours and exams included, from £2,200. Small cohorts.">
+  <Hero eyebrow="Qualify" title="How to become a Pilates instructor in Manchester" lead="One route, no shortcuts: a four or five-day in-person intensive, supported practice hours and exams that studios trust. Everything included in one price.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Become a Pilates instructor', url: '/become-a-pilates-instructor' }]} />
     <div class="hero-actions">
       <a href="#courses" class="btn btn-primary">Choose a course</a>
@@ -104,7 +104,7 @@ const facts = [
       <div class="col-7">
         <p class="eyebrow">What it really costs</p>
         <h2>One price, nothing hidden</h2>
-        <p class="lead">{gbp(minPrice)} covers the online course, five in-person days, your manual, the video library, every workshop and all three exams. Studio hire for practice hours and insurance are the only things to budget for on top.</p>
+        <p class="lead">{gbp(minPrice)} covers the online course, four or five in-person days, your manual, the video library, every workshop and all three exams. Studio hire for practice hours and insurance are the only things to budget for on top.</p>
         <p class="mt-4"><a href="/pricing" class="arrow-link">See the full pricing, finance and payback maths</a></p>
       </div>
       <div class="col-5"><AccreditationStrip settings={settings} /></div>

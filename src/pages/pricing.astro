@@ -10,11 +10,11 @@ import { gbp } from '@/lib/format';
 const [settings, courses, rules, faqs] = await Promise.all([getSiteSettings(), getCourses(), getPricingRules(), getFaqsByIds(['faq-cost', 'faq-finance', 'faq-double', 'faq-fitness-discount', 'faq-refunds', 'faq-extra-costs', 'faq-returning-discount'])]);
 const qualify = courses.filter((c) => c.path === 'qualify');
 const minQualify = Math.min(...qualify.map((c) => c.price ?? Infinity));
-const inPersonHours = (c: typeof courses[number]) => c.hoursBreakdown?.inPersonHours ?? (c.hoursBreakdown?.inPersonDays ? c.hoursBreakdown.inPersonDays * 7 : undefined);
+const inPersonHours = (c: typeof courses[number]) => c.hoursBreakdown?.inPersonHours ?? (c.durationDays ? c.durationDays * 7 : undefined);
 const perHour = qualify.map((c) => ({ c, hours: inPersonHours(c), rate: c.price != null && inPersonHours(c) ? c.price / inPersonHours(c)! : undefined }));
 const rate = settings.typicalClassRate;
 const financeLabel = (c: typeof courses[number]) => c.financeOptions.map((f) => f.instalments && f.amount ? `${f.instalments} × ${gbp(f.amount)}` : f.label).join(' or ');
-const answer = `Pilates teacher training at The Pilates Programme, Altrincham costs ${gbp(minQualify)} for Mat, Reformer or Barre, including the online course, five in-person days, manual, video library, workshops and all three exams. Pay in full or in four monthly interest-free payments. Two courses together cost £3,400. Apparatus courses run from £800 and CPD days are £250.`;
+const answer = `Pilates teacher training at The Pilates Programme, Altrincham costs ${gbp(minQualify)} for Mat, Reformer or Barre, including the online course, four or five in-person days, manual, video library, workshops and all three exams. Pay in full or in four monthly interest-free payments. Two courses together cost £3,400. Apparatus courses run from £800 and CPD days are £250.`;
 ---
 <Base title="Pilates Teacher Training Cost | The Pilates Programme" description="What Pilates teacher training costs in Manchester: £2,200 all in with exams, interest-free instalments, double booking savings and costs to plan for.">
   <Hero eyebrow="Pricing" title="How much does Pilates teacher training cost?" lead="One price per course with exams, manual and assessment included. Here is every number, the finance options and the maths on paying it back.">
@@ -70,7 +70,7 @@ const answer = `Pilates teacher training at The Pilates Programme, Altrincham co
         <thead><tr><th scope="col">Course</th><th scope="col">Price</th><th scope="col">In-person hours</th><th scope="col">Per in-person hour</th></tr></thead>
         <tbody>
           {perHour.map(({ c, hours, rate }) => (
-            <tr><th scope="row">{c.shortTitle}</th><td>{gbp(c.price)}</td><td>{hours ? `${hours} hours (${c.hoursBreakdown?.inPersonDays} days)` : <span class="muted">Confirm with us</span>}</td><td>{rate ? gbp(rate, { decimals: true }) : <span class="muted">Confirm with us</span>}</td></tr>
+            <tr><th scope="row">{c.shortTitle}</th><td>{gbp(c.price)}</td><td>{hours ? `${hours} hours (${c.durationDays} days)` : <span class="muted">Confirm with us</span>}</td><td>{rate ? gbp(rate, { decimals: true }) : <span class="muted">Confirm with us</span>}</td></tr>
           ))}
         </tbody>
       </table>

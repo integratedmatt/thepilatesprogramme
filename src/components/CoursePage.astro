@@ -21,7 +21,7 @@ import Section from './Section.astro';
 import { getSiteSettings, getUpcomingDates, getPricingRules, getFaqsByIds, getTeam, getTestimonialsByIds, getCourses, courseUrl, hubUrl } from '@/lib/content';
 import { courseSchema } from '@/lib/schema';
 import { pageTitle, pageDescription } from '@/lib/seo';
-import { gbp, priceLine } from '@/lib/format';
+import { gbp, priceLine, durationLabel } from '@/lib/format';
 import { arketaUrl } from '@/lib/arketa';
 import type { Course } from '@/lib/types';
 
@@ -47,7 +47,7 @@ const title = pageTitle(course.title, course.seo);
 const description = pageDescription(course.answerSummary.slice(0, 155), course.seo);
 const financeLine = course.financeOptions.find((f) => f.instalments && f.amount);
 const facts = [
-  { label: 'Format', value: course.format === 'online' ? 'Online, on demand' : hours?.inPersonDays ? `${hours.inPersonDays} in-person days` : 'In person' },
+  { label: 'Format', value: durationLabel(course) ?? (course.format === 'online' ? 'Online, on demand' : 'In person') },
   { label: 'Practice hours', value: totalHours ? `${totalHours} supported hours` : undefined },
   { label: 'Exams', value: course.exams.length ? `${course.exams.length} included` : undefined },
   { label: 'Price', value: course.price != null ? (financeLine ? `${gbp(course.price)} or ${financeLine.instalments} × ${gbp(financeLine.amount)}` : gbp(course.price)) : undefined },

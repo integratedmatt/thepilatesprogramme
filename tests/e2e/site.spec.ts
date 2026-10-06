@@ -163,3 +163,27 @@ test('job review links reject a bad signature and are noindexed', async ({ page 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   await expect(page.locator('.review form button[type="submit"]')).toHaveCount(0);
 });
+
+test('equipment partner links carry the affiliate tracking and are marked sponsored', async ({ page }) => {
+  for (const url of ['/jobs', '/training-centre']) {
+    await page.goto(url);
+    const link = page.locator('a[href*="align-pilates.com"]').first();
+    await expect(link).toHaveAttribute('href', /utm_id=AMB-1-TPP/);
+    await expect(link).toHaveAttribute('rel', /sponsored/);
+    await expect(page.getByText('Affiliate link', { exact: false }).first()).toBeAttached();
+  }
+});
+
+test('course pages show the confirmed course length', async ({ page }) => {
+  const expected: [string, string][] = [
+    ['/become-a-pilates-instructor/mat-pilates-teacher-training', '4 in-person days'],
+    ['/become-a-pilates-instructor/reformer-pilates-teacher-training', '5 in-person days'],
+    ['/continuing-education/chair', '3 in-person days'],
+    ['/continuing-education/barrels', '2 in-person days'],
+    ['/continuing-education/cpd/pain-science', '1 in-person day'],
+  ];
+  for (const [url, text] of expected) {
+    await page.goto(url);
+    await expect(page.locator('.facts, dl').getByText(text, { exact: true }).first()).toBeVisible();
+  }
+});

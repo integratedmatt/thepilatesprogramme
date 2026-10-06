@@ -6,7 +6,8 @@ import Section from '@/components/Section.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import JobRow from '@/components/JobRow.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
-import { getLiveJobs, getCpdCourses } from '@/lib/content';
+import PartnerCard from '@/components/PartnerCard.astro';
+import { getLiveJobs, getCpdCourses, getSiteSettings } from '@/lib/content';
 import { gbp } from '@/lib/format';
 export const prerender = false;
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
@@ -27,6 +28,7 @@ const filtered = jobs.filter((j) =>
   (!f.graduate || j.featuredGraduateFriendly),
 );
 const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
+const settings = await getSiteSettings();
 ---
 <Base title="Pilates Instructor Jobs Across the UK | The Pilates Programme" description="Pilates and Barre teaching jobs across the UK, listed free by studios and checked by us. Filter by discipline, area and type, or get alerts for new roles." canonicalPath="/jobs" noindex={isFiltered}>
   <Hero eyebrow="Jobs board" title="Pilates and Barre teaching jobs across the UK" lead="Roles listed by studios, reviewed by us, free for everyone. New roles are added as they are approved.">
@@ -69,6 +71,7 @@ const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
           <p class="small secondary">Reach qualified teachers across the UK. Reviewed within 2 working days.</p>
           <a href="/jobs/post" class="btn btn-primary">Post a job</a>
         </div>
+        <PartnerCard settings={settings} />
       </aside>
     </div>
   </Section>

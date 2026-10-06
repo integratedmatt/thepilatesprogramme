@@ -1,0 +1,21 @@
+---
+/** Equipment partner card for sidebars. Renders nothing until the partner is set in site settings. */
+import type { SiteSettings } from '@/lib/types';
+import { AFFILIATE_REL } from '@/lib/affiliate';
+interface Props { settings: SiteSettings; class?: string }
+const { settings, class: className = '' } = Astro.props;
+const p = settings.equipmentPartner;
+---
+{p?.url && (
+  <div class={`partner-card ${className}`.trim()}>
+    <p class="eyebrow">Equipment partner</p>
+    <p class="h3">{p.name}</p>
+    {p.blurb && <p class="small secondary">{p.blurb}</p>}
+    <a href={p.url} class="arrow-link" rel={AFFILIATE_REL} target="_blank" data-partner={p.name}>Visit {p.name}<span class="visually-hidden"> (opens in a new tab)</span></a>
+    <p class="disclosure">Affiliate link: we may earn a commission, at no extra cost to you.</p>
+  </div>
+)}
+<style>
+  .partner-card { display: grid; gap: var(--space-3); padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); justify-items: start; }
+  .disclosure { font-size: var(--type-eyebrow); line-height: var(--leading-small); color: var(--text-muted); }
+</style>

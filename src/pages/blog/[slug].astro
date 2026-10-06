@@ -9,6 +9,8 @@ import EmailCapture from '@/components/EmailCapture.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getPosts, getSiteSettings, getCourses, getUpcomingDates } from '@/lib/content';
 import { articleSchema } from '@/lib/schema';
+import { withAffiliateLinks } from '@/lib/affiliate';
+import PartnerCard from '@/components/PartnerCard.astro';
 import { longDate, readingTime, wordCount, slugify } from '@/lib/format';
 import { pageTitle, pageDescription } from '@/lib/seo';
 export async function getStaticPaths() {
@@ -23,7 +25,7 @@ const words = wordCount(post.body);
 const showToc = words > 1200;
 // Add ids to h2s for the table of contents and split the body for the inline CTA at ~40% depth.
 const headings: { id: string; text: string }[] = [];
-let body = post.body.replace(/<h2>(.*?)<\/h2>/g, (_, text) => { const id = slugify(text.replace(/<[^>]+>/g, '')); headings.push({ id, text: text.replace(/<[^>]+>/g, '') }); return `<h2 id="${id}">${text}</h2>`; });
+let body = withAffiliateLinks(post.body, settings.equipmentPartner).replace(/<h2>(.*?)<\/h2>/g, (_, text) => { const id = slugify(text.replace(/<[^>]+>/g, '')); headings.push({ id, text: text.replace(/<[^>]+>/g, '') }); return `<h2 id="${id}">${text}</h2>`; });
 const blocks = body.split(/(?=<h2)/);
 const cut = Math.max(1, Math.round(blocks.length * 0.4));
 const before = blocks.slice(0, cut).join('');
@@ -52,6 +54,7 @@ const nextFor = (id: string) => dates.find((d) => d.course === id);
         <aside class="post-side">
           <div class="summary"><p class="eyebrow">In short</p><p>{post.summary}</p></div>
           {showToc && <nav class="toc" aria-label="Contents"><p class="eyebrow">Contents</p><ol role="list">{headings.map((h) => <li><a href={`#${h.id}`}>{h.text}</a></li>)}</ol></nav>}
+          <PartnerCard settings={settings} class="side-partner" />
         </aside>
         <div class="post-body prose">
           <Fragment set:html={before} />
@@ -68,6 +71,7 @@ const nextFor = (id: string) => dates.find((d) => d.course === id);
             {post.author?.image && <Picture image={post.author.image} aspect="square" sizes="96px" widths={[96, 192]} class="author-img" />}
             <div><p class="eyebrow">About the author</p><p><strong><a href={`/about/${post.author?.slug}`}>{post.author?.name}</a></strong>{post.author?.role ? `, ${post.author.role}` : ''}</p>{post.author?.credentials?.length ? <p class="small muted">{post.author.credentials.join(' · ')}</p> : null}{post.author?.bio && <p class="small">{post.author.bio}</p>}</div>
           </footer>
+          <PartnerCard settings={settings} class="end-partner" />
         </div>
       </div>
     </Section>
@@ -96,6 +100,10 @@ const nextFor = (id: string) => dates.find((d) => d.course === id);
   .post-grid { display: grid; gap: var(--space-7); }
   @media (min-width: 1024px) { .post-grid { grid-template-columns: 3fr 8fr; gap: var(--space-8); } }
   .post-side { display: grid; gap: var(--space-6); align-content: start; }
+  /* Partner card: in the sticky sidebar on desktop, after the article on smaller screens. */
+  .post-side :global(.side-partner) { display: none; }
+  .post-body :global(.end-partner) { margin-top: var(--space-7); }
+  @media (min-width: 1024px) { .post-side :global(.side-partner) { display: grid; } .post-body :global(.end-partner) { display: none; } }
   @media (min-width: 1024px) { .post-side { position: sticky; top: calc(var(--header-height) + var(--space-5)); } }
   .summary { border: var(--border-width) solid var(--border-strong); padding: var(--space-5); background: var(--bg-surface); display: grid; gap: var(--space-2); }
   .toc ol { list-style: none; display: grid; gap: var(--space-2); font-size: var(--type-small); margin-top: var(--space-2); }

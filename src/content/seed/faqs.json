@@ -5,7 +5,7 @@
     "group": "Cost and finance",
     "order": 1,
     "question": "How much does Pilates teacher training cost?",
-    "answer": "Mat, Reformer and Barre teacher training each cost £2,200. That includes the online Human Movement course, five in-person days, your manual, the video library, all workshops and all exams. There are no extra fees for assessment or certification. You can pay in full or in four monthly interest-free payments."
+    "answer": "Mat, Reformer and Barre teacher training each cost £2,200. That includes the online Human Movement course, the in-person days (four for Mat, five for Reformer or Barre), your manual, the video library, all workshops and all exams. There are no extra fees for assessment or certification. You can pay in full or in four monthly interest-free payments."
   },
   {
     "_id": "faq-finance",
@@ -69,7 +69,7 @@
     "group": "Practice hours and exams",
     "order": 12,
     "question": "How long does it take to become a Pilates instructor?",
-    "answer": "From booking to your first paid class is typically three to four months: pre-course online study, five in-person days, then around eight weeks of practice hours and exams. Some students take longer around work and family, and that is fine."
+    "answer": "From booking to your first paid class is typically three to four months: pre-course online study, four or five in-person days, then around eight weeks of practice hours and exams. Some students take longer around work and family, and that is fine."
   },
   {
     "_id": "faq-mat-experience",

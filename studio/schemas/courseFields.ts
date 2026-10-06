@@ -19,6 +19,7 @@ export const courseFields = [
   defineField({ name: 'prerequisites', type: 'array', of: [{ type: 'string' }], description: 'Only place where a prior qualification may be named.' }),
   defineField({ name: 'inclusions', type: 'array', of: [{ type: 'string' }] }),
   defineField({ name: 'curriculum', type: 'array', of: [{ type: 'curriculumGroup' }] }),
+  defineField({ name: 'durationDays', title: 'Course length (days)', type: 'number', description: 'Shown on the course page, pricing table and in search results. Leave empty if not yet confirmed.', validation: (r) => r.min(1).integer() }),
   defineField({ name: 'hoursBreakdown', type: 'hoursBreakdown' }),
   defineField({ name: 'exams', type: 'array', of: [{ type: 'exam' }] }),
   defineField({ name: 'forYou', title: 'This is for you if', type: 'array', of: [{ type: 'string' }] }),

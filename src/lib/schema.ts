@@ -51,11 +51,12 @@ export function faqSchema(faqs: Faq[]) {
   };
 }
 
-export function courseInstanceSchema(d: CourseDate, s: SiteSettings) {
+export function courseInstanceSchema(d: CourseDate, s: SiteSettings, days?: number) {
   const onsite = d.location !== 'partner-studio';
   return {
     '@type': 'CourseInstance',
     courseMode: 'onsite',
+    courseWorkload: days ? `P${days}D` : undefined,
     startDate: d.startDate,
     endDate: d.endDate,
     courseSchedule: {
@@ -88,9 +89,9 @@ export function courseSchema(c: Course, dates: CourseDate[], s: SiteSettings, si
       ? { '@type': 'Offer', price: c.price, priceCurrency: 'GBP', category: 'Paid', availability: 'https://schema.org/InStock', url: absolute(siteUrl, url) }
       : undefined,
     hasCourseInstance: dates.length
-      ? dates.map((d) => courseInstanceSchema(d, s))
+      ? dates.map((d) => courseInstanceSchema(d, s, c.durationDays))
       : c.format === 'online'
-        ? [{ '@type': 'CourseInstance', courseMode: 'online', courseWorkload: 'PT4H' }]
+        ? [{ '@type': 'CourseInstance', courseMode: 'online', courseWorkload: c.durationDays ? `P${c.durationDays}D` : 'PT4H' }]
         : undefined,
   };
 }

@@ -11,7 +11,7 @@
     "discipline": "Mat",
     "level": "Beginner, Intermediate and Advanced",
     "format": "in-person",
-    "eyebrow": "Teacher training · 5 in-person days",
+    "eyebrow": "Teacher training · 4 in-person days",
     "outcome": "Qualify to teach Mat Pilates from beginner to advanced, across Contrology, Classical and Contemporary repertoire.",
     "bestFor": "Best first course if you want to teach anywhere, with no equipment needed for your practice hours.",
     "price": 2200,
@@ -29,7 +29,7 @@
     "inclusions": [
       "Human Movement Course (online)",
       "Online learning platform",
-      "5 in-person practical days at the Altrincham centre",
+      "4 in-person practical days at the Altrincham centre",
       "Training manual",
       "Video library",
       "Workshops: history, principles, inclusive language, classroom management, programming, teaching to music, prenatal guidelines, your first job and starting a business",
@@ -68,8 +68,7 @@
     "hoursBreakdown": {
       "observation": 30,
       "personalStudy": 25,
-      "practiceTeaching": 25,
-      "inPersonDays": 5
+      "practiceTeaching": 25
     },
     "exams": [
       {
@@ -88,7 +87,7 @@
     "forYou": [
       "You want to teach Pilates properly, not learn a routine",
       "You value small groups and in-person coaching",
-      "You can commit to 5 in-person days and around 80 hours of practice over the following weeks",
+      "You can commit to 4 in-person days and around 80 hours of practice over the following weeks",
       "You want a qualification that covers every Mat tradition"
     ],
     "notForYou": [
@@ -123,11 +122,12 @@
     "testimonials": [],
     "seo": {
       "title": "Mat Pilates Teacher Training Manchester | The Pilates Programme",
-      "description": "Qualify to teach Mat Pilates in 5 in-person days plus supported practice hours. Contrology, Classical and Contemporary. £2,200 all-in, exams included."
+      "description": "Qualify to teach Mat Pilates in 4 in-person days plus supported practice hours. Contrology, Classical and Contemporary. £2,200 all-in, exams included."
     },
     "answerQuestion": "What is the Mat Pilates teacher training?",
-    "answerSummary": "A Mat Pilates teacher training in Altrincham, Greater Manchester, covering beginner to advanced repertoire across Contrology, Classical and Contemporary styles. Five in-person days, an online Human Movement course, 80 supported practice hours and three exams, all included for £2,200 or four interest-free payments. No prior qualification is needed.",
-    "arketaFallbackUrl": "schedule?serviceId=2souTJywf2FNGYMw3Np9"
+    "answerSummary": "A Mat Pilates teacher training in Altrincham, Greater Manchester, covering beginner to advanced repertoire across Contrology, Classical and Contemporary styles. Four in-person days, an online Human Movement course, 80 supported practice hours and three exams, all included for £2,200 or four interest-free payments. No prior qualification is needed.",
+    "arketaFallbackUrl": "schedule?serviceId=2souTJywf2FNGYMw3Np9",
+    "durationDays": 4
   },
   {
     "_id": "course-reformer",
@@ -197,8 +197,7 @@
     "hoursBreakdown": {
       "observation": 30,
       "personalStudy": 25,
-      "practiceTeaching": 25,
-      "inPersonDays": 5
+      "practiceTeaching": 25
     },
     "exams": [
       {
@@ -256,7 +255,8 @@
     },
     "answerQuestion": "What is the Reformer Pilates teacher training?",
     "answerSummary": "A Reformer Pilates instructor course in Altrincham, Greater Manchester, covering beginner and intermediate repertoire with Classical and Contemporary programming. Five in-person days on full apparatus, an online Human Movement course, 80 supported practice hours and three exams, all included for £2,200 or four interest-free payments. No prior qualification needed.",
-    "arketaFallbackUrl": "schedule?serviceId=0JTOQIuPQBgYVuVl7d0c"
+    "arketaFallbackUrl": "schedule?serviceId=0JTOQIuPQBgYVuVl7d0c",
+    "durationDays": 5
   },
   {
     "_id": "course-barre",
@@ -269,7 +269,7 @@
     "kind": "teacher-training",
     "discipline": "Barre",
     "format": "in-person",
-    "eyebrow": "Teacher training · in person",
+    "eyebrow": "Teacher training · 5 in-person days",
     "outcome": "Qualify to teach Barre classes that blend ballet conditioning with Pilates principles.",
     "bestFor": "Best if you love music-led classes and want to add a high-demand group format to your timetable.",
     "price": 2200,
@@ -287,7 +287,7 @@
     "inclusions": [
       "Human Movement Course (online)",
       "Online learning platform",
-      "In-person practical days at the Altrincham centre",
+      "5 in-person practical days at the Altrincham centre",
       "Training manual",
       "Video library",
       "Workshops: history, principles, inclusive language, classroom management, programming, teaching to music, prenatal guidelines, your first job and starting a business",
@@ -325,8 +325,7 @@
     "hoursBreakdown": {
       "observation": 30,
       "personalStudy": 25,
-      "practiceTeaching": 25,
-      "inPersonDays": 5
+      "practiceTeaching": 25
     },
     "exams": [
       {
@@ -377,8 +376,9 @@
       "description": "Barre teacher training in Altrincham, Manchester. In-person coaching, Pilates-based conditioning, exams included. £2,200 or 4 interest-free payments."
     },
     "answerQuestion": "What is the Barre teacher training?",
-    "answerSummary": "A Barre instructor training in Altrincham, Greater Manchester, blending ballet conditioning with Pilates principles. In-person practical days at our training centre, an online Human Movement course, supported practice hours and exams, all included for £2,200 or four interest-free payments. Suitable for beginners and for Pilates or fitness teachers adding Barre.",
-    "arketaFallbackUrl": "schedule?serviceId=SxZCcWErALVzpl8wvPln"
+    "answerSummary": "A Barre instructor training in Altrincham, Greater Manchester, blending ballet conditioning with Pilates principles. Five in-person practical days at our training centre, an online Human Movement course, supported practice hours and exams, all included for £2,200 or four interest-free payments. Suitable for beginners and for Pilates or fitness teachers adding Barre.",
+    "arketaFallbackUrl": "schedule?serviceId=SxZCcWErALVzpl8wvPln",
+    "durationDays": 5
   },
   {
     "_id": "course-advanced-reformer",
@@ -480,7 +480,7 @@
     "kind": "apparatus",
     "discipline": "Chair",
     "format": "in-person",
-    "eyebrow": "Continuing education · in person",
+    "eyebrow": "Continuing education · 3 in-person days",
     "outcome": "Teach the Wunda Chair, the most space-efficient apparatus for private sessions and small groups.",
     "bestFor": "For Mat or Reformer teachers moving into full apparatus work.",
     "price": 1200,
@@ -498,7 +498,7 @@
       "An existing Mat or Reformer teaching certification"
     ],
     "inclusions": [
-      "In-person practical days on full apparatus",
+      "3 in-person practical days on full apparatus",
       "Course manual",
       "Video library",
       "Online learning platform access, with a 6-week free trial",
@@ -555,7 +555,8 @@
     },
     "answerQuestion": "What is the Chair training?",
     "answerSummary": "An in-person Wunda Chair teacher training in Altrincham, Greater Manchester, for teachers with an existing Mat or Reformer certification. It covers Classical repertoire and Contemporary variations with assessment included, for £1,200. Book Cadillac, Chair and Barrels together for £2,700 and Barrels is free.",
-    "arketaFallbackUrl": "schedule?serviceId=x42a0jeV0x4grjdkOGLR"
+    "arketaFallbackUrl": "schedule?serviceId=x42a0jeV0x4grjdkOGLR",
+    "durationDays": 3
   },
   {
     "_id": "course-cadillac",
@@ -568,7 +569,7 @@
     "kind": "apparatus",
     "discipline": "Cadillac",
     "format": "in-person",
-    "eyebrow": "Continuing education · in person",
+    "eyebrow": "Continuing education · 4 in-person days",
     "outcome": "Teach the Cadillac, the apparatus that opens up rehabilitation-minded and one-to-one work.",
     "bestFor": "For Mat or Reformer teachers building a private client practice.",
     "price": 1500,
@@ -586,7 +587,7 @@
       "An existing Mat or Reformer teaching certification"
     ],
     "inclusions": [
-      "In-person practical days on full apparatus",
+      "4 in-person practical days on full apparatus",
       "Course manual",
       "Video library",
       "Online learning platform access, with a 6-week free trial",
@@ -643,7 +644,8 @@
     },
     "answerQuestion": "What is the Cadillac training?",
     "answerSummary": "An in-person Cadillac teacher training in Altrincham, Greater Manchester, for teachers with an existing Mat or Reformer certification. It covers Classical repertoire, springs, bars and straps, and Contemporary variations, with assessment included, for £1,500. Book Cadillac, Chair and Barrels together for £2,700 and Barrels is free.",
-    "arketaFallbackUrl": "schedule?template=rJC9pbCKvTc6IG0Es12d"
+    "arketaFallbackUrl": "schedule?template=rJC9pbCKvTc6IG0Es12d",
+    "durationDays": 4
   },
   {
     "_id": "course-barrels",
@@ -656,7 +658,7 @@
     "kind": "apparatus",
     "discipline": "Barrels",
     "format": "in-person",
-    "eyebrow": "Continuing education · in person",
+    "eyebrow": "Continuing education · 2 in-person days",
     "outcome": "Teach the Ladder Barrel, Spine Corrector and Arc, the apparatus for extension and mobility work.",
     "bestFor": "For Mat or Reformer teachers who want mobility and extension tools for every client.",
     "price": 800,
@@ -674,7 +676,7 @@
       "An existing Mat or Reformer teaching certification"
     ],
     "inclusions": [
-      "In-person practical days on full apparatus",
+      "2 in-person practical days on full apparatus",
       "Course manual",
       "Video library",
       "Online learning platform access, with a 6-week free trial",
@@ -730,7 +732,8 @@
     },
     "answerQuestion": "What is the Barrels training?",
     "answerSummary": "An in-person Barrels teacher training in Altrincham, Greater Manchester, covering the Ladder Barrel, Spine Corrector and Arc for teachers with an existing Mat or Reformer certification. Assessment included, for £800. Barrels is free when you book Cadillac, Chair and Barrels together for £2,700.",
-    "arketaFallbackUrl": "schedule?serviceId=powPe603yhYq1wKT3WKI"
+    "arketaFallbackUrl": "schedule?serviceId=powPe603yhYq1wKT3WKI",
+    "durationDays": 2
   },
   {
     "_id": "course-apparatus-bundle",
@@ -743,7 +746,7 @@
     "kind": "bundle",
     "discipline": "Apparatus",
     "format": "in-person",
-    "eyebrow": "Continuing education · three courses",
+    "eyebrow": "Continuing education · three courses, 9 days",
     "outcome": "Become a full apparatus teacher. Book Cadillac, Chair and Barrels together and Barrels is free.",
     "bestFor": "For Mat or Reformer teachers committing to full apparatus work.",
     "price": 2700,
@@ -811,7 +814,8 @@
     },
     "answerQuestion": "What is the apparatus bundle?",
     "answerSummary": "The apparatus bundle combines the Cadillac, Chair and Barrels teacher trainings at The Pilates Programme, Altrincham for £2,700, with Barrels included free. It is for teachers with an existing Mat or Reformer certification who want to teach on full apparatus. Each course includes a manual, video library and assessment.",
-    "arketaFallbackUrl": "schedule?template=rJC9pbCKvTc6IG0Es12d"
+    "arketaFallbackUrl": "schedule?template=rJC9pbCKvTc6IG0Es12d",
+    "durationDays": 9
   },
   {
     "_id": "cpd-prenatal",
@@ -885,7 +889,8 @@
     },
     "answerQuestion": "What is the Prenatal and Postpartum CPD?",
     "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers pregnancy anatomy, trimester modifications, postpartum return to movement and when to refer, for £250 or two interest-free instalments. Returning students receive 10% off.",
-    "arketaFallbackUrl": "schedule?serviceId=MpBf6en47VtQeZiSEMCr"
+    "arketaFallbackUrl": "schedule?serviceId=MpBf6en47VtQeZiSEMCr",
+    "durationDays": 1
   },
   {
     "_id": "cpd-strength",
@@ -959,7 +964,8 @@
     },
     "answerQuestion": "What is the Strength and Endurance CPD?",
     "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers progressive overload, programming for strength and endurance, load and tempo choices and tracking progress, for £250 or two interest-free instalments. Returning students receive 10% off.",
-    "arketaFallbackUrl": "schedule?template=oXPZLAxnn9KxroBbibXv"
+    "arketaFallbackUrl": "schedule?template=oXPZLAxnn9KxroBbibXv",
+    "durationDays": 1
   },
   {
     "_id": "cpd-jumpboard",
@@ -1034,7 +1040,8 @@
     },
     "answerQuestion": "What is the Jumpboard CPD?",
     "answerSummary": "An online, on-demand Jumpboard CPD from The Pilates Programme, Altrincham for Reformer teachers from any provider. It covers set-up and safety, foot positions and landing mechanics, programming cardio blocks and contraindications, for £250 or two interest-free instalments, with a certificate on completion.",
-    "arketaFallbackUrl": "series/JgwhP1I5P1NAjOEGNOav"
+    "arketaFallbackUrl": "series/JgwhP1I5P1NAjOEGNOav",
+    "durationDays": 1
   },
   {
     "_id": "cpd-pain-science",
@@ -1108,6 +1115,7 @@
     },
     "answerQuestion": "What is the Pain Science CPD?",
     "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers current models of pain, language that helps, graded exposure in a Pilates setting and scope of practice, for £250 or two interest-free instalments. Returning students receive 10% off.",
-    "arketaFallbackUrl": "schedule?serviceId=iMD1D9WcClvJbvzVTpxn"
+    "arketaFallbackUrl": "schedule?serviceId=iMD1D9WcClvJbvzVTpxn",
+    "durationDays": 1
   }
 ]

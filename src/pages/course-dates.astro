@@ -14,7 +14,7 @@ const byId = new Map(courses.map((c) => [c._id, c]));
 const rows = dates.map((d) => ({ d, c: byId.get(d.course)! })).filter((r) => r.c);
 const months = Array.from(new Set(rows.map((r) => monthKey(r.d.startDate))));
 const courseOptions = courses.filter((c) => rows.some((r) => r.c._id === c._id));
-const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Course', name: r.c.title, description: r.c.answerSummary, provider: { '@type': 'EducationalOrganization', name: settings.entityName }, offers: r.c.price != null ? { '@type': 'Offer', price: r.c.price, priceCurrency: 'GBP', category: 'Paid' } : undefined, hasCourseInstance: [courseInstanceSchema(r.d, settings)] }));
+const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Course', name: r.c.title, description: r.c.answerSummary, provider: { '@type': 'EducationalOrganization', name: settings.entityName }, offers: r.c.price != null ? { '@type': 'Offer', price: r.c.price, priceCurrency: 'GBP', category: 'Paid' } : undefined, hasCourseInstance: [courseInstanceSchema(r.d, settings, r.c.durationDays)] }));
 ---
 <Base title="Pilates Teacher Training Course Dates | The Pilates Programme" description="All upcoming Mat, Reformer, Barre, apparatus and CPD dates at our Altrincham training centre. Filter by course, month and location, and book in two clicks." canonicalPath="/course-dates">
   <Fragment slot="head"><JsonLd data={schema} /></Fragment>

@@ -1,9 +1,12 @@
 ---
 import JsonLd from './JsonLd.astro';
 import { faqSchema } from '@/lib/schema';
+import { getSiteSettings } from '@/lib/content';
+import { withAffiliateLinks } from '@/lib/affiliate';
 import type { Faq } from '@/lib/types';
 interface Props { faqs: Faq[]; heading?: string; schema?: boolean; eyebrow?: string; id?: string; exclusive?: boolean }
 const { faqs, heading = 'Questions people ask', schema = true, eyebrow = 'FAQ', id = 'faq', exclusive = true } = Astro.props;
+const partner = (await getSiteSettings()).equipmentPartner;
 ---
 {faqs.length > 0 && (
   <div class="faq" id={id}>
@@ -12,7 +15,7 @@ const { faqs, heading = 'Questions people ask', schema = true, eyebrow = 'FAQ', 
       {faqs.map((f) => (
         <details class="faq-item" name={exclusive ? 'faq' : undefined}>
           <summary><span class="h3">{f.question}</span><span class="faq-icon" aria-hidden="true"></span></summary>
-          <div class="faq-answer prose" set:html={f.answer.startsWith('<') ? f.answer : `<p>${f.answer}</p>`} />
+          <div class="faq-answer prose" set:html={withAffiliateLinks(f.answer.startsWith('<') ? f.answer : `<p>${f.answer}</p>`, partner)} />
         </details>
       ))}
     </div>

@@ -39,8 +39,7 @@ export interface HoursBreakdown {
   observation: number;
   personalStudy: number;
   practiceTeaching: number;
-  inPersonDays?: number;
-  inPersonHours?: number;  // used for cost per in-person hour
+  inPersonHours?: number;  // used for cost per in-person hour; defaults to durationDays × 7
 }
 
 export interface Exam {
@@ -104,6 +103,7 @@ export interface Course {
   notForYou?: string[];
   afterBooking?: string[];
   unlocks?: string[];      // slugs of courses this unlocks
+  durationDays?: number;   // course length in days (in person, or online equivalent)
   heroImage?: ImageRef;   // also the hero video's poster
   heroVideo?: string;      // base path, e.g. /video/advanced-reformer (see src/lib/video.ts)
   gallery?: ImageRef[];
@@ -265,4 +265,5 @@ export interface SiteSettings {
   };                // "What's included" on the Continuing Education hub
   heroTrustLine?: string;                      // e.g. "Trusted by 850+ students"
   pressLogos: { name: string; image?: ImageRef; url?: string }[];   // "As seen in"; image optional, text wordmark fallback
+  equipmentPartner?: { name: string; url: string; blurb?: string };  // affiliate URL; every link to its domain gets these tracking params
 }
