@@ -28,7 +28,7 @@ Anything marked `[CLIENT TO CONFIRM]` in the spec is an empty CMS field that the
 | Layout, header, footer, cookie banner, GTM | `src/layouts/Base.astro`, `src/components/{Header,Footer,CookieBanner,Analytics}.astro` |
 | Course page template (7.3) | `src/components/CoursePage.astro` used by the three course routes |
 | Pages | `src/pages/**` matching the IA in Section 5 |
-| Forms (server) | `src/pages/api/{lead,contact,job,graduate,elevating-others}.ts`, helpers in `src/lib/server/` |
+| Forms (server) | `src/pages/api/{lead,contact,job,elevating-others}.ts`, helpers in `src/lib/server/` |
 | Jobs approval + expiry | Studio actions in `studio/actions`, webhook target `src/pages/api/revalidate.ts`, cron `src/pages/api/cron/expire-jobs.ts`, one-click renew `src/pages/api/jobs/renew.ts`. Each submission emails `NOTIFY_EMAIL` (info@) with signed Approve and Decline buttons that open `src/pages/jobs/review.astro`; the change only happens on its confirm button, so mail scanners can't trigger it. Set `JOB_REVIEW_SECRET` in production. |
 | Structured data | `src/lib/schema.ts`, validated by `scripts/validate-schema.mjs` |
 | Redirects (5.1) | `src/content/seed/redirects.json` (or Sanity `redirect` docs) → `vercel.json` at build |
@@ -63,7 +63,7 @@ The playbook's 3D transitions and animated 3D clay icons were deliberately not u
 
 ## Analytics
 
-GTM is loaded only when `PUBLIC_GTM_ID` is set. Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, graduate_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
+GTM is loaded only when `PUBLIC_GTM_ID` is set. Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
 
 ## Server routes on Vercel
 

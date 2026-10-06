@@ -5,7 +5,6 @@ import Section from '@/components/Section.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Picture from '@/components/Picture.astro';
 import Testimonials from '@/components/Testimonials.astro';
-import Turnstile from '@/components/Turnstile.astro';
 import { getGraduates, getTestimonials, getQualifyCourses, getContinueCourses } from '@/lib/content';
 const [graduates, testimonials, qualify, cont] = await Promise.all([getGraduates(), getTestimonials(), getQualifyCourses(), getContinueCourses()]);
 const courses = [...qualify, ...cont];
@@ -14,8 +13,8 @@ const areas = Array.from(new Set(graduates.map((g) => g.town).filter(Boolean))) 
 const studios = Array.from(new Set(graduates.flatMap((g) => g.studios ?? []))).sort();
 const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
 ---
-<Base title="Where Our Pilates Graduates Teach | The Pilates Programme" description="Where our graduates teach now, how soon they landed their first class and what they say about training with us. Graduates can add their own profile.">
-  <Hero eyebrow="Graduates" title="Where our graduates teach" lead="Outcomes, not promises. Profiles are added by graduates themselves and checked by the team before they go live.">
+<Base title="Where Our Pilates Graduates Teach | The Pilates Programme" description="Where our graduates teach now, how soon they landed their first paid class and what they say about training with The Pilates Programme in Altrincham.">
+  <Hero eyebrow="Graduates" title="Where our graduates teach" lead="Outcomes, not promises. Every profile is published with the graduate's consent.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Graduates', url: '/graduates' }]} />
   </Hero>
 
@@ -47,39 +46,12 @@ const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
     </Section>
   ) : (
     <Section>
-      <p class="lead">Graduate profiles are being collected now. In the meantime, read what graduates say below, and if you trained with us, add your profile so future students can see where the training leads.</p>
+      <p class="lead">Graduate profiles are coming soon. In the meantime, read what graduates say below.</p>
     </Section>
   )}
 
   <Testimonials items={testimonials} heading="What graduates say" />
 
-  <Section tone="subtle" id="add">
-    <div class="grid">
-      <div class="col-5">
-        <p class="eyebrow">Graduates</p>
-        <h2>Add your profile</h2>
-        <p class="secondary">Trained with us? Tell future students where you teach now. We check every profile before it goes live and never publish without your consent.</p>
-      </div>
-      <div class="col-7">
-        <form class="form-grid" method="post" action="/api/graduate" enctype="multipart/form-data" data-form="graduate" data-form-id="graduate_profile" data-path="qualify" novalidate>
-          <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
-          <div class="field"><label for="gr-name">Full name</label><input class="input" id="gr-name" name="name" required autocomplete="name" /><p class="error" hidden></p></div>
-          <div class="field"><label for="gr-email">Email</label><input class="input" id="gr-email" name="email" type="email" required autocomplete="email" /><p class="hint">Only used to confirm your profile. Never published.</p><p class="error" hidden></p></div>
-          <div class="field"><label for="gr-course">Course you trained on</label><select class="input" id="gr-course" name="course" required>{courses.map((c) => <option value={c.slug}>{c.shortTitle}{c.kind === 'teacher-training' ? ' teacher training' : ''}</option>)}</select><p class="error" hidden></p></div>
-          <div class="field"><label for="gr-cohort">Cohort date</label><input class="input" id="gr-cohort" name="cohort" placeholder="e.g. March 2025" /></div>
-          <div class="field"><label for="gr-studios">Where you teach now</label><input class="input" id="gr-studios" name="studios" placeholder="Studio names, separated by commas" required /><p class="error" hidden></p></div>
-          <div class="field"><label for="gr-town">Town or city</label><input class="input" id="gr-town" name="town" /></div>
-          <div class="field"><label for="gr-time">How long until your first paid class?</label><input class="input" id="gr-time" name="timeToFirstClass" placeholder="e.g. 6 weeks" /></div>
-          <div class="field"><label for="gr-quote">A sentence about your training (optional)</label><textarea class="input" id="gr-quote" name="quote" maxlength="300"></textarea></div>
-          <div class="field"><label for="gr-photo">Photo (optional, JPG or PNG up to 5MB)</label><input class="input" id="gr-photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" /></div>
-          <label class="checkbox"><input type="checkbox" name="consent" value="yes" required /><span>I consent to my name, photo, course and where I teach being published on this site. I can ask for it to be removed at any time.</span></label>
-          <Turnstile />
-          <button type="submit" class="btn btn-primary">Submit my profile</button>
-          <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. We will check your profile and email you when it is live."></div>
-        </form>
-      </div>
-    </div>
-  </Section>
 </Base>
 <style>
   .filters { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); max-width: calc(var(--space-11) * 3); }
@@ -92,10 +64,6 @@ const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
   .studio-list { margin-top: var(--space-8); display: grid; gap: var(--space-4); }
   .studio-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .studio-list li { padding: var(--space-2) var(--space-3); border: var(--border-width) solid var(--border-subtle); font-size: var(--type-small); }
-  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
-  @media (min-width: 1024px) { .col-5 { grid-column: span 4; } .col-7 { grid-column: 6 / span 7; } }
-  .col-5 h2 { margin-block: var(--space-3); }
-  .form-grid { display: grid; gap: var(--space-5); }
 </style>
 <script>
   const form = document.getElementById('grad-filters') as HTMLFormElement | null;
