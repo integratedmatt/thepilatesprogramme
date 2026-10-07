@@ -1,6 +1,6 @@
 ---
 import { dateRange, gbp, parseDate } from '@/lib/format';
-import { statusLabel, statusClass, isBookable, locationLabel, dayPatternLabel } from '@/lib/dates';
+import { statusLabel, statusClass, isBookable, locationLabel, daysLabel } from '@/lib/dates';
 import { arketaUrl } from '@/lib/arketa';
 import { getSiteSettings, courseUrl } from '@/lib/content';
 import type { Course, CourseDate } from '@/lib/types';
@@ -29,7 +29,7 @@ const detailsId = `details-${date._id}`;
     {showCourse && <p class="eyebrow">{courseName}</p>}
     <p class="date-range"><time datetime={date.startDate}>{dateRange(date.startDate, date.endDate)}</time></p>
   </div>
-  <p class="small secondary">{dayPatternLabel(date.dayPattern)}</p>
+  <p class="small secondary">{daysLabel(date)}</p>
   <p class="small secondary">{locationLabel(date)}</p>
   <p><span class={`pill ${statusClass(date.status)}`}>{statusLabel(date)}</span></p>
   <p class="date-action">

@@ -1,4 +1,5 @@
 /** JSON-LD builders. All values come from CMS content. */
+import { courseDays } from './dates';
 import type { Course, CourseDate, Faq, Job, Post, SiteSettings } from './types';
 
 const CONTEXT = 'https://schema.org';
@@ -64,14 +65,14 @@ export function courseInstanceSchema(d: CourseDate, s: SiteSettings, days?: numb
       startDate: d.startDate,
       endDate: d.endDate,
       repeatFrequency: 'Daily',
-      byDay: d.dayPattern === 'weekend' ? ['Saturday', 'Sunday'] : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      byDay: [...new Set(courseDays(d))],
     },
     location: {
       '@type': 'Place',
       name: d.locationName || (onsite ? s.entityName : 'Partner studio'),
       address: onsite
         ? { '@type': 'PostalAddress', streetAddress: s.address.street, addressLocality: s.address.town, postalCode: s.address.postcode, addressCountry: s.address.country }
-        : { '@type': 'PostalAddress', addressLocality: 'Manchester', addressCountry: 'GB' },
+        : { '@type': 'PostalAddress', addressLocality: d.locationName?.split(',').pop()?.trim() || 'Manchester', addressCountry: 'GB' },
     },
   };
 }
