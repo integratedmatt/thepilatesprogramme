@@ -52,7 +52,7 @@ for await (const file of walk(dir)) {
   const path = '/' + relative(dir, file).replace(/^client\//, '').replace(/\/?index\.html$|\.html$/, '');
   pageInfo.set(path.replace(/\/$/, '') || '/', { noindex: /<meta name="robots" content="[^"]*noindex/.test(html), canonical: html.match(/<link rel="canonical" href="([^"]*)"/)?.[1] });
 }
-const sitemapFile = join(dir, dir.endsWith('client') ? '' : 'client', 'sitemap-0.xml');
+const sitemapFile = join(dir, dir.endsWith('client') ? '' : 'client', 'sitemap.xml');
 const sitemap = await readFile(sitemapFile, 'utf8').catch(() => '');
 const redirectSources = new Set(JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8')).redirects.map((r) => r.source));
 for (const [, loc] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
@@ -63,7 +63,7 @@ for (const [, loc] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
   if (info.noindex) errors.push(`sitemap lists ${path}, which is noindex`);
   if (info.canonical && info.canonical !== loc) errors.push(`sitemap lists ${loc} but its canonical is ${info.canonical}`);
 }
-if (!sitemap) errors.push('no sitemap-0.xml in the build');
+if (!sitemap) errors.push('no sitemap.xml in the build');
 
 for (const [t, ps] of titles) if (t && ps.length > 1) errors.push(`duplicate title on ${ps.join(', ')}: ${t}`);
 for (const [, ps] of descs) if (ps.length > 1) errors.push(`duplicate description on ${ps.join(', ')}`);
