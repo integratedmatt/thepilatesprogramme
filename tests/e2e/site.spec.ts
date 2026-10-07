@@ -77,10 +77,11 @@ test('mobile nav opens, traps focus sensibly and closes on Escape', async ({ pag
 test('mega-menu is keyboard operable on desktop', async ({ page, isMobile }) => {
   test.skip(isMobile, 'desktop only');
   await page.goto('/');
-  const trigger = page.locator('[data-menu-trigger="qualify"]');
+  await expect(page.locator('.nav-desktop > ul > li')).toHaveCount(3);
+  const trigger = page.locator('[data-menu-trigger="courses"]');
   await trigger.click();
   await expect(trigger).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('#menu-qualify')).toBeVisible();
+  await expect(page.locator('#menu-courses')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   await expect(trigger).toBeFocused();

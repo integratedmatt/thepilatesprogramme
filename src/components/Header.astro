@@ -1,6 +1,6 @@
 ---
 import { getQualifyCourses, getContinueCourses, courseUrl } from '@/lib/content';
-import { priceLine } from '@/lib/format';
+import { priceLine, durationLabel } from '@/lib/format';
 import type { SiteSettings } from '@/lib/types';
 interface Props { settings: SiteSettings }
 const { settings } = Astro.props;
@@ -8,16 +8,22 @@ const qualify = await getQualifyCourses();
 const continueCourses = (await getContinueCourses()).filter((c) => c.kind !== 'bundle');
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
-const menus = [
-  { id: 'qualify', label: 'Qualify', href: '/become-a-pilates-instructor', intro: 'I want to become a Pilates or Barre teacher', courses: qualify, extra: [{ label: 'Which course is right for me?', href: '/become-a-pilates-instructor/which-course' }, { label: 'Road to Certification', href: '/become-a-pilates-instructor/road-to-certification' }, { label: 'Pricing', href: '/pricing' }, { label: 'Accreditation', href: '/accreditation' }] },
-  { id: 'continue', label: 'Continue Learning', href: '/continuing-education', intro: 'I am already a qualified teacher', courses: continueCourses, extra: [{ label: 'Apparatus bundle', href: '/continuing-education/apparatus-bundle' }, { label: 'All CPD', href: '/continuing-education/cpd' }] },
-];
+const apparatus = continueCourses.filter((c) => c.kind !== 'cpd');
+// One "Courses" menu holds both paths side by side, so visitors see every course before choosing a route.
+// Course Dates is the Book button; Journal, FAQs and Contact live in the footer.
 const links = [
-  { label: 'Course Dates', href: '/course-dates' },
   { label: 'Jobs', href: '/jobs' },
-  { label: 'Journal', href: '/blog' },
   { label: 'About', href: '/about' },
 ];
+const planLinks = [
+  { label: 'Course dates', href: '/course-dates' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Road to Certification', href: '/become-a-pilates-instructor/road-to-certification' },
+  { label: 'Accreditation', href: '/accreditation' },
+  { label: 'FAQs', href: '/faqs' },
+];
+const coursesActive = ['/become-a-pilates-instructor', '/continuing-education', '/pricing', '/accreditation'].some(isActive);
+const meta = (c: (typeof qualify)[number]) => [durationLabel(c) ?? (c.format === 'online' ? 'Online' : 'In person'), c.price != null ? priceLine(c.price, c.financeOptions) : ''].filter(Boolean).join(' · ');
 ---
 <header class="site-header" id="site-header">
   <div class="container header-inner">
@@ -27,34 +33,35 @@ const links = [
 
     <nav class="nav-desktop" aria-label="Primary">
       <ul>
-        {menus.map((m) => (
-          <li class="has-menu">
-            <button type="button" class:list={['nav-link', { 'is-active': isActive(m.href) }]} aria-expanded="false" aria-controls={`menu-${m.id}`} data-menu-trigger={m.id}>{m.label}</button>
-            <div class="mega motion-pop" id={`menu-${m.id}`} hidden data-menu={m.id}>
-              <div class="container mega-inner">
-                <div class="mega-intro">
-                  <p class="eyebrow">{m.intro}</p>
-                  <a href={m.href} class="arrow-link">See the {m.label === 'Qualify' ? 'Qualify' : 'Continue Learning'} path</a>
-                  <ul class="mega-extra">
-                    {m.extra.map((e) => <li><a href={e.href}>{e.label}</a></li>)}
-                  </ul>
-                </div>
-                <ul class="mega-courses" role="list">
-                  {m.courses.map((c) => (
-                    <li>
-                      <a href={courseUrl(c)} class="mega-card">
-                        <span class="eyebrow">{c.kind === 'cpd' ? 'CPD' : c.discipline}</span>
-                        <span class="mega-title">{c.shortTitle}</span>
-                        <span class="small secondary">{c.outcome}</span>
-                        {c.price != null && <span class="small muted">From {priceLine(c.price, c.financeOptions)}</span>}
-                      </a>
-                    </li>
-                  ))}
+        <li class="has-menu">
+          <button type="button" class:list={['nav-link', { 'is-active': coursesActive }]} aria-expanded="false" aria-controls="menu-courses" data-menu-trigger="courses">Courses<span class="chev" aria-hidden="true"></span></button>
+          <div class="mega motion-pop" id="menu-courses" hidden data-menu="courses">
+            <div class="container mega-inner">
+              <section class="mega-group" aria-labelledby="mega-qualify">
+                <p class="eyebrow">I want to qualify</p>
+                <a href="/become-a-pilates-instructor" class="mega-heading" id="mega-qualify">Become a teacher</a>
+                <ul class="mega-list" role="list">
+                  {qualify.map((c) => <li><a href={courseUrl(c)} class="mega-item"><span class="mega-item-title">{c.shortTitle} teacher training</span><span class="small muted">{meta(c)}</span></a></li>)}
                 </ul>
-              </div>
+                <a href="/become-a-pilates-instructor/which-course" class="arrow-link small">Which course is right for me?</a>
+              </section>
+              <section class="mega-group" aria-labelledby="mega-continue">
+                <p class="eyebrow">I'm already qualified</p>
+                <a href="/continuing-education" class="mega-heading" id="mega-continue">Continue learning</a>
+                <ul class="mega-list" role="list">
+                  {apparatus.map((c) => <li><a href={courseUrl(c)} class="mega-item"><span class="mega-item-title">{c.shortTitle}</span><span class="small muted">{meta(c)}</span></a></li>)}
+                  <li><a href="/continuing-education/cpd" class="mega-item"><span class="mega-item-title">CPD courses</span><span class="small muted">One-day courses, in person or online</span></a></li>
+                </ul>
+              </section>
+              <section class="mega-plan" aria-labelledby="mega-plan">
+                <p class="eyebrow" id="mega-plan">Plan your training</p>
+                <ul class="mega-plan-list" role="list">
+                  {planLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+                </ul>
+              </section>
             </div>
-          </li>
-        ))}
+          </div>
+        </li>
         {links.map((l) => (
           <li><a href={l.href} class:list={['nav-link', { 'is-active': isActive(l.href) }]} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a></li>
         ))}
@@ -82,11 +89,10 @@ const links = [
         </a>
       </div>
       <ul class="mobile-links rule-list" data-stagger>
-        {qualify.map((c) => <li><a href={courseUrl(c)}>{c.shortTitle} teacher training</a></li>)}
         <li><a href="/become-a-pilates-instructor/which-course">Which course is right for me?</a></li>
-        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="/course-dates">Course dates</a></li>
         <li><a href="/pricing">Pricing</a></li>
-        <li><a href="/faqs">FAQs</a></li>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
         <li><a href="/contact">Contact</a></li>
       </ul>
     </div>
@@ -103,24 +109,31 @@ const links = [
   .logo-text { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); letter-spacing: var(--tracking-h2); }
   .nav-desktop { display: none; }
   @media (min-width: 1024px) { .nav-desktop { display: block; } }
-  .nav-desktop > ul { display: flex; gap: var(--space-1); list-style: none; }
+  .nav-desktop > ul { display: flex; gap: var(--space-4); list-style: none; }
   .nav-link { display: inline-flex; align-items: center; white-space: nowrap; min-height: var(--touch-target); padding: var(--space-2) var(--space-2); background: none; border: 0; cursor: pointer; text-decoration: none; color: var(--text-secondary); font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); border-bottom: var(--focus-width) solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
   .nav-link:hover, .nav-link[aria-expanded="true"], .nav-link.is-active { color: var(--text-primary); border-bottom-color: var(--bronze-700); }
   .mega { position: absolute; left: 0; right: 0; top: 100%; background: var(--bg-surface); border-bottom: var(--border-width) solid var(--border-subtle); padding-block: var(--space-7); }
-  .mega-inner { display: grid; grid-template-columns: 3fr 9fr; gap: var(--space-7); }
-  .mega-intro { display: grid; gap: var(--space-4); align-content: start; }
-  .mega-extra { list-style: none; display: grid; gap: var(--space-2); font-size: var(--type-small); }
-  .mega-courses { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
-  .mega-card { display: grid; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); background: var(--bg-page); text-decoration: none; color: var(--text-primary); min-height: 100%; transition: border-color var(--dur-fast) var(--ease-out); }
-  .mega-card:hover { border-color: var(--border-strong); color: var(--text-primary); transform: translateY(calc(-1 * var(--press))); }
-  .mega-card { transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .mega-inner { display: grid; grid-template-columns: 4fr 4fr 3fr; gap: var(--space-8); }
+  .mega-group, .mega-plan { display: grid; gap: var(--space-3); align-content: start; }
+  .mega-heading { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); color: var(--text-primary); text-decoration: none; }
+  .mega-heading:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .mega-list { list-style: none; display: grid; border-top: var(--border-width) solid var(--border-subtle); margin-block: var(--space-2); }
+  .mega-list li { border-bottom: var(--border-width) solid var(--border-subtle); }
+  .mega-item { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-2); text-decoration: none; color: var(--text-primary); transition: background-color var(--dur-fast) var(--ease-out); }
+  .mega-item:hover, .mega-item:focus-visible { background: var(--bg-subtle); }
+  .mega-item-title { font-weight: var(--weight-medium); }
+  .mega-plan { padding-left: var(--space-7); border-left: var(--border-width) solid var(--border-subtle); }
+  .mega-plan-list { list-style: none; display: grid; gap: var(--space-3); }
+  .mega-plan-list a { color: var(--text-primary); text-decoration: none; }
+  .mega-plan-list a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .chev { display: inline-block; width: 0.45em; height: 0.45em; margin-left: var(--space-2); border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-0.15em) rotate(45deg); transition: transform var(--dur-fast) var(--ease-out); }
+  .nav-link[aria-expanded="true"] .chev { transform: translateY(0.05em) rotate(-135deg); }
   .mobile-nav:not([hidden]) [data-stagger] > * { animation: rise var(--dur-slow) var(--ease-out) both; animation-delay: calc(var(--stagger) * var(--i, 0)); }
-  .mega-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); }
   .header-actions { display: flex; align-items: center; gap: var(--space-3); }
   .btn-book { min-height: var(--touch-target); padding: var(--space-3) var(--space-4); white-space: nowrap; }
   .book-full { display: none; }
   @media (min-width: 768px) { .book-full { display: inline; } .book-short { display: none; } }
-  @media (min-width: 1440px) { .nav-link { padding-inline: var(--space-3); } .nav-desktop > ul { gap: var(--space-3); } }
+  @media (min-width: 1440px) { .nav-link { padding-inline: var(--space-3); } .nav-desktop > ul { gap: var(--space-5); } }
   .menu-toggle { display: inline-grid; gap: var(--space-1); place-content: center; width: var(--touch-target); height: var(--touch-target); background: none; border: 0; cursor: pointer; }
   .menu-toggle .bar { display: block; width: var(--space-5); height: var(--focus-width); background: var(--ink-900); transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
   .menu-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(calc(var(--space-1) + var(--focus-width))) rotate(45deg); }
