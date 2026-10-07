@@ -2,7 +2,7 @@
  * Writes vercel.json from the redirect content (Sanity when configured, else the seed).
  * Runs before every build so redirects stay in the CMS.
  */
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, access } from 'node:fs/promises';
 
 const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.PUBLIC_SANITY_DATASET || 'production';
@@ -24,7 +24,19 @@ async function loadRedirects() {
   return JSON.parse(await readFile(new URL('../src/content/seed/redirects.json', import.meta.url), 'utf8'));
 }
 
-const redirects = await loadRedirects();
+const exists = (p) => access(new URL(p, import.meta.url)).then(() => true, () => false);
+/** A redirect from a path that is now a real page would hide that page (and leave a redirect in the sitemap). */
+async function shadowsPage(from) {
+  if (!/^\/[a-z0-9/-]*$/i.test(from)) return false;
+  const base = `../src/pages${from.replace(/\/$/, '')}`;
+  return (await exists(`${base}.astro`)) || (await exists(`${base}/index.astro`));
+}
+const all = await loadRedirects();
+const redirects = [];
+for (const r of all) {
+  if (r.from && (await shadowsPage(r.from))) console.warn(`[redirects] skipped ${r.from} -> ${r.to}: ${r.from} is a page on this site`);
+  else redirects.push(r);
+}
 const base = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
   trailingSlash: false,

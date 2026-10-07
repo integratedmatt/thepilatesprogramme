@@ -12,6 +12,5 @@
   { "_id": "redirect-11", "_type": "redirect", "from": "/strengthandendurancecpd", "to": "/continuing-education/cpd/strength-endurance", "permanent": true },
   { "_id": "redirect-12", "_type": "redirect", "from": "/jumpboard", "to": "/continuing-education/cpd/jumpboard-online", "permanent": true },
   { "_id": "redirect-13", "_type": "redirect", "from": "/painscience", "to": "/continuing-education/cpd/pain-science", "permanent": true },
-  { "_id": "redirect-14", "_type": "redirect", "from": "/about", "to": "/training-centre", "permanent": true },
   { "_id": "redirect-15", "_type": "redirect", "from": "/elevatingothers", "to": "/elevating-others", "permanent": true }
 ]

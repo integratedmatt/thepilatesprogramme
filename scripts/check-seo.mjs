@@ -44,6 +44,27 @@ for await (const file of walk(dir)) {
     (descs.get(desc) ?? descs.set(desc, []).get(desc)).push(page);
   }
 }
+// Sitemap hygiene: every listed URL must be a built, indexable page whose canonical is itself, and must not
+// be shadowed by a redirect. Server-rendered routes (no built HTML) are only checked against redirects.
+const pageInfo = new Map();
+for await (const file of walk(dir)) {
+  const html = await readFile(file, 'utf8');
+  const path = '/' + relative(dir, file).replace(/^client\//, '').replace(/\/?index\.html$|\.html$/, '');
+  pageInfo.set(path.replace(/\/$/, '') || '/', { noindex: /<meta name="robots" content="[^"]*noindex/.test(html), canonical: html.match(/<link rel="canonical" href="([^"]*)"/)?.[1] });
+}
+const sitemapFile = join(dir, dir.endsWith('client') ? '' : 'client', 'sitemap-0.xml');
+const sitemap = await readFile(sitemapFile, 'utf8').catch(() => '');
+const redirectSources = new Set(JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8')).redirects.map((r) => r.source));
+for (const [, loc] of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+  const path = new URL(loc).pathname.replace(/\/$/, '') || '/';
+  if (redirectSources.has(path)) errors.push(`sitemap lists ${path}, which redirects`);
+  const info = pageInfo.get(path);
+  if (!info) continue;
+  if (info.noindex) errors.push(`sitemap lists ${path}, which is noindex`);
+  if (info.canonical && info.canonical !== loc) errors.push(`sitemap lists ${loc} but its canonical is ${info.canonical}`);
+}
+if (!sitemap) errors.push('no sitemap-0.xml in the build');
+
 for (const [t, ps] of titles) if (t && ps.length > 1) errors.push(`duplicate title on ${ps.join(', ')}: ${t}`);
 for (const [, ps] of descs) if (ps.length > 1) errors.push(`duplicate description on ${ps.join(', ')}`);
 for (const w of warnings) console.warn(`! ${w}`);

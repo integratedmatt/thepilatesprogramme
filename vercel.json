@@ -68,11 +68,6 @@
       "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/training-centre",
-      "permanent": true
-    },
-    {
       "source": "/elevatingothers",
       "destination": "/elevating-others",
       "permanent": true

@@ -17,5 +17,5 @@ export function pageDescription(fallback: string, seo?: SeoFields): string {
 export function canonical(site: URL | undefined, pathname: string): string {
   const base = site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
   const clean = pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
-  return `${base}${clean === '/' ? '' : clean}` || base;
+  return clean === '/' ? `${base}/` : `${base}${clean}`;
 }
