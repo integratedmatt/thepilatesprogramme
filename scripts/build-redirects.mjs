@@ -43,6 +43,8 @@ const base = {
   redirects: redirects
     .filter((r) => r.from && r.to && r.from !== r.to)
     .map((r) => ({ source: r.from, destination: r.to, permanent: r.permanent !== false })),
+  // /sitemap.xml is where most tools look first; serve the index there too (a rewrite, so it answers 200).
+  rewrites: [{ source: '/sitemap.xml', destination: '/sitemap-index.xml' }],
   headers: [
     { source: '/(.*)', headers: [
       { key: 'X-Content-Type-Options', value: 'nosniff' },
