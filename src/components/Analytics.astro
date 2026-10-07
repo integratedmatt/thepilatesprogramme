@@ -3,7 +3,8 @@
  * GTM with Consent Mode v2. Defaults to denied; the cookie banner updates consent.
  * No analytics or marketing tags fire before consent. GA4 and Meta Pixel are configured inside GTM.
  */
-const gtmId = import.meta.env.PUBLIC_GTM_ID as string | undefined;
+import { GTM_ID } from '@/lib/analytics';
+const gtmId = GTM_ID;
 ---
 <script is:inline>
   window.dataLayer = window.dataLayer || [];

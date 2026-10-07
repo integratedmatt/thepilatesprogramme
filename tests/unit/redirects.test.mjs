@@ -18,7 +18,7 @@ const expected = {
   '/strengthandendurancecpd': '/continuing-education/cpd/strength-endurance',
   '/jumpboard': '/continuing-education/cpd/jumpboard-online',
   '/painscience': '/continuing-education/cpd/pain-science',
-  '/about': '/training-centre',
+  // '/about' -> '/training-centre' is deliberately absent: /about is now a page, and the redirect hid it.
   '/elevatingothers': '/elevating-others',
 };
 
@@ -28,6 +28,14 @@ test('all Section 5.1 redirects are in the seed and in vercel.json as 301s', () 
     assert.ok(s, `seed missing ${from}`); assert.equal(s.to, to); assert.equal(s.permanent, true);
     const v = vercel.redirects.find((r) => r.source === from);
     assert.ok(v, `vercel.json missing ${from}`); assert.equal(v.destination, to); assert.equal(v.permanent, true);
+  }
+});
+
+test('no redirect hides a page on this site', () => {
+  for (const r of vercel.redirects) {
+    for (const p of [`src/pages${r.source}.astro`, `src/pages${r.source}/index.astro`]) {
+      assert.throws(() => readFileSync(p), `${r.source} redirects but ${p} exists`);
+    }
   }
 });
 

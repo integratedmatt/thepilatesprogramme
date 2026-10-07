@@ -63,7 +63,7 @@ The playbook's 3D transitions and animated 3D clay icons were deliberately not u
 
 ## Analytics
 
-GTM is loaded only when `PUBLIC_GTM_ID` is set. Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
+GTM container `GTM-NSDMRJW6` loads on production builds (`src/lib/analytics.ts`; `PUBLIC_GTM_ID` overrides it, dev and test builds load nothing). Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
 
 ## Server routes on Vercel
 
