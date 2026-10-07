@@ -76,7 +76,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "/sitemap-index.xml"
+      "destination": "/sitemap-0.xml"
     }
   ],
   "headers": [

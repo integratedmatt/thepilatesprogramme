@@ -25,6 +25,7 @@ export default defineConfig({
         !page.includes('/jobs/review') &&
         !page.includes('/jobs/post'),
       changefreq: 'weekly',
+      xslURL: '/sitemap.xsl',
     }),
   ],
   vite: {
