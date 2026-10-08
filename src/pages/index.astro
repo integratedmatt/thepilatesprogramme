@@ -47,7 +47,7 @@ const heroVideo = heroVideoSources('/video/header');
   {stats.length > 0 && (
     <Section tone="subtle" reveal={false}>
       <dl class="proof-bar">
-        {stats.map((s) => <div><dd class="h2">{s.value}</dd><dt class="small muted">{s.label}</dt></div>)}
+        {stats.map((s) => <div><dd class="h2" data-countup>{s.value}</dd><dt class="small muted">{s.label}</dt></div>)}
       </dl>
     </Section>
   )}
@@ -182,3 +182,23 @@ const heroVideo = heroVideoSources('/video/header');
   .plain-list li::before { content: "·"; margin-right: var(--space-2); color: var(--text-inverse-accent); }
   .mt-4 { margin-top: var(--space-4); } .mt-6 { margin-top: var(--space-6); }
 </style>
+<script>
+  // Proof bar numbers count up once when they enter view (pattern from Relume Stats 7). Text such as "850+" or "4.9★" keeps its suffix.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-countup]'));
+  if (els.length && !reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        const el = e.target as HTMLElement; const text = el.textContent || '';
+        const m = text.match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/); if (!m) return;
+        const [, pre, num, post] = m; const target = Number(num.replace(/,/g, '')); const dec = (num.split('.')[1] || '').length;
+        const start = performance.now(); const dur = 900;
+        const tick = (now: number) => { const p = Math.min(1, (now - start) / dur); const v = target * (1 - Math.pow(1 - p, 3)); el.textContent = `${pre}${v.toLocaleString('en-GB', { minimumFractionDigits: dec, maximumFractionDigits: dec })}${post}`; if (p < 1) requestAnimationFrame(tick); else el.textContent = text; };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+    els.forEach((el) => io.observe(el));
+  }
+</script>

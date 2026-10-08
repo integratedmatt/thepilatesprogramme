@@ -7,6 +7,7 @@ import AnswerBox from '@/components/AnswerBox.astro';
 import FactsBlock from '@/components/FactsBlock.astro';
 import Timeline from '@/components/Timeline.astro';
 import CourseCard from '@/components/CourseCard.astro';
+import CompareTabs from '@/components/CompareTabs.astro';
 import DatesList from '@/components/DatesList.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
@@ -24,8 +25,6 @@ const ids = new Set(courses.map((c) => c._id));
 const dates = allDates.filter((d) => ids.has(d.course)).slice(0, 6);
 const nextFor = (id: string) => allDates.find((d) => d.course === id);
 const dbl = rules.find((r) => r.slug === 'double-booking');
-const mat = courses.find((c) => c.slug === 'mat-pilates-teacher-training');
-const reformer = courses.find((c) => c.slug === 'reformer-pilates-teacher-training');
 const minPrice = Math.min(...courses.map((c) => c.price ?? Infinity));
 const answer = `To become a Pilates instructor you complete a teacher training course, your practice hours and the exams. At The Pilates Programme that is four or five in-person days, usually at our Altrincham training centre, then 30 observation, 25 personal study and 25 practice teaching hours in your own time, and the exams, from ${gbp(minPrice)} all in with four interest-free payments. Most students certify in around six months.`;
 const steps = [
@@ -72,24 +71,11 @@ const facts = [
     <ul class="card-grid" role="list" data-stagger>{courses.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
   </Section>
 
-  {mat && reformer && (
-    <Section tone="subtle">
-      <header class="section-heading"><p class="eyebrow">Which first?</p><h2>Mat or Reformer first?</h2><p class="lead">Train in the apparatus you are most passionate about. Both set you up to teach in studios, gyms, online and one to one. The difference is what you can practise on.</p></header>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th scope="col">Question</th><th scope="col">Mat</th><th scope="col">Reformer</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Prerequisites</th><td>{mat.prerequisites?.length ? mat.prerequisites.join(', ') : 'None'}</td><td>{reformer.prerequisites?.length ? reformer.prerequisites.join(', ') : 'None'}</td></tr>
-            <tr><th scope="row">Equipment for practice hours</th><td>None. A mat and a room.</td><td>Regular access to a Reformer: local studio, hire at the centre, or at home.</td></tr>
-            <tr><th scope="row">Where you can teach</th><td>Studios, gyms, community venues, online, your own classes.</td><td>Boutique Reformer studios and gyms with Reformers, private clients.</td></tr>
-            <tr><th scope="row">Price</th><td>{gbp(mat.price)}</td><td>{gbp(reformer.price)}</td></tr>
-            <tr><th scope="row">Levels covered</th><td>{mat.level}</td><td>{reformer.level}</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="small muted mt-4">Job demand varies by area. The jobs board shows which disciplines local studios are hiring for right now.</p>
-    </Section>
-  )}
+  <Section tone="subtle" id="compare">
+    <header class="section-heading"><p class="eyebrow">Compare</p><h2>Mat, Reformer or Barre?</h2><p class="lead">Train in the apparatus you are most passionate about. All three set you up to teach in studios, gyms, online and one to one. The difference is what you can practise on.</p></header>
+    <CompareTabs courses={courses} nextFor={nextFor} id="compare-courses" />
+    <p class="small muted mt-4">Job demand varies by area. The jobs board shows which disciplines local studios are hiring for right now.</p>
+  </Section>
 
   {dbl && (
     <Section tone="inverse">

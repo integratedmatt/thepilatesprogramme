@@ -1,0 +1,103 @@
+---
+/**
+ * Course comparison tabs for the teacher training hub (pattern from Relume Timeline 14 and Layout 403,
+ * ported to plain HTML). Every panel is rendered in the HTML and only hidden with the `hidden` attribute,
+ * so all three courses stay indexable and the page works without JavaScript (panels simply stack).
+ * Data comes straight from the course records; nothing here is written by hand.
+ */
+import Picture from './Picture.astro';
+import { courseUrl } from '@/lib/content';
+import { gbp, durationLabel, dateRange } from '@/lib/format';
+import type { Course, CourseDate } from '@/lib/types';
+interface Props { courses: Course[]; nextFor: (id: string) => CourseDate | undefined; id?: string }
+const { courses, nextFor, id = 'compare' } = Astro.props;
+const facts = (c: Course) => [
+  ['Format', durationLabel(c) ?? (c.format === 'online' ? 'Online' : 'In person')],
+  ['After the course', c.hoursBreakdown ? `${c.hoursBreakdown.observation} observation, ${c.hoursBreakdown.personalStudy} personal study, ${c.hoursBreakdown.practiceTeaching} practice teaching hours` : ''],
+  ['Price', c.price != null ? `${gbp(c.price)}${c.financeOptions.find((f) => f.instalments && f.amount) ? ` or ${c.financeOptions.find((f) => f.instalments)!.instalments} × ${gbp(c.financeOptions.find((f) => f.amount)!.amount!)}` : ''}` : 'Price on request'],
+  ['Accreditation', c.accreditation ?? ''],
+  ['Prerequisite', c.prerequisites?.length ? c.prerequisites.join('; ') : 'No prior certification needed'],
+].filter(([, v]) => v);
+---
+<div class="compare" id={id} data-tabs>
+  <div class="tablist" role="tablist" aria-label="Compare the courses">
+    {courses.map((c, i) => (
+      <button type="button" role="tab" id={`${id}-tab-${c.slug}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`${id}-panel-${c.slug}`} tabindex={i === 0 ? 0 : -1} class="tab">
+        <span class="tab-label">{c.shortTitle}</span>
+        <span class="tab-meta small muted">{durationLabel(c) ?? ''}</span>
+      </button>
+    ))}
+    <span class="tab-ink" aria-hidden="true"></span>
+  </div>
+  {courses.map((c, i) => {
+    const next = nextFor(c._id);
+    return (
+      <div role="tabpanel" id={`${id}-panel-${c.slug}`} aria-labelledby={`${id}-tab-${c.slug}`} class="panel motion-step" hidden={i !== 0}>
+        <div class="panel-media">
+          <Picture image={c.cardImage ?? c.heroImage} aspect={c.cardImage ? 'wide' : 'landscape'} sizes="(min-width: 1024px) 50vw, 100vw" />
+        </div>
+        <div class="panel-body">
+          <p class="eyebrow">{c.discipline} teacher training</p>
+          <h3>{c.outcome}</h3>
+          {c.bestFor && <p class="secondary">{c.bestFor}</p>}
+          <dl class="facts">
+            {facts(c).map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+          </dl>
+          <div class="panel-actions">
+            <a href={courseUrl(c)} class="btn btn-primary">See the {c.shortTitle} course</a>
+            {next ? <a href={`${courseUrl(c)}#dates`} class="arrow-link">Next date {dateRange(next.startDate, next.endDate)}</a> : <span class="small muted">New dates being scheduled</span>}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+<style>
+  .compare { display: grid; gap: var(--space-6); }
+  .tablist { position: relative; display: flex; gap: var(--space-2); border-bottom: var(--border-width) solid var(--border-subtle); overflow-x: auto; scrollbar-width: none; }
+  .tablist::-webkit-scrollbar { display: none; }
+  .tab { flex: 1 0 auto; display: grid; gap: var(--space-1); justify-items: start; padding: var(--space-4) var(--space-4) var(--space-4) 0; background: none; border: 0; border-bottom: var(--focus-width) solid transparent; margin-bottom: calc(-1 * var(--border-width)); color: var(--text-muted); cursor: pointer; text-align: left; transition: color var(--dur-fast) var(--ease-out); }
+  @media (min-width: 768px) { .tab { flex: 1 1 0; } }
+  .tab:hover { color: var(--text-primary); }
+  .tab[aria-selected="true"] { color: var(--text-primary); border-bottom-color: var(--border-strong); }
+  .tab:focus-visible { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
+  .tab-label { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); line-height: var(--leading-h3); }
+  .tab-ink { display: none; }
+  .panel { display: grid; gap: var(--space-6); }
+  @media (min-width: 1024px) { .panel { grid-template-columns: 6fr 6fr; gap: var(--space-8); align-items: start; } }
+  .panel-body { display: grid; gap: var(--space-4); align-content: start; }
+  .panel-body h3 { font-size: var(--type-h3); }
+  .facts { display: grid; gap: var(--space-3); margin-top: var(--space-2); }
+  .facts div { display: grid; gap: var(--space-1); border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
+  @media (min-width: 640px) { .facts div { grid-template-columns: 10rem 1fr; gap: var(--space-4); } }
+  .facts dt { font-size: var(--type-small); font-weight: var(--weight-medium); color: var(--text-muted); }
+  .facts dd { margin: 0; color: var(--text-secondary); }
+  .panel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-3); }
+  /* Without JavaScript every panel shows, stacked, and the tab buttons become plain headings. */
+  :global(.no-js) .panel[hidden] { display: grid; }
+  :global(.no-js) .tablist { display: none; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')!)).filter((p): p is HTMLElement => Boolean(p));
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => { const on = i === j; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+      panels.forEach((p, j) => { p.hidden = i !== j; });
+      const w = window as any; (w.dataLayer = w.dataLayer || []).push({ event: 'compare_tab', course: tabs[i].id.split('-tab-')[1] });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % n, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + n) % n, true); }
+        if (e.key === 'Home') { e.preventDefault(); select(0, true); }
+        if (e.key === 'End') { e.preventDefault(); select(n - 1, true); }
+      });
+    });
+    // Deep link: /become-a-pilates-instructor#compare=reformer
+    const m = location.hash.match(/compare=([a-z-]+)/);
+    if (m) { const i = tabs.findIndex((t) => t.id.endsWith(`-tab-${m[1]}`) || t.id.includes(`-tab-${m[1]}-`)); if (i > 0) select(i); }
+  });
+</script>

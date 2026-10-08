@@ -55,6 +55,15 @@ Follows spec 4.7 and section 5.6 of the UI/UX playbook (Google Drive, "02 UI UX 
 | Eased disclosure | FAQ accordion, course date details | `.disclosure::details-content` animates height and opacity |
 | Micro-interactions | buttons, inputs, cards, arrow links | press offset, border and colour eases, image lift, arrow slide |
 | Data read in order | hours bar | segments grow from the left with a stagger when the section enters |
+| Section tabs | course pages | `SectionNav.astro`: sticky anchor list under the header; IntersectionObserver marks the section in view. Plain links, so it works without JS |
+| Course comparison | teacher training hub | `CompareTabs.astro`: ARIA tablist with arrow keys; every panel is in the HTML and only hidden, so all three courses stay indexable. Deep link `#compare=reformer` |
+| Timeline progress | hub, Road to Certification | `Timeline.astro`: the rule above each step fills as it enters view |
+| Testimonial carousel | home | `TestimonialWall.astro`: prev/next buttons and dots over the existing scroll-snap list; appear only when the list overflows |
+| Pay in full / instalments | course pricing block | `PriceBlock.astro`: both views rendered, switch toggles which shows |
+| Gallery lightbox | training centre | `Gallery.astro`: native `<dialog>`, Esc closes, arrow keys move, image only loads when opened |
+| Count-up | proof bar | numbers count up once on entry, suffixes kept, off under reduced motion |
+
+These were ported from Relume's React section patterns (Layout 350, Timeline 14, Testimonial 41, Pricing 35, Gallery 10, Stats 7) as plain Astro components on the site's tokens: no React runtime, content server-rendered, each script a few hundred bytes.
 
 The playbook's 3D transitions and animated 3D clay icons were deliberately not used: they conflict with the spec's quiet, editorial direction. Everything collapses to instant under `prefers-reduced-motion: reduce`.
 

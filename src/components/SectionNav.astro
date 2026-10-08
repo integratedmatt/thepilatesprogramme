@@ -1,0 +1,49 @@
+---
+/**
+ * Sticky in-page section tabs (pattern from Relume Layout 350 / Section Header 3, ported to plain HTML).
+ * Anchor links render server-side so crawlers and no-JS users get a working jump list; a small script
+ * highlights the section in view. Sits directly under the sticky site header. Scrolls sideways on phones.
+ * The client singled out the "jump to dates" link as something they loved; this generalises it.
+ */
+interface Props { items: { href: string; label: string }[]; label?: string }
+const { items, label = 'On this page' } = Astro.props;
+---
+<nav class="section-nav" aria-label={label} data-section-nav>
+  <div class="container">
+    <ul role="list">
+      {items.map((i) => <li><a href={i.href} data-target={i.href.replace('#', '')}>{i.label}</a></li>)}
+    </ul>
+  </div>
+</nav>
+<style>
+  .section-nav { position: sticky; top: var(--header-height-mobile); z-index: 70; background: color-mix(in srgb, var(--bg-page) 94%, transparent); backdrop-filter: blur(var(--space-2)); -webkit-backdrop-filter: blur(var(--space-2)); border-bottom: var(--border-width) solid var(--border-subtle); }
+  @media (min-width: 1024px) { .section-nav { top: var(--header-height); } }
+  .section-nav ul { list-style: none; display: flex; gap: var(--space-5); overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--margin-outer)); padding-inline: var(--margin-outer); -webkit-overflow-scrolling: touch; }
+  .section-nav ul::-webkit-scrollbar { display: none; }
+  .section-nav a { display: inline-flex; align-items: center; min-height: var(--button-min-height); padding-block: var(--space-1); white-space: nowrap; font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); color: var(--text-secondary); text-decoration: none; border-bottom: var(--focus-width) solid transparent; transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+  .section-nav a:hover { color: var(--text-primary); }
+  .section-nav a.is-active { color: var(--text-primary); border-bottom-color: var(--text-link); }
+  .section-nav a:focus-visible { outline: var(--focus-width) solid var(--focus-ring); outline-offset: calc(-1 * var(--focus-width)); }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-section-nav]').forEach((nav) => {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[data-target]'));
+    const targets = links.map((l) => document.getElementById(l.dataset.target!)).filter((t): t is HTMLElement => Boolean(t));
+    if (!targets.length || !('IntersectionObserver' in window)) return;
+    const setActive = (id: string) => {
+      links.forEach((l) => {
+        const on = l.dataset.target === id;
+        l.classList.toggle('is-active', on);
+        if (on) { l.setAttribute('aria-current', 'location'); l.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' }); } else l.removeAttribute('aria-current');
+      });
+    };
+    const visible = new Map<string, number>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => visible.set((e.target as HTMLElement).id, e.isIntersecting ? e.intersectionRatio : 0));
+      // Highlight the first in-view section in document order, so the tab follows the reader down the page.
+      const first = targets.find((t) => (visible.get(t.id) ?? 0) > 0);
+      if (first) setActive(first.id);
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.01] });
+    targets.forEach((t) => io.observe(t));
+  });
+</script>

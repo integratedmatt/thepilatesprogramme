@@ -55,7 +55,12 @@ const googleCards = google.relevant;
       </ul>
       <p class="wall-more">
         <span class="wall-links"><a href="/graduates" class="arrow-link">Meet our graduates</a>{hasRating && google.url && <a href={google.url} class="arrow-link" target="_blank" rel="noopener">Read all reviews on Google</a>}</span>
-        <span class="small muted wall-hint">Scroll for more</span>
+        <span class="wall-controls" data-wall-controls hidden>
+          <button type="button" class="wall-btn" data-wall-prev aria-label="Previous testimonials">‹</button>
+          <span class="wall-dots" aria-hidden="true"></span>
+          <button type="button" class="wall-btn" data-wall-next aria-label="Next testimonials">›</button>
+        </span>
+        <span class="small muted wall-hint" data-wall-hint>Scroll for more</span>
       </p>
     </div>
   </section>
@@ -86,5 +91,37 @@ const googleCards = google.relevant;
   cite a { color: inherit; text-decoration: none; }
   cite a:hover { color: var(--text-link); text-decoration: underline; }
   .wall-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
-  .wall-more { margin-top: var(--space-5); display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); max-width: none; }
+  .wall-more { margin-top: var(--space-5); display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); max-width: none; flex-wrap: wrap; }
+  /* Carousel controls (pattern from Relume Testimonial 41): prev/next scroll the snap list one card at a time; dots show position. */
+  .wall-controls { display: inline-flex; align-items: center; gap: var(--space-3); }
+  .wall-controls[hidden] { display: none; }
+  .wall-btn { display: inline-flex; align-items: center; justify-content: center; width: var(--button-min-height); height: var(--button-min-height); border: var(--border-width) solid var(--border-strong); border-radius: var(--radius-pill); background: var(--bg-surface); color: var(--text-primary); font-size: var(--type-h3); line-height: 1; cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .wall-btn:hover { background: var(--button-primary-bg); color: var(--button-primary-text); }
+  .wall-btn:active { transform: translateY(var(--press)); }
+  .wall-btn:focus-visible { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
+  .wall-dots { display: inline-flex; gap: var(--space-2); }
+  .wall-dots i { display: block; width: var(--space-2); height: var(--space-2); border-radius: var(--radius-pill); background: var(--border-subtle); transition: background var(--dur-fast) var(--ease-out); }
+  .wall-dots i.is-on { background: var(--ink-900); }
 </style>
+<script>
+  document.querySelectorAll<HTMLElement>('.wall').forEach((wall) => {
+    const root = wall.parentElement!;
+    const controls = root.querySelector<HTMLElement>('[data-wall-controls]');
+    const hint = root.querySelector<HTMLElement>('[data-wall-hint]');
+    const items = Array.from(wall.children) as HTMLElement[];
+    if (!controls || items.length < 2) return;
+    const overflow = () => wall.scrollWidth > wall.clientWidth + 8;
+    if (!overflow()) return;
+    controls.hidden = false; if (hint) hint.hidden = true;
+    const dots = controls.querySelector('.wall-dots')!;
+    items.forEach(() => dots.appendChild(document.createElement('i')));
+    const step = () => items[1].offsetLeft - items[0].offsetLeft;
+    const index = () => Math.round(wall.scrollLeft / step());
+    const paint = () => { const i = index(); dots.querySelectorAll('i').forEach((d, j) => d.classList.toggle('is-on', j === i)); };
+    const go = (dir: number) => wall.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    controls.querySelector('[data-wall-prev]')!.addEventListener('click', () => go(-1));
+    controls.querySelector('[data-wall-next]')!.addEventListener('click', () => go(1));
+    let raf = 0; wall.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(paint); }, { passive: true });
+    paint();
+  });
+</script>

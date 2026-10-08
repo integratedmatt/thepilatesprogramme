@@ -1,4 +1,9 @@
 ---
+/**
+ * Course price block with a pay-in-full / instalments switch (pattern from Relume Pricing 35, ported).
+ * Both views render in the HTML; the switch only toggles which is shown, so the price and the
+ * instalment amount are always on the page for search engines and for anyone without JavaScript.
+ */
 import { gbp } from '@/lib/format';
 import type { Course, PricingRule } from '@/lib/types';
 interface Props { course: Course; rules: PricingRule[] }
@@ -8,20 +13,34 @@ const dbl = applicable.find((r) => r.slug === 'double-booking');
 const fitness = applicable.find((r) => r.slug === 'fitness-qualification-discount');
 const returning = applicable.find((r) => r.slug === 'returning-student');
 const bundle = applicable.find((r) => r.slug === 'apparatus-bundle');
+const plan = course.financeOptions.find((f) => f.instalments && f.amount);
+const planLabel = plan ? `${plan.instalments} monthly payments` : '';
 ---
-<div class="price-block" id="price">
+<div class="price-block" id="price" data-price-switch>
   <div class="price-main">
     <p class="eyebrow">Price</p>
+    {course.price != null && plan ? (
+      <div class="pay-switch" role="tablist" aria-label="How to pay">
+        <button type="button" role="tab" id="pay-full" aria-selected="true" aria-controls="pay-full-panel" class="pay-tab">Pay in full</button>
+        <button type="button" role="tab" id="pay-plan" aria-selected="false" aria-controls="pay-plan-panel" class="pay-tab" tabindex="-1">{planLabel}</button>
+      </div>
+    ) : null}
     {course.price != null ? (
-      <p class="price-figure"><span class="h1">{gbp(course.price)}</span> <span class="secondary">all in</span></p>
+      <div class="pay-panels">
+        <div class="pay-panel motion-step" id="pay-full-panel" role="tabpanel" aria-labelledby="pay-full">
+          <p class="price-figure"><span class="h1">{gbp(course.price)}</span> <span class="secondary">all in</span></p>
+          <p class="small secondary">Card payment at checkout in Arketa.</p>
+        </div>
+        {plan && (
+          <div class="pay-panel motion-step" id="pay-plan-panel" role="tabpanel" aria-labelledby="pay-plan" hidden>
+            <p class="price-figure"><span class="h1">{gbp(plan.amount!)}</span> <span class="secondary">× {plan.instalments}, interest-free</span></p>
+            <p class="small secondary">{gbp(course.price)} spread over {plan.instalments} monthly payments. No interest, no credit check. Choose it at checkout.</p>
+          </div>
+        )}
+      </div>
     ) : (
       <p class="price-figure"><span class="h2">Price on request</span></p>
     )}
-    <ul class="finance" role="list">
-      {course.financeOptions.map((f) => (
-        <li>{f.instalments && f.amount ? `${f.instalments} × ${gbp(f.amount)} ${f.label.toLowerCase().includes('interest') ? 'interest-free' : ''}`.trim() : f.label}</li>
-      ))}
-    </ul>
     <p class="small muted">No extra fees: exams, manual and assessment included{course.path === 'continue' ? ', with online platform access on a 6-week free trial' : ''}. All payments are non-refundable and non-transferable.</p>
   </div>
   <div class="price-side">
@@ -51,12 +70,33 @@ const bundle = applicable.find((r) => r.slug === 'apparatus-bundle');
   .price-block { display: grid; gap: var(--space-7); }
   @media (min-width: 1024px) { .price-block { grid-template-columns: 5fr 4fr; } .price-included { grid-column: 1 / -1; } }
   .price-main, .price-side, .price-included { display: grid; gap: var(--space-4); align-content: start; }
-  .price-figure { display: flex; align-items: baseline; gap: var(--space-3); }
-  .finance { list-style: none; display: grid; gap: var(--space-2); font-weight: var(--weight-regular); }
-  .finance li::before { content: "·"; margin-right: var(--space-2); color: var(--text-link); }
+  .price-figure { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
+  .pay-switch { display: inline-flex; gap: var(--space-1); padding: var(--space-1); border: var(--border-width) solid var(--border-subtle); background: var(--bg-surface); width: fit-content; }
+  .pay-tab { padding: var(--space-2) var(--space-4); border: 0; background: none; font-family: var(--font-body); font-size: var(--type-small); font-weight: var(--weight-medium); letter-spacing: var(--tracking-button); color: var(--text-secondary); cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+  .pay-tab[aria-selected="true"] { background: var(--button-primary-bg); color: var(--button-primary-text); }
+  .pay-tab:focus-visible { outline: var(--focus-width) solid var(--focus-ring); outline-offset: var(--focus-offset); }
+  .pay-panel { display: grid; gap: var(--space-2); }
+  :global(.no-js) .pay-panel[hidden] { display: grid; }
+  :global(.no-js) .pay-switch { display: none; }
   .callout { padding: var(--space-5); background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); display: grid; gap: var(--space-2); }
   .checklist { list-style: none; display: grid; gap: var(--space-3); }
   @media (min-width: 768px) { .checklist { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-6); } }
   .checklist li { padding-left: var(--space-5); position: relative; color: var(--text-secondary); }
   .checklist li::before { content: "\2713"; position: absolute; left: 0; color: var(--text-link); font-weight: var(--weight-medium); }
 </style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-price-switch]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.pay-tab'));
+    if (tabs.length < 2) return;
+    const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls')!));
+    const select = (i: number) => {
+      tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+      panels.forEach((p, j) => { if (p) p.hidden = i !== j; });
+      const w = window as any; (w.dataLayer = w.dataLayer || []).push({ event: 'price_switch', option: i === 0 ? 'full' : 'instalments' });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select((i + 1) % 2); tabs[(i + 1) % 2].focus(); } });
+    });
+  });
+</script>

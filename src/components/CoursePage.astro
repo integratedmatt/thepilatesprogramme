@@ -22,6 +22,7 @@ import CourseCard from './CourseCard.astro';
 import EmailCapture from './EmailCapture.astro';
 import JsonLd from './JsonLd.astro';
 import Section from './Section.astro';
+import SectionNav from './SectionNav.astro';
 import { getSiteSettings, getUpcomingDates, getPricingRules, getFaqsByIds, getTeam, getTestimonialsByIds, getCourses, courseUrl, hubUrl } from '@/lib/content';
 import { courseSchema } from '@/lib/schema';
 import { pageTitle, pageDescription } from '@/lib/seo';
@@ -61,6 +62,15 @@ const facts = [
   { label: 'Accreditation', value: course.accreditation || undefined },
   { label: 'Prerequisite', value: course.prerequisites?.length ? course.prerequisites.join('; ') : isQualify ? 'No prior certification needed' : undefined },
 ];
+const sectionNav = [
+  { href: '#overview', label: 'Overview' },
+  ...(course.forYou?.length ? [{ href: '#for-you', label: 'Is it for you?' }] : []),
+  ...(course.curriculum.length ? [{ href: '#learn', label: "What you'll learn" }] : []),
+  ...(hours ? [{ href: '#road', label: 'Road to Certification' }] : []),
+  { href: '#dates', label: 'Dates' },
+  { href: '#pricing', label: 'Pricing' },
+  ...(faqs.length ? [{ href: '#questions', label: 'FAQs' }] : []),
+];
 const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, path: course.path, kind: course.kind });
 ---
 <Base title={title} description={description} ogImage={course.seo.ogImage?.url ?? course.heroImage?.url} bodyClass="course-page">
@@ -83,6 +93,8 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
     <AccreditationStrip settings={settings} tone="dark" class="hero-accred" only={course.accreditationBadges ?? []} />
   </Hero>
 
+  <SectionNav items={sectionNav} />
+
   {!isQualify && course.prerequisites && course.prerequisites.length > 0 && (
     <div class="container prereq-wrap">
       <aside class="prereq" aria-label="Prerequisite">
@@ -93,7 +105,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
     </div>
   )}
 
-  <Section>
+  <Section id="overview">
     <div class="grid">
       <div class="col-answer">
         <AnswerBox question={course.answerQuestion ?? `What is the ${course.shortTitle} course?`} answer={course.answerSummary} />
@@ -103,14 +115,14 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   </Section>
 
   {course.forYou && course.forYou.length > 0 && (
-    <Section tone="subtle">
+    <Section tone="subtle" id="for-you">
       <header class="section-heading"><p class="eyebrow">Is this for you?</p><h2>This is for you if</h2></header>
       <ul class="tick-list for-you" role="list" data-stagger>{course.forYou.map((i) => <li>{i}</li>)}</ul>
     </Section>
   )}
 
   {course.curriculum.length > 0 && (
-    <Section>
+    <Section id="learn">
       <header class="section-heading"><p class="eyebrow">Curriculum</p><h2>What you'll learn</h2></header>
       <div class="curriculum" data-stagger>
         {course.curriculum.map((g) => (
@@ -213,7 +225,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
     </Section>
   )}
 
-  <Section tone="subtle"><FaqAccordion faqs={faqs} heading={`${course.shortTitle} questions`} /></Section>
+  <Section tone="subtle" id="questions"><FaqAccordion faqs={faqs} heading={`${course.shortTitle} questions`} /></Section>
 
   <Section>
     <nav class="related-links" aria-label="Related pages">
@@ -229,7 +241,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
 <style>
   .hero-price { font-weight: var(--weight-regular); color: var(--stone-300); }
   :global(.hero-accred) { margin-top: var(--space-4); }
-  .prereq-wrap { margin-top: calc(-1 * var(--space-6)); position: relative; z-index: 2; }
+  .prereq-wrap { margin-top: var(--space-6); position: relative; z-index: 2; }
   .prereq { background: var(--bg-surface); border: var(--border-width) solid var(--border-strong); padding: var(--space-5); display: grid; gap: var(--space-2); }
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
   .col-answer { grid-column: span 12; }

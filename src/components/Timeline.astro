@@ -1,10 +1,16 @@
 ---
+/**
+ * Step timeline. The rule above each step fills in as the step scrolls into view (pattern from Relume
+ * Timeline 14's progress line, done with IntersectionObserver and a CSS transition, so it costs nothing
+ * on load and collapses to instant under prefers-reduced-motion).
+ */
 interface Props { steps: { title: string; text: string; meta?: string }[] }
 const { steps } = Astro.props;
 ---
-<ol class="timeline" role="list" data-stagger>
+<ol class="timeline" role="list" data-stagger data-timeline>
   {steps.map((s, i) => (
     <li class="step">
+      <span class="step-rule" aria-hidden="true"></span>
       <span class="step-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
       <div class="step-body">
         {s.meta && <p class="eyebrow">{s.meta}</p>}
@@ -17,7 +23,26 @@ const { steps } = Astro.props;
 <style>
   .timeline { list-style: none; display: grid; gap: var(--space-6); counter-reset: step; }
   @media (min-width: 1024px) { .timeline { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: var(--space-5); } }
-  .step { display: grid; gap: var(--space-3); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); }
+  .step { position: relative; display: grid; gap: var(--space-3); border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-4); }
+  .step-rule { position: absolute; top: calc(-1 * var(--border-width)); left: 0; height: var(--focus-width); width: 100%; background: var(--border-strong); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-slow) var(--ease-out); }
+  .step.is-reached .step-rule, :global(.no-js) .step-rule { transform: scaleX(1); }
   .step-num { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); color: var(--text-link); }
   .step-body { display: grid; gap: var(--space-2); }
+  @media (prefers-reduced-motion: reduce) { .step-rule { transition: none; } }
 </style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-timeline]').forEach((list) => {
+    const steps = Array.from(list.querySelectorAll<HTMLElement>('.step'));
+    if (!('IntersectionObserver' in window)) { steps.forEach((s) => s.classList.add('is-reached')); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const i = steps.indexOf(e.target as HTMLElement);
+        // Reaching a step fills its rule and every rule before it, so the line reads as progress.
+        steps.slice(0, i + 1).forEach((s, j) => setTimeout(() => s.classList.add('is-reached'), j * 80));
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -20% 0px', threshold: 0.2 });
+    steps.forEach((s) => io.observe(s));
+  });
+</script>
