@@ -30,8 +30,8 @@ const filtered = jobs.filter((j) =>
 const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
 const settings = await getSiteSettings();
 ---
-<Base title="Pilates Instructor Jobs Across the UK | The Pilates Programme" description="Pilates and Barre teaching jobs across the UK, listed free by studios and checked by us. Filter by discipline, area and type, or get alerts for new roles." canonicalPath="/jobs" noindex={isFiltered}>
-  <Hero eyebrow="Jobs board" title="Pilates and Barre teaching jobs across the UK" lead="Roles listed by studios, reviewed by us, free for everyone. New roles are added as they are approved.">
+<Base title="Pilates Instructor Jobs Across the UK | The Pilates Programme" description="Pilates and Barre teaching jobs across the UK, listed by studios and checked by us. Filter by discipline, area and type, or get alerts for new roles." canonicalPath="/jobs" noindex={isFiltered}>
+  <Hero eyebrow="Jobs board" title="Pilates and Barre teaching jobs across the UK" lead="Roles listed by studios, reviewed by us, free for teachers to browse. New roles are added as they are approved.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }]} />
   </Hero>
   <Section reveal={false}>
@@ -67,8 +67,8 @@ const settings = await getSiteSettings();
         </div>
         <div class="side-card">
           <p class="eyebrow">Hiring?</p>
-          <h2 class="h3">List a role free</h2>
-          <p class="small secondary">Reach qualified teachers across the UK. Reviewed within 2 working days.</p>
+          <h2 class="h3">List a role</h2>
+          <p class="small secondary">Reach certified teachers across the UK. Paid listings, reviewed within 2 working days.</p>
           <a href="/jobs/post" class="btn btn-primary">Post a job</a>
         </div>
         <PartnerCard settings={settings} />

@@ -10,14 +10,14 @@ interface Props {
   sizes?: string;
   priority?: boolean;
   class?: string;
-  aspect?: 'portrait' | 'landscape' | 'square' | 'none';
+  aspect?: 'portrait' | 'landscape' | 'square' | 'wide' | 'none';
   widths?: number[];
 }
 const { image, alt, sizes = '100vw', priority = false, class: className = '', aspect = 'landscape', widths = [480, 768, 1024, 1440, 1920] } = Astro.props;
 const isSanity = image?.url?.includes('cdn.sanity.io');
 const isSite = Boolean(image?.url && /^\/images\/site\/[a-z0-9-]+\.jpg$/.test(image.url));
 const siteBase = isSite ? image!.url.replace(/\.jpg$/, '') : '';
-const ratio = aspect === 'portrait' ? 5 / 4 : aspect === 'square' ? 1 : 2 / 3;
+const ratio = aspect === 'portrait' ? 5 / 4 : aspect === 'square' ? 1 : aspect === 'wide' ? 9 / 16 : 2 / 3;
 function sanityUrl(w: number, fm: 'avif' | 'webp' | 'jpg') {
   const h = aspect === 'none' ? undefined : Math.round(w * ratio);
   const u = new URL(image!.url);

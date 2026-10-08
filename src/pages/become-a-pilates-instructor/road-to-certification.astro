@@ -12,34 +12,24 @@ import { getSiteSettings, getQualifyCourses, getFaqsByIds } from '@/lib/content'
 import { gbp } from '@/lib/format';
 const [settings, courses, faqs] = await Promise.all([getSiteSettings(), getQualifyCourses(), getFaqsByIds(['faq-how-long', 'faq-hours', 'faq-exams', 'faq-studio-hire', 'faq-reformer-access'])]);
 const hours = courses[0]?.hoursBreakdown ?? { observation: 30, personalStudy: 25, practiceTeaching: 25 };
-const total = hours.observation + hours.personalStudy + hours.practiceTeaching;
 const exams = courses[0]?.exams ?? [];
+// Time to certify: usually around 6 months, anywhere from 3 to 12 (client, 8 Oct 2026). Never weeks.
 const timeline = [
-  { meta: 'Day 0', title: 'You book', text: 'Welcome email, online platform access and the Human Movement course to complete before your in-person days.' },
-  { meta: 'Weeks 1 to 4', title: 'Pre-course study', text: 'Work through the Human Movement course and pre-reading at your own pace, around work.' },
-  { meta: 'Intensive', title: '4 or 5 in-person days', text: 'Repertoire, teaching skills and workshops in a small cohort at the Altrincham centre.' },
-  { meta: 'Weeks 5 to 12', title: `${total} practice hours`, text: 'Observation, personal study and practice teaching with a week-by-week plan and your trainers on hand.' },
-  { meta: 'Weeks 12 to 14', title: 'Three exams', text: 'Two online multiple choice exams and a 45-minute practical over Zoom. All included.' },
-  { meta: 'Weeks 14 to 16', title: 'Your first paid class', text: 'Cover at a local studio, apply through the jobs board, or launch your own class.' },
-];
-const weeks = [
-  ['1', 'Observe 5 hours. Study 3 hours. Revisit the manual.'],
-  ['2', 'Observe 5 hours. Study 3 hours. Teach 1 hour to a friend.'],
-  ['3', 'Observe 4 hours. Study 3 hours. Teach 2 hours.'],
-  ['4', 'Observe 4 hours. Study 3 hours. Teach 3 hours. Sit the Human Movement exam.'],
-  ['5', 'Observe 4 hours. Study 3 hours. Teach 3 hours.'],
-  ['6', 'Observe 3 hours. Study 3 hours. Teach 4 hours. Sit the theory exam.'],
-  ['7', 'Observe 3 hours. Study 4 hours. Teach 4 full classes.'],
-  ['8', 'Observe 2 hours. Study 3 hours. Teach 5 hours. Book your practical.'],
+  { meta: 'Step 1', title: 'You book', text: 'Welcome email, online platform access and the HUMAN MOVEMENT course, sent to you to start working through as soon as you sign up.' },
+  { meta: 'Step 2', title: 'Pre-course study', text: 'Work through the HUMAN MOVEMENT course and your pre-reading at your own pace, around work.' },
+  { meta: 'Step 3', title: '4 or 5 in-person days', text: 'Repertoire, teaching skills and workshops in a small cohort, usually at our Altrincham training centre.' },
+  { meta: 'Step 4', title: 'Your practice hours', text: 'Observation, personal study and practice teaching, in your own time and at a location that works for you.' },
+  { meta: 'Step 5', title: 'The exams', text: 'Once your hours are logged and you feel confident with your teaching. All online, all included.' },
+  { meta: 'Step 6', title: 'Your first paid class', text: 'Cover at a local studio, apply through the jobs board, or launch your own class. Industry ready from day one.' },
 ];
 ---
-<Base title="Pilates Certification Timeline | The Pilates Programme" description="How long it takes to become a Pilates instructor: three to four months from booking to first paid class, with the 80 practice hours and three exams mapped out.">
-  <Hero eyebrow="Road to Certification" title="How long does it take to become a Pilates instructor?" lead="Three to four months from booking to your first paid class is typical. Here is exactly what fills that time, and why it is the reason studios hire our graduates.">
+<Base title="Road to Certification | The Pilates Programme" description="How you become a certified Pilates instructor: the in-person days, the practice hours around your life, and the exams. Usually around six months.">
+  <Hero eyebrow="Road to Certification" title="How long does it take to become a Pilates instructor?" lead="Most of our students certify in around six months. Some do it in three, some take up to twelve, and both are fine. Here is exactly what fills that time, and why it is the reason studios hire our graduates.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Become a Pilates instructor', url: '/become-a-pilates-instructor' }, { name: 'Road to Certification', url: '/become-a-pilates-instructor/road-to-certification' }]} />
   </Hero>
 
   <Section>
-    <AnswerBox question="How long does it take to become a Pilates instructor?" answer={`At The Pilates Programme, Altrincham, becoming a Pilates instructor takes three to four months: a few weeks of online pre-course study, a four or five-day in-person intensive, ${total} supported practice hours over about eight weeks, and three exams. The hours can flex around a job and family, so some students take longer.`} />
+    <AnswerBox question="How long does it take to become a Pilates instructor?" answer="With The Pilates Programme it is usually around six months, and anywhere from three to twelve. You work through the online HUMAN MOVEMENT course, complete four or five in-person days, then do your 30 observation, 25 personal study and 25 practice teaching hours in your own time, around your job and your family, before sitting the exams online." />
   </Section>
 
   <Section tone="subtle">
@@ -50,15 +40,21 @@ const weeks = [
   <Section>
     <div class="grid">
       <div class="col-7">
-        <header class="section-heading"><p class="eyebrow">The hours</p><h2>Why are there {total} practice hours?</h2><p class="lead">Because knowing the exercises is not the same as teaching them. Studios hire teachers who have watched, studied and taught real bodies before their first paid class.</p></header>
+        <header class="section-heading"><p class="eyebrow">The hours</p><h2>Why the practice hours matter</h2><p class="lead">Because knowing the exercises is not the same as teaching them. These hours mean that once you pass your exams you are industry ready and can teach confidently and competently in a studio. Our students are sought after because they already have hands-on experience teaching real clients.</p></header>
+        <ul class="rule-list hours-list" role="list">
+          <li><strong>{hours.observation} observation hours.</strong> Observing other teachers, on our online platform or by attending classes.</li>
+          <li><strong>{hours.personalStudy} personal study hours.</strong> Practising every exercise in the manual on your own body and understanding them inside out.</li>
+          <li><strong>{hours.practiceTeaching} practice teaching hours.</strong> Planning and delivering practice classes.</li>
+        </ul>
         <HoursBar hours={hours} />
       </div>
       <div class="col-5">
-        <h3>Are the hours hard to organise?</h3>
-        <p class="secondary">No, if you have a plan. Ten hours a week for eight weeks covers it: two evenings and a Saturday morning. Observation can be at any studio or through the video library. Practice teaching can be friends, family or fellow students. If you need a room and equipment, hire the centre.</p>
+        <h3>How the hours fit around your life</h3>
+        <p class="secondary">You complete them in your own time, at a location that works for you: around your existing nine to five, around your kids, around everything else going on. Observation can be in person or through the video library. Practice teaching can be friends, family or fellow students. If you need a room and equipment, hire the centre.</p>
         <ul class="rule-list how-list mt-4" role="list">
-          <li><strong>Studio hire.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour at the Altrincham centre.` : 'At the Altrincham centre. Current rate on the pricing page.'}</li>
-          <li><strong>Equipment hire.</strong> {settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour.` : 'Available at the centre.'}</li>
+          <li><strong>Studio hire.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour at the Altrincham centre for practice teaching.` : 'At the Altrincham centre, for practice teaching. Ask us for the current rate.'}</li>
+          <li><strong>Equipment hire.</strong> At the centre, for your personal practice.</li>
+          <li><strong>Your local studio.</strong> Ask whether you can observe classes or hire their space.</li>
           <li><strong>Online observation.</strong> Through the video library{settings.appMonthlyPrice ? ` and the app (${gbp(settings.appMonthlyPrice)} a month)` : ''}.</li>
         </ul>
       </div>
@@ -66,35 +62,25 @@ const weeks = [
   </Section>
 
   <Section tone="subtle">
-    <header class="section-heading"><p class="eyebrow">Week by week</p><h2>What does an 8-week hours plan look like?</h2><p class="lead">A realistic plan that adds up to {total} hours. Move things around to suit your week.</p></header>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th scope="col">Week</th><th scope="col">Plan</th></tr></thead>
-        <tbody>{weeks.map(([w, p]) => <tr><th scope="row">Week {w}</th><td>{p}</td></tr>)}</tbody>
-      </table>
-    </div>
-  </Section>
-
-  <Section>
-    <header class="section-heading"><p class="eyebrow">Exams</p><h2>What are the exams?</h2><p class="lead">Three, all included in the course fee, and you are prepared for each during training.</p></header>
+    <header class="section-heading"><p class="eyebrow">Exams</p><h2>What are the exams?</h2><p class="lead">All online, all included in the course fee, and we structure the course so you are ready for each one.</p></header>
     <ol class="exam-list" role="list" data-stagger>{exams.map((e) => <li><h3>{e.title}</h3><p class="secondary">{e.detail}</p></li>)}</ol>
   </Section>
 
-  <Section tone="subtle">
-    <header class="section-heading"><p class="eyebrow">Support</p><h2>What support do you get?</h2></header>
+  <Section>
+    <header class="section-heading"><p class="eyebrow">Support</p><h2>You will never figure it out alone</h2></header>
     <ul class="support-grid" role="list" data-stagger>
-      <li><h3>Your trainers</h3><p class="secondary">Georgie, Sarah and the team are available throughout your hours by email and at the centre.</p></li>
-      <li><h3>The online platform</h3><p class="secondary">Manual, video library and revision material, which you keep after you qualify.</p></li>
-      <li><h3>The centre</h3><p class="secondary">Studio and equipment hire for practice teaching, and classes to observe.</p></li>
-      <li><h3>Your cohort</h3><p class="secondary">Small groups mean you practise teaching on each other and keep each other going.</p></li>
+      <li><h3>Your trainers</h3><p class="secondary">Georgie, Sarah and the team are an actual person on the end of the phone throughout your hours, and at the centre.</p></li>
+      <li><h3>The online platform</h3><p class="secondary">Manual, video library and revision material, which you keep after you certify.</p></li>
+      <li><h3>The centre</h3><p class="secondary">Studio and equipment hire for practice teaching and personal practice.</p></li>
+      <li><h3>Your cohort</h3><p class="secondary">Small groups mean you practise teaching on each other, keep each other going and make new friends.</p></li>
     </ul>
   </Section>
 
-  <Section><FaqAccordion faqs={faqs} heading="Questions about hours and exams" /></Section>
+  <Section tone="subtle"><FaqAccordion faqs={faqs} heading="Questions about hours and exams" /></Section>
 
   <Section tone="inverse">
     <div class="grid">
-      <div class="col-7"><p class="eyebrow">Ready?</p><h2>Choose your first course</h2><p class="lead">Mat, Reformer or Barre. Four or five in-person days, {total} supported hours, exams included.</p><div class="hero-actions"><a href="/become-a-pilates-instructor#courses" class="btn btn-primary">See the courses</a><a href="/course-dates" class="btn btn-secondary">See dates</a></div></div>
+      <div class="col-7"><p class="eyebrow">Ready?</p><h2>Choose your first course</h2><p class="lead">Mat, Reformer or Barre. Four or five in-person days, your practice hours in your own time, exams included.</p><div class="hero-actions"><a href="/become-a-pilates-instructor#courses" class="btn btn-primary">See the courses</a><a href="/course-dates" class="btn btn-secondary">See dates</a></div></div>
       <div class="col-5"><EmailCapture formId="road_guide" path="qualify" tag="career-guide" heading="Or get the free guide first" successText="Thanks. The guide is on its way to your inbox." /></div>
     </div>
   </Section>
@@ -103,8 +89,8 @@ const weeks = [
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
   .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
   @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
-  .how-list { list-style: none; } .how-list li { padding-block: var(--space-3); color: var(--text-secondary); }
-  .table-wrap { overflow-x: auto; } th[scope="row"] { white-space: nowrap; font-weight: var(--weight-medium); } td { color: var(--text-secondary); }
+  .how-list, .hours-list { list-style: none; } .how-list li, .hours-list li { padding-block: var(--space-3); color: var(--text-secondary); }
+  .hours-list { margin-bottom: var(--space-5); }
   .exam-list { list-style: none; display: grid; gap: var(--space-5); }
   @media (min-width: 768px) { .exam-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .exam-list li { display: grid; gap: var(--space-2); border-top: var(--border-width) solid var(--border-strong); padding-top: var(--space-4); }

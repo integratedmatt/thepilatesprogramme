@@ -26,6 +26,12 @@ const siteUrl = Astro.site?.origin ?? 'https://www.thepilatesprogramme.co.uk';
 const canonicalUrl = canonical(Astro.site, canonicalPath ?? Astro.url.pathname);
 const og = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}${DEFAULT_OG}`;
 const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
+// Preview deployments must never be indexed: every build that is not the production deployment on
+// Vercel gets a site-wide noindex until the client has signed the content off (set VERCEL_ENV=production
+// only on the live project). Local dev builds are unaffected because VERCEL_ENV is unset there.
+const vercelEnv = (import.meta.env.VERCEL_ENV as string | undefined) ?? process.env.VERCEL_ENV;
+const previewNoindex = Boolean(vercelEnv) && vercelEnv !== 'production';
+const robotsNoindex = noindex || previewNoindex;
 ---
 <!doctype html>
 <html lang="en-GB" class="no-js">
@@ -35,7 +41,7 @@ const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    {robotsNoindex && <meta name="robots" content={previewNoindex ? 'noindex, nofollow' : 'noindex, follow'} />}
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={settings.entityName} />
     <meta property="og:title" content={title} />

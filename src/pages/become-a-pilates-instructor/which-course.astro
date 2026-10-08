@@ -12,7 +12,8 @@ const courseData = courses.map((c) => ({ slug: c.slug, title: c.shortTitle, url:
 const questions = [
   { id: 'experience', q: 'How much Pilates have you done?', options: [['new', 'I am new to Pilates'], ['some', 'I practise sometimes'], ['regular', 'I practise regularly'], ['teacher', 'I already teach movement or fitness']] },
   { id: 'qualification', q: 'Do you hold a fitness or movement teaching qualification?', options: [['none', 'No'], ['fitness', 'Yes, a fitness qualification'], ['pilates', 'Yes, I already teach Pilates or Barre']] },
-  { id: 'where', q: 'Where do you want to teach?', options: [['studio', 'Boutique Reformer studios'], ['anywhere', 'Gyms, community venues or online'], ['own', 'My own classes or private clients'], ['music', 'Energetic, music-led group classes']] },
+  // Client feedback (8 Oct 2026): never ask "where do you want to teach"; every TPP course sets you up to teach in studios, gyms, online and one to one. TPP will supply their own questions; this is a holding version.
+  { id: 'where', q: 'Which class format are you most drawn to?', options: [['anywhere', 'Mat classes'], ['studio', 'Reformer classes'], ['music', 'Barre: energetic, music-led classes'], ['own', 'Not sure yet']] },
   { id: 'reformer', q: 'Can you practise on a Reformer between the course and your exam?', options: [['yes', 'Yes, I have regular access'], ['hire', 'I could hire one or use a local studio'], ['no', 'No access at all']] },
 ];
 ---
@@ -75,7 +76,12 @@ const questions = [
   .quiz-nav { display: flex; gap: var(--space-3); margin-top: var(--space-6); }
   .quiz-result { display: grid; gap: var(--space-5); }
   .result-courses { display: grid; gap: var(--space-4); }
-  .result-course { padding: var(--space-5); border: var(--border-width) solid var(--border-strong); background: var(--bg-surface); display: grid; gap: var(--space-2); }
+  .result-course { padding: var(--space-5); border: var(--border-width) solid var(--border-strong); background: var(--bg-surface); display: grid; gap: var(--space-2); justify-items: start; }
+  .result-course > * { display: block; }
+  .result-course .h3 { text-decoration: none; color: var(--text-primary); }
+  .result-course .h3:hover { color: var(--text-link); }
+  .result-course .secondary { color: var(--text-secondary); }
+  .callout p + p { margin-top: var(--space-2); }
   .callout { padding: var(--space-5); background: var(--bg-subtle); border-left: var(--focus-width) solid var(--bronze-700); }
   .result-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .result-email { margin-top: var(--space-5); padding-top: var(--space-6); border-top: var(--border-width) solid var(--border-subtle); }
@@ -118,7 +124,7 @@ const questions = [
       reason = 'You already teach Pilates or Barre. Advanced Reformer, Chair, Cadillac, Barrels and our CPD days are open to teachers from any provider, and returning students receive 10% off.';
     } else if (a.where === 'music') {
       picks.push(barre); title = 'Start with Barre';
-      reason = 'You want energetic, music-led classes. Barre is the format built for that, and it pairs well with Mat later.';
+      reason = 'You want energetic, music-led classes. Barre is the format built for that, it is the only UK Barre certification accredited by the Barre Fitness Alliance, and it pairs well with Mat later.';
       if (a.experience === 'regular' || a.experience === 'teacher') { picks.push(mat); reason += ' With regular Pilates practice, adding Mat as a double booking gives you the deepest foundation.'; }
     } else if (a.where === 'studio' && a.reformer !== 'no') {
       picks.push(reformer); title = 'Start with Reformer';
@@ -133,6 +139,7 @@ const questions = [
       if (a.reformer === 'yes' || a.reformer === 'hire') { picks.push(reformer); reason += ' Because you can practise on a Reformer, booking Reformer alongside Mat is the better value and opens boutique studio work.'; }
     }
     if (a.experience === 'new' && picks.length) reason += ' As you are new to Pilates, we suggest a few months of regular classes before your course so the repertoire feels familiar.';
+    if (picks.length) reason += ' Whichever you choose, you will be set up to teach in studios, gyms, online and one to one.';
 
     (document.getElementById('result-title') as HTMLElement).textContent = title;
     (document.getElementById('result-reason') as HTMLElement).textContent = reason;

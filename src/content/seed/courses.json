@@ -3,7 +3,7 @@
     "_id": "course-mat",
     "_type": "course",
     "order": 1,
-    "title": "Mat Pilates Teacher Training, Manchester",
+    "title": "Mat Pilates Teacher Training",
     "shortTitle": "Mat",
     "slug": "mat-pilates-teacher-training",
     "path": "qualify",
@@ -12,7 +12,7 @@
     "level": "Beginner, Intermediate and Advanced",
     "format": "in-person",
     "eyebrow": "Teacher training · 4 in-person days",
-    "outcome": "Qualify to teach Mat Pilates from beginner to advanced, across Contrology, Classical and Contemporary repertoire.",
+    "outcome": "Certify to teach Mat Pilates from beginner to advanced, training across the full spectrum of Pilates: from contrology and classical through to a contemporary practice.",
     "bestFor": "Best first course if you want to teach anywhere, with no equipment needed for your practice hours.",
     "price": 2200,
     "financeOptions": [
@@ -27,41 +27,46 @@
     ],
     "prerequisites": [],
     "inclusions": [
-      "Human Movement Course (online)",
+      "A welcoming and encouraging learning community, and a supportive peer group to learn, grow and succeed alongside",
+      "Our HUMAN MOVEMENT course: anatomy and movement science online, with recorded lectures, detailed manuals and downloadable resources",
+      "4 in-person practical training days with our teacher trainers",
+      "A training manual covering the execution of every exercise, and how to cue, correct, modify and progress clients",
+      "An extensive video library to review, revise and master each exercise at your own pace",
       "Online learning platform",
-      "4 in-person practical days at the Altrincham centre",
-      "Training manual",
-      "Video library",
-      "Workshops: history, principles, inclusive language, classroom management, programming, teaching to music, prenatal guidelines, your first job and starting a business",
-      "All exams at no extra cost"
+      "All exams included, at no extra cost"
     ],
     "curriculum": [
       {
         "title": "Repertoire",
         "items": [
           "Beginner, intermediate and advanced Mat repertoire",
-          "Contrology: the original 34 exercises",
-          "Classical and Contemporary variations and modifications",
+          "ALL of the Contrology exercises",
+          "The Classical exercises, including transitions, from the beginner, intermediate and advanced tiers",
+          "Contemporary exercises, variations and modifications",
           "Props and progressions"
         ]
       },
       {
         "title": "Teaching skills",
         "items": [
-          "Anatomy and human movement",
+          "HUMAN MOVEMENT: anatomy and physiology",
+          "The history of Joseph Pilates and the evolution of Classical and Contemporary Pilates",
+          "The principles of Pilates",
           "Cueing and inclusive language",
           "Classroom management",
-          "Programming a class",
+          "Programming classical and contemporary Pilates for studio classes and one-to-one sessions",
           "Teaching to music",
-          "Prenatal guidelines"
+          "Prenatal health-based guidelines",
+          "Modifying for injuries and special populations",
+          "Delivering one-to-one sessions and group classes that cater to all abilities"
         ]
       },
       {
         "title": "Career",
         "items": [
-          "Finding your first job",
-          "Starting your own classes",
-          "Insurance and setting up as self-employed"
+          "How to apply for your first teaching job",
+          "Setting up your own business",
+          "Insurance and self-employment"
         ]
       }
     ],
@@ -72,28 +77,23 @@
     },
     "exams": [
       {
-        "title": "Human Movement exam",
+        "title": "HUMAN MOVEMENT exam",
         "detail": "50 multiple choice questions, online."
       },
       {
         "title": "Theory exam",
-        "detail": "30 multiple choice questions, online."
+        "detail": "30 multiple choice questions, online: the practical application of teaching, including who would and wouldn't do certain exercises, the goals of each exercise and how to add challenges and modifications."
       },
       {
         "title": "Practical exam",
-        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+        "detail": "Programme and deliver a 45-minute class to show you can plan and teach in a real studio setting. Online, with a client you source."
       }
     ],
     "forYou": [
-      "You want to teach Pilates properly, not learn a routine",
-      "You value small groups and in-person coaching",
-      "You can commit to 4 in-person days and around 80 hours of practice over the following weeks",
-      "You want a qualification that covers every Mat tradition"
-    ],
-    "notForYou": [
-      "You want a guaranteed pass in a weekend",
-      "You would rather learn entirely online",
-      "You plan to run your own teacher trainings from this course"
+      "You value high quality, in-depth, thorough education",
+      "You want a certification that covers contrology, classical and contemporary Pilates",
+      "You value small groups and expert in-person coaching",
+      "You value community: a supportive, engaging atmosphere for learning, where you'll meet like-minded people and make new friends"
     ],
     "afterBooking": [],
     "unlocks": [
@@ -104,8 +104,8 @@
       "prenatal-postpartum"
     ],
     "heroImage": {
-      "url": "/images/site/about-5.jpg",
-      "alt": "The Reformer studio at the Altrincham training centre, with the sign that reads cool people teach Pilates",
+      "url": "/images/site/about-3.jpg",
+      "alt": "The lounge at the Altrincham training centre, with the course manual on the table",
       "width": 1600,
       "height": 1068
     },
@@ -122,18 +122,30 @@
     "testimonials": [],
     "seo": {
       "title": "Mat Pilates Teacher Training Manchester | The Pilates Programme",
-      "description": "Qualify to teach Mat Pilates in 4 in-person days plus supported practice hours. Contrology, Classical and Contemporary. £2,200 all-in, exams included."
+      "description": "Certify to teach Mat Pilates: 4 in-person days, the full spectrum from contrology to contemporary, exams included. £2,200 or 4 interest-free payments."
     },
     "answerQuestion": "What is the Mat Pilates teacher training?",
-    "answerSummary": "A Mat Pilates teacher training in Altrincham, Greater Manchester, covering beginner to advanced repertoire across Contrology, Classical and Contemporary styles. Four in-person days, an online Human Movement course, 80 supported practice hours and three exams, all included for £2,200 or four interest-free payments. No prior qualification is needed.",
+    "answerSummary": "A Mat Pilates teacher training covering beginner to advanced repertoire across the full spectrum of Pilates, from contrology and classical through to contemporary. Four in-person days, usually at our Altrincham training centre, plus our online HUMAN MOVEMENT course, your practice hours and the exams, all included for £2,200 or four interest-free payments. No prior certification needed.",
     "arketaFallbackUrl": "schedule?serviceId=2souTJywf2FNGYMw3Np9",
-    "durationDays": 4
+    "durationDays": 4,
+    "accreditation": "Internationally accredited by ITTAP via the Pilates Method Alliance",
+    "accreditationBadges": [
+      "ITTAP",
+      "Pilates Method Alliance"
+    ],
+    "locationNote": "Most Mat dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "cardImage": {
+      "url": "/images/site/course-mat.jpg",
+      "alt": "Mat Pilates teacher training",
+      "width": 1600,
+      "height": 900
+    }
   },
   {
     "_id": "course-reformer",
     "_type": "course",
     "order": 2,
-    "title": "Reformer Pilates Teacher Training, Manchester",
+    "title": "Reformer Pilates Teacher Training",
     "shortTitle": "Reformer",
     "slug": "reformer-pilates-teacher-training",
     "path": "qualify",
@@ -142,8 +154,8 @@
     "level": "Beginner and Intermediate",
     "format": "in-person",
     "eyebrow": "Teacher training · 5 in-person days",
-    "outcome": "Qualify to teach beginner and intermediate Reformer, the most in-demand skill in boutique studios.",
-    "bestFor": "Best first course if you want to work in Reformer studios and have access to a Reformer for practice hours.",
+    "outcome": "Certify to teach beginner and intermediate Reformer, covering the classical and contemporary repertoire.",
+    "bestFor": "Best first course if you want to work in Reformer studios and have access to a Reformer for your practice hours.",
     "price": 2200,
     "financeOptions": [
       {
@@ -157,39 +169,44 @@
     ],
     "prerequisites": [],
     "inclusions": [
-      "Human Movement Course (online)",
+      "A welcoming and encouraging learning community, and a supportive peer group to learn, grow and succeed alongside",
+      "Our HUMAN MOVEMENT course: anatomy and movement science online, with recorded lectures, detailed manuals and downloadable resources",
+      "5 in-person practical training days with our teacher trainers",
+      "A training manual covering the execution of every exercise, and how to cue, correct, modify and progress clients",
+      "An extensive video library to review, revise and master each exercise at your own pace",
       "Online learning platform",
-      "5 in-person practical days at the Altrincham centre",
-      "Training manual",
-      "Video library",
-      "Workshops: history, principles, inclusive language, classroom management, programming, teaching to music, prenatal guidelines, your first job and starting a business",
-      "All exams at no extra cost"
+      "All exams included, at no extra cost"
     ],
     "curriculum": [
       {
         "title": "Repertoire",
         "items": [
           "Beginner and intermediate Reformer repertoire",
-          "Classical order and Contemporary programming",
-          "Spring settings, safety and set-up",
-          "Modifications for common client needs"
+          "ALL of the Classical exercises, including transitions, from the beginner and intermediate tiers",
+          "Contemporary exercises, variations and modifications",
+          "Spring settings, safety and set-up"
         ]
       },
       {
         "title": "Teaching skills",
         "items": [
-          "Anatomy and human movement",
-          "Cueing on the apparatus",
-          "Managing a group Reformer class",
-          "Programming for strength and mobility",
-          "Teaching to music"
+          "HUMAN MOVEMENT: anatomy and physiology",
+          "The history of Joseph Pilates and the evolution of Classical and Contemporary Pilates",
+          "The principles of Pilates",
+          "Cueing on the apparatus and inclusive language",
+          "Classroom management",
+          "Programming classical and contemporary Pilates for studio classes and one-to-one sessions",
+          "Teaching to music",
+          "Prenatal health-based guidelines",
+          "Modifying for injuries and special populations",
+          "Delivering one-to-one sessions and group classes that cater to all abilities"
         ]
       },
       {
         "title": "Career",
         "items": [
-          "Finding your first studio job",
-          "Covering classes and building a timetable",
+          "How to apply for your first studio job",
+          "Setting up your own business",
           "Insurance and self-employment"
         ]
       }
@@ -201,28 +218,24 @@
     },
     "exams": [
       {
-        "title": "Human Movement exam",
+        "title": "HUMAN MOVEMENT exam",
         "detail": "50 multiple choice questions, online."
       },
       {
         "title": "Theory exam",
-        "detail": "30 multiple choice questions, online."
+        "detail": "30 multiple choice questions, online: the practical application of teaching, including who would and wouldn't do certain exercises, the goals of each exercise and how to add challenges and modifications."
       },
       {
         "title": "Practical exam",
-        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+        "detail": "Programme and deliver a 45-minute Reformer class to show you can plan and teach in a real studio setting. Online, with a client and a Reformer you source."
       }
     ],
     "forYou": [
-      "You want to teach in boutique Reformer studios",
-      "You have, or can arrange, access to a Reformer for practice hours",
-      "You value small groups and individual coaching",
-      "You can commit to 5 in-person days and around 80 hours of practice"
-    ],
-    "notForYou": [
-      "You want a guaranteed pass in a weekend",
-      "You would rather learn entirely online",
-      "You have no way to practise on a Reformer between the course and your exam"
+      "You value high quality, in-depth, thorough education",
+      "You want a certification that covers the classical and contemporary Reformer repertoire",
+      "You value small groups and expert in-person coaching",
+      "You value community: a supportive, engaging atmosphere for learning, where you'll meet like-minded people and make new friends",
+      "You have, or can arrange, access to a Reformer for your practice hours"
     ],
     "afterBooking": [],
     "unlocks": [
@@ -233,8 +246,8 @@
       "jumpboard-online"
     ],
     "heroImage": {
-      "url": "/images/site/about-4.jpg",
-      "alt": "A row of Reformers by the windows at the Altrincham training centre",
+      "url": "/images/site/about-9.jpg",
+      "alt": "Reformers by the windows at the Altrincham training centre",
       "width": 1600,
       "height": 1068
     },
@@ -250,19 +263,31 @@
     ],
     "testimonials": [],
     "seo": {
-      "title": "Reformer Pilates Teacher Training | The Pilates Programme",
-      "description": "Reformer Pilates teacher training in Altrincham, Cheshire. 5 in-person days, 80 supported practice hours, exams included. £2,200 or 4 interest-free payments."
+      "title": "Reformer Teacher Training Manchester | The Pilates Programme",
+      "description": "Certify to teach Reformer Pilates: 5 in-person days, classical and contemporary repertoire, exams included. £2,200 or 4 interest-free payments."
     },
     "answerQuestion": "What is the Reformer Pilates teacher training?",
-    "answerSummary": "A Reformer Pilates instructor course in Altrincham, Greater Manchester, covering beginner and intermediate repertoire with Classical and Contemporary programming. Five in-person days on full apparatus, an online Human Movement course, 80 supported practice hours and three exams, all included for £2,200 or four interest-free payments. No prior qualification needed.",
+    "answerSummary": "A Reformer Pilates teacher training covering the beginner and intermediate repertoire, classical and contemporary. Five in-person days on full apparatus, usually at our Altrincham training centre, plus our online HUMAN MOVEMENT course, your practice hours and the exams, all included for £2,200 or four interest-free payments. No prior certification needed.",
     "arketaFallbackUrl": "schedule?serviceId=0JTOQIuPQBgYVuVl7d0c",
-    "durationDays": 5
+    "durationDays": 5,
+    "accreditation": "Internationally accredited by ITTAP via the Pilates Method Alliance",
+    "accreditationBadges": [
+      "ITTAP",
+      "Pilates Method Alliance"
+    ],
+    "locationNote": "Most Reformer dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "cardImage": {
+      "url": "/images/site/course-reformer.jpg",
+      "alt": "Reformer Pilates teacher training",
+      "width": 1600,
+      "height": 900
+    }
   },
   {
     "_id": "course-barre",
     "_type": "course",
     "order": 3,
-    "title": "Barre Teacher Training, Manchester",
+    "title": "Barre Teacher Training",
     "shortTitle": "Barre",
     "slug": "barre-teacher-training",
     "path": "qualify",
@@ -270,8 +295,8 @@
     "discipline": "Barre",
     "format": "in-person",
     "eyebrow": "Teacher training · 5 in-person days",
-    "outcome": "Qualify to teach Barre classes that blend ballet conditioning with Pilates principles.",
-    "bestFor": "Best if you love music-led classes and want to add a high-demand group format to your timetable.",
+    "outcome": "Certify on the only Barre teacher training in the UK accredited by the Barre Fitness Alliance: the most in-depth training and the truest to the original method.",
+    "bestFor": "Best if you love energetic, music-led classes and want to teach Barre with real depth.",
     "price": 2200,
     "financeOptions": [
       {
@@ -285,39 +310,42 @@
     ],
     "prerequisites": [],
     "inclusions": [
-      "Human Movement Course (online)",
+      "In-person practical training: 5 days with our teacher trainers",
+      "Your manual and learning materials, refreshed regularly so you're always up to date",
+      "HUMAN MOVEMENT: our anatomy and physiology training, thorough and comprehensive yet easy to understand",
+      "An extensive video library to review, revise and master each exercise at your own pace",
+      "Ongoing coaching and encouragement to keep you growing",
       "Online learning platform",
-      "5 in-person practical days at the Altrincham centre",
-      "Training manual",
-      "Video library",
-      "Workshops: history, principles, inclusive language, classroom management, programming, teaching to music, prenatal guidelines, your first job and starting a business",
-      "All exams at no extra cost"
+      "All exams included, at no extra cost"
     ],
     "curriculum": [
       {
         "title": "Repertoire",
         "items": [
-          "Barre fundamentals and ballet positions",
-          "Pilates-based core and conditioning sequences",
-          "Props and progressions",
-          "Class formats from beginner to athletic"
+          "Where it all began: from the origins of Lotte Berk to the dynamic, high-energy method we know today",
+          "The differences between classical and contemporary Barre styles",
+          "Movement patterns at the barre and on the floor",
+          "The signature exercises that give Barre its technique, principles and unmistakable burn",
+          "How to cue, correct, modify and progress each exercise"
         ]
       },
       {
         "title": "Teaching skills",
         "items": [
-          "Anatomy and human movement",
-          "Cueing to the beat",
-          "Building a playlist and class flow",
+          "HUMAN MOVEMENT: anatomy and physiology",
+          "Programming and transitioning through the exercises",
+          "Inclusive language",
           "Classroom management",
-          "Prenatal guidelines"
+          "Pre and postnatal basics",
+          "Teaching to music",
+          "Modifying for injuries and special populations"
         ]
       },
       {
         "title": "Career",
         "items": [
-          "Finding your first job",
-          "Launching your own Barre classes",
+          "How to apply for your first teaching job",
+          "Setting up your own business",
           "Insurance and self-employment"
         ]
       }
@@ -329,26 +357,24 @@
     },
     "exams": [
       {
-        "title": "Human Movement exam",
+        "title": "HUMAN MOVEMENT exam",
         "detail": "50 multiple choice questions, online."
       },
       {
         "title": "Theory exam",
-        "detail": "30 multiple choice questions, online."
+        "detail": "30 multiple choice questions, online: the practical application of teaching, including who would and wouldn't do certain exercises, the goals of each exercise and how to add challenges and modifications."
       },
       {
         "title": "Practical exam",
-        "detail": "Teach a 45-minute class plus 5 random exercises, via Zoom."
+        "detail": "Programme and deliver a 45-minute Barre class to show you can plan and teach in a real studio setting. Online, with a client you source."
       }
     ],
     "forYou": [
-      "You love music-led, energetic classes",
-      "You want to teach in studios, gyms or your own venue",
-      "You value in-person coaching in a small group"
-    ],
-    "notForYou": [
-      "You want a guaranteed pass in a weekend",
-      "You would rather learn entirely online"
+      "You value high quality, in-depth, thorough education",
+      "You want the only Barre certification in the UK accredited by the Barre Fitness Alliance",
+      "You value small groups and expert in-person coaching",
+      "You value community: a supportive, engaging atmosphere for learning, where you'll meet like-minded people and make new friends",
+      "You love energetic, music-led classes"
     ],
     "afterBooking": [],
     "unlocks": [
@@ -356,10 +382,10 @@
       "reformer-pilates-teacher-training"
     ],
     "heroImage": {
-      "url": "/images/site/about-1.jpg",
-      "alt": "The main studio at the Altrincham training centre",
+      "url": "/images/site/barre-studio.jpg",
+      "alt": "A wooden barre in the studio",
       "width": 1600,
-      "height": 1068
+      "height": 1385
     },
     "faqs": [
       "faq-barre-experience",
@@ -372,13 +398,24 @@
     ],
     "testimonials": [],
     "seo": {
-      "title": "Barre Instructor Training UK | The Pilates Programme",
-      "description": "Barre teacher training in Altrincham, Manchester. In-person coaching, Pilates-based conditioning, exams included. £2,200 or 4 interest-free payments."
+      "title": "Barre Teacher Training Course UK | The Pilates Programme",
+      "description": "The UK's only Barre teacher training accredited by the Barre Fitness Alliance. 5 in-person days, exams included. £2,200 or 4 interest-free payments."
     },
     "answerQuestion": "What is the Barre teacher training?",
-    "answerSummary": "A Barre instructor training in Altrincham, Greater Manchester, blending ballet conditioning with Pilates principles. Five in-person practical days at our training centre, an online Human Movement course, supported practice hours and exams, all included for £2,200 or four interest-free payments. Suitable for beginners and for Pilates or fitness teachers adding Barre.",
+    "answerSummary": "The only Barre teacher training certification in the UK accredited by the Barre Fitness Alliance, built from years of teaching thousands of classes. Five in-person days, usually at our Altrincham training centre, plus our HUMAN MOVEMENT anatomy course, your practice hours and the exams, all included for £2,200 or four interest-free payments. No prior certification needed.",
     "arketaFallbackUrl": "schedule?serviceId=SxZCcWErALVzpl8wvPln",
-    "durationDays": 5
+    "durationDays": 5,
+    "accreditation": "The only Barre teacher training certification in the UK accredited by the Barre Fitness Alliance",
+    "accreditationBadges": [
+      "Barre Fitness Alliance"
+    ],
+    "locationNote": "Most Barre dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "cardImage": {
+      "url": "/images/site/course-barre.jpg",
+      "alt": "Barre teacher training",
+      "width": 1600,
+      "height": 900
+    }
   },
   {
     "_id": "course-advanced-reformer",
@@ -394,7 +431,7 @@
     "format": "in-person",
     "eyebrow": "Continuing education · in person",
     "outcome": "Add the advanced Reformer repertoire and teach progressions your strongest clients ask for.",
-    "bestFor": "For qualified Reformer teachers ready to teach advanced classes.",
+    "bestFor": "For certified Reformer teachers ready to teach advanced classes.",
     "price": null,
     "financeOptions": [
       {
@@ -406,7 +443,7 @@
       }
     ],
     "prerequisites": [
-      "An existing Reformer teaching qualification"
+      "An existing Reformer teaching certification"
     ],
     "inclusions": [
       "In-person practical days on full apparatus",
@@ -444,9 +481,6 @@
       "You already teach Reformer and want to extend your repertoire",
       "You want to run advanced or athletic Reformer classes"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach Reformer. Start with the Reformer teacher training."
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/advanced-reformer-header.jpg",
@@ -462,12 +496,24 @@
     "testimonials": [],
     "seo": {
       "title": "Advanced Reformer Pilates Training UK | The Pilates Programme",
-      "description": "Advanced Reformer teacher training in Altrincham for qualified Reformer teachers. Extend your repertoire with in-person coaching on full apparatus."
+      "description": "Advanced Reformer teacher training in Altrincham for certified Reformer teachers. Extend your repertoire with in-person coaching on full apparatus."
     },
     "answerQuestion": "What is the Advanced Reformer training?",
-    "answerSummary": "An in-person Advanced Reformer course in Altrincham, Greater Manchester, for teachers who already hold a Reformer qualification. It covers the advanced Classical order and Contemporary progressions, spotting and programming. The manual, exam, online platform access with a 6-week free trial and an interest-free payment plan are all included. Returning students receive 10% off.",
+    "answerSummary": "An in-person Advanced Reformer course in Altrincham, Greater Manchester, for teachers who already hold a Reformer certification. It covers the advanced Classical order and Contemporary progressions, spotting and programming. The manual, exam, online platform access with a 6-week free trial and an interest-free payment plan are all included. Returning students receive 10% off.",
     "arketaFallbackUrl": "schedule?serviceId=jP1em8jJ5F496TV5mwTN",
-    "heroVideo": "/video/advanced-reformer"
+    "heroVideo": "/video/advanced-reformer",
+    "cardImage": {
+      "url": "/images/site/course-advanced-reformer.jpg",
+      "alt": "Advanced Reformer teacher training",
+      "width": 1600,
+      "height": 900
+    },
+    "locationNote": "At our Altrincham training centre",
+    "accreditation": "Internationally accredited by ITTAP via the Pilates Method Alliance",
+    "accreditationBadges": [
+      "ITTAP",
+      "Pilates Method Alliance"
+    ]
   },
   {
     "_id": "course-chair",
@@ -532,9 +578,6 @@
       "You teach Mat or Reformer and want to work on full apparatus",
       "You want to offer private sessions"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-7.jpg",
@@ -551,12 +594,19 @@
     "testimonials": [],
     "seo": {
       "title": "Pilates Chair Training UK | The Pilates Programme",
-      "description": "Wunda Chair teacher training in Altrincham for qualified Mat or Reformer teachers. £1,200, or book Cadillac, Chair and Barrels together for £2,700."
+      "description": "Wunda Chair teacher training in Altrincham for certified Mat or Reformer teachers. £1,200, or book Cadillac, Chair and Barrels together for £2,700."
     },
     "answerQuestion": "What is the Chair training?",
     "answerSummary": "An in-person Wunda Chair teacher training in Altrincham, Greater Manchester, for teachers with an existing Mat or Reformer certification. It covers Classical repertoire and Contemporary variations with assessment included, for £1,200. Book Cadillac, Chair and Barrels together for £2,700 and Barrels is free.",
     "arketaFallbackUrl": "schedule?serviceId=x42a0jeV0x4grjdkOGLR",
-    "durationDays": 3
+    "durationDays": 3,
+    "cardImage": {
+      "url": "/images/site/course-chair.jpg",
+      "alt": "Chair teacher training",
+      "width": 1600,
+      "height": 900
+    },
+    "locationNote": "At our Altrincham training centre"
   },
   {
     "_id": "course-cadillac",
@@ -621,9 +671,6 @@
       "You teach Mat or Reformer and want to work on full apparatus",
       "You want to build a private client practice"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-6.jpg",
@@ -640,12 +687,19 @@
     "testimonials": [],
     "seo": {
       "title": "Pilates Cadillac Training UK | The Pilates Programme",
-      "description": "Cadillac teacher training in Altrincham for qualified Mat or Reformer teachers. £1,500, or book Cadillac, Chair and Barrels together for £2,700."
+      "description": "Cadillac teacher training in Altrincham for certified Mat or Reformer teachers. £1,500, or book Cadillac, Chair and Barrels together for £2,700."
     },
     "answerQuestion": "What is the Cadillac training?",
     "answerSummary": "An in-person Cadillac teacher training in Altrincham, Greater Manchester, for teachers with an existing Mat or Reformer certification. It covers Classical repertoire, springs, bars and straps, and Contemporary variations, with assessment included, for £1,500. Book Cadillac, Chair and Barrels together for £2,700 and Barrels is free.",
     "arketaFallbackUrl": "schedule?template=rJC9pbCKvTc6IG0Es12d",
-    "durationDays": 4
+    "durationDays": 4,
+    "cardImage": {
+      "url": "/images/site/course-cadillac.jpg",
+      "alt": "Cadillac teacher training",
+      "width": 1600,
+      "height": 900
+    },
+    "locationNote": "At our Altrincham training centre"
   },
   {
     "_id": "course-barrels",
@@ -709,9 +763,6 @@
     "forYou": [
       "You teach Mat or Reformer and want extension and mobility tools"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach Mat or Reformer. Start with a teacher training."
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/barrel-pilates-course-1.jpg",
@@ -728,12 +779,19 @@
     "testimonials": [],
     "seo": {
       "title": "Pilates Barrels Training UK | The Pilates Programme",
-      "description": "Ladder Barrel, Spine Corrector and Arc teacher training in Altrincham for qualified teachers. £800, or free when you book the apparatus bundle."
+      "description": "Ladder Barrel, Spine Corrector and Arc teacher training in Altrincham for certified teachers. £800, or free when you book the apparatus bundle."
     },
     "answerQuestion": "What is the Barrels training?",
     "answerSummary": "An in-person Barrels teacher training in Altrincham, Greater Manchester, covering the Ladder Barrel, Spine Corrector and Arc for teachers with an existing Mat or Reformer certification. Assessment included, for £800. Barrels is free when you book Cadillac, Chair and Barrels together for £2,700.",
     "arketaFallbackUrl": "schedule?serviceId=powPe603yhYq1wKT3WKI",
-    "durationDays": 2
+    "durationDays": 2,
+    "cardImage": {
+      "url": "/images/site/course-barrels.jpg",
+      "alt": "Barrels teacher training",
+      "width": 1600,
+      "height": 900
+    },
+    "locationNote": "At our Altrincham training centre"
   },
   {
     "_id": "course-apparatus-bundle",
@@ -789,10 +847,7 @@
     ],
     "forYou": [
       "You want to teach on every piece of apparatus",
-      "You want the best value route to a full apparatus qualification"
-    ],
-    "notForYou": [
-      "You are not yet qualified to teach Mat or Reformer."
+      "You want the best value route to a full apparatus certification"
     ],
     "unlocks": [],
     "heroImage": {
@@ -810,7 +865,7 @@
     "testimonials": [],
     "seo": {
       "title": "Pilates Apparatus Training Bundle UK | The Pilates Programme",
-      "description": "Cadillac, Chair and Barrels teacher training together for £2,700 with Barrels free. In person in Altrincham for qualified Mat or Reformer teachers."
+      "description": "Cadillac, Chair and Barrels teacher training together for £2,700 with Barrels free. In person in Altrincham for certified Mat or Reformer teachers."
     },
     "answerQuestion": "What is the apparatus bundle?",
     "answerSummary": "The apparatus bundle combines the Cadillac, Chair and Barrels teacher trainings at The Pilates Programme, Altrincham for £2,700, with Barrels included free. It is for teachers with an existing Mat or Reformer certification who want to teach on full apparatus. Each course includes a manual, video library and assessment.",
@@ -830,7 +885,7 @@
     "format": "in-person",
     "eyebrow": "CPD · in person · one day",
     "outcome": "Teach pregnant and postpartum clients with confidence, within scope and with current guidelines.",
-    "bestFor": "For qualified teachers who have pregnant or postpartum clients in their classes.",
+    "bestFor": "For certified teachers who have pregnant or postpartum clients in their classes.",
     "price": 250,
     "financeOptions": [
       {
@@ -843,7 +898,7 @@
       }
     ],
     "prerequisites": [
-      "A Pilates or Barre teaching qualification from any provider"
+      "A Pilates or Barre teaching certification from any provider"
     ],
     "inclusions": [
       "One in-person day",
@@ -867,9 +922,6 @@
     "forYou": [
       "You already teach and want to work safely with this client group"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach"
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-3.jpg",
@@ -885,10 +937,10 @@
     "testimonials": [],
     "seo": {
       "title": "Prenatal & Postpartum Pilates CPD | The Pilates Programme",
-      "description": "One-day in-person prenatal and postpartum Pilates CPD in Altrincham for qualified teachers from any provider. £250 or 2 interest-free instalments."
+      "description": "One-day in-person prenatal and postpartum Pilates CPD in Altrincham for certified teachers from any provider. £250 or 2 interest-free instalments."
     },
     "answerQuestion": "What is the Prenatal and Postpartum CPD?",
-    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers pregnancy anatomy, trimester modifications, postpartum return to movement and when to refer, for £250 or two interest-free instalments. Returning students receive 10% off.",
+    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for certified Pilates and Barre teachers from any provider. It covers pregnancy anatomy, trimester modifications, postpartum return to movement and when to refer, for £250 or two interest-free instalments. Returning students receive 10% off.",
     "arketaFallbackUrl": "schedule?serviceId=MpBf6en47VtQeZiSEMCr",
     "durationDays": 1
   },
@@ -918,7 +970,7 @@
       }
     ],
     "prerequisites": [
-      "A Pilates or Barre teaching qualification from any provider"
+      "A Pilates or Barre teaching certification from any provider"
     ],
     "inclusions": [
       "One in-person day",
@@ -942,9 +994,6 @@
     "forYou": [
       "You already teach and want to programme for strength"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach"
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-4.jpg",
@@ -960,10 +1009,10 @@
     "testimonials": [],
     "seo": {
       "title": "Strength & Endurance Pilates CPD | The Pilates Programme",
-      "description": "One-day in-person strength and endurance Pilates CPD in Altrincham for qualified teachers. Programme for measurable progress. £250 or 2 instalments."
+      "description": "One-day in-person strength and endurance Pilates CPD in Altrincham for certified teachers. Programme for measurable progress. £250 or 2 instalments."
     },
     "answerQuestion": "What is the Strength and Endurance CPD?",
-    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers progressive overload, programming for strength and endurance, load and tempo choices and tracking progress, for £250 or two interest-free instalments. Returning students receive 10% off.",
+    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for certified Pilates and Barre teachers from any provider. It covers progressive overload, programming for strength and endurance, load and tempo choices and tracking progress, for £250 or two interest-free instalments. Returning students receive 10% off.",
     "arketaFallbackUrl": "schedule?template=oXPZLAxnn9KxroBbibXv",
     "durationDays": 1
   },
@@ -993,7 +1042,7 @@
       }
     ],
     "prerequisites": [
-      "A Reformer teaching qualification from any provider"
+      "A Reformer teaching certification from any provider"
     ],
     "inclusions": [
       "On-demand video course",
@@ -1017,9 +1066,6 @@
     "forYou": [
       "You teach Reformer and want to add Jumpboard"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach Reformer"
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-9.jpg",
@@ -1036,7 +1082,7 @@
     "testimonials": [],
     "seo": {
       "title": "Jumpboard Pilates CPD Online | The Pilates Programme",
-      "description": "Online, on-demand Jumpboard CPD for qualified Reformer teachers. Set-up, landing mechanics and programming. £250 or 2 interest-free instalments."
+      "description": "Online, on-demand Jumpboard CPD for certified Reformer teachers. Set-up, landing mechanics and programming. £250 or 2 interest-free instalments."
     },
     "answerQuestion": "What is the Jumpboard CPD?",
     "answerSummary": "An online, on-demand Jumpboard CPD from The Pilates Programme, Altrincham for Reformer teachers from any provider. It covers set-up and safety, foot positions and landing mechanics, programming cardio blocks and contraindications, for £250 or two interest-free instalments, with a certificate on completion.",
@@ -1069,7 +1115,7 @@
       }
     ],
     "prerequisites": [
-      "A Pilates or Barre teaching qualification from any provider"
+      "A Pilates or Barre teaching certification from any provider"
     ],
     "inclusions": [
       "One in-person day",
@@ -1093,9 +1139,6 @@
     "forYou": [
       "You already teach and have clients living with persistent pain"
     ],
-    "notForYou": [
-      "You are not yet qualified to teach"
-    ],
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-8.jpg",
@@ -1111,10 +1154,10 @@
     "testimonials": [],
     "seo": {
       "title": "Pain Science Pilates CPD | The Pilates Programme",
-      "description": "One-day in-person pain science CPD in Altrincham for qualified Pilates teachers. Modern pain models, helpful language and scope of practice. £250."
+      "description": "One-day in-person pain science CPD in Altrincham for certified Pilates teachers. Modern pain models, helpful language and scope of practice. £250."
     },
     "answerQuestion": "What is the Pain Science CPD?",
-    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for qualified Pilates and Barre teachers from any provider. It covers current models of pain, language that helps, graded exposure in a Pilates setting and scope of practice, for £250 or two interest-free instalments. Returning students receive 10% off.",
+    "answerSummary": "A one-day in-person CPD at The Pilates Programme, Altrincham for certified Pilates and Barre teachers from any provider. It covers current models of pain, language that helps, graded exposure in a Pilates setting and scope of practice, for £250 or two interest-free instalments. Returning students receive 10% off.",
     "arketaFallbackUrl": "schedule?serviceId=iMD1D9WcClvJbvzVTpxn",
     "durationDays": 1
   }

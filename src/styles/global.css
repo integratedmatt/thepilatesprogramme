@@ -260,6 +260,7 @@
   .aspect-portrait { aspect-ratio: 4 / 5; }
   .aspect-landscape { aspect-ratio: 3 / 2; }
   .aspect-square { aspect-ratio: 1; }
+  .aspect-wide { aspect-ratio: 16 / 9; }
 
   .hours-bar { display: flex; height: var(--space-3); width: 100%; overflow: hidden; }
   .hours-bar span { display: block; height: 100%; }

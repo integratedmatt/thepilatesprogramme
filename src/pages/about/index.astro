@@ -11,19 +11,21 @@ const [settings, team] = await Promise.all([getSiteSettings(), getTeam()]);
 const founders = team.filter((m) => m.founder);
 const trainers = team.filter((m) => !m.founder);
 ---
-<Base title="About The Pilates Programme, Altrincham | The Pilates Programme" description="Founded by Georgie and Sarah to fix what they missed when they qualified: small cohorts, in-person coaching and every Pilates tradition, taught in Altrincham.">
-  <Hero eyebrow="About" title="Built by teachers who wanted a better training" lead="The Pilates Programme, Altrincham was founded by Georgie and Sarah to close the gaps they felt when they qualified: too little time in the room, one style only, and no help finding work.">
+<Base title="About The Pilates Programme, Altrincham | The Pilates Programme" description="Founded by Georgie and Sarah to close the gaps they experienced as teachers: small cohorts, in-person coaching and the full spectrum of Pilates, taught from Altrincham.">
+  <Hero eyebrow="About" title="Built by teachers, to close the gaps we found as teachers" lead="The Pilates Programme was founded by Georgie and Sarah to put together a comprehensive training that closes many of the gaps we experienced when we first started teaching. We aim to share our learnings and experience so you can build a career without limits.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'About', url: '/about' }]} />
   </Hero>
 
   <Section>
     <div class="grid">
+      {/* Photo: the client wants a picture of Sarah and Georgie here. Replace this studio shot once they supply one. */}
       <div class="col-7"><Picture image={{ url: '/images/site/about-8.jpg', alt: 'The lounge at the Altrincham training centre, with the words Be you not them on the wall', width: 1600, height: 1068 }} aspect="landscape" sizes="(min-width: 1024px) 58vw, 100vw" /></div>
       <div class="col-5">
-        <p class="eyebrow">Our story</p>
-        <h2>Why we built the course</h2>
-        <p class="secondary">We qualified through courses that taught a sequence and sent us on our way. What we needed was more time with a trainer watching us teach, a method that covered every tradition so we could work anywhere, and a plan for the practice hours and the first job. So we built that.</p>
-        <p class="secondary mt-4">Today we train small cohorts from a two-floor centre in Altrincham, with full apparatus, and we stay with students long after the course through studio hire, CPD and the jobs board.</p>
+        <p class="eyebrow">Our approach</p>
+        <h2>What makes us different</h2>
+        <p class="secondary">Our courses are steeped in the heritage of the original method, combined with modern knowledge of training principles and the science of movement, so your clients get results. Whether you would prefer to teach classically or through a more contemporary lens, you'll have all the tools to do so.</p>
+        <p class="secondary mt-4">We host our courses at our training centre in Altrincham and, a handful of times a year, in partnership with boutique studios elsewhere in the UK and abroad. We keep our course sizes small so we can focus on your individual development, all while building a community and valuing connection.</p>
+        <p class="secondary mt-4">Train with confidence. Teach with purpose. Build a career without limits.</p>
       </div>
     </div>
   </Section>
@@ -34,10 +36,10 @@ const trainers = team.filter((m) => !m.founder);
   <Section tone="inverse">
     <header class="section-heading"><p class="eyebrow">Values</p><h2>What we stand for</h2></header>
     <ul class="values" role="list" data-stagger>
-      <li><h3>Quality over speed</h3><p>The hours exist because they make you a teacher studios trust. We will never sell a guaranteed pass.</p></li>
-      <li><h3>In person, in a small group</h3><p>Being corrected while you teach is the fastest way to improve. Online supports it, it never replaces it.</p></li>
-      <li><h3>The whole method</h3><p>Contrology, Classical and Contemporary, so you can teach in any studio and understand why each tradition exists.</p></li>
-      <li><h3>Community that lasts</h3><p>Graduates come back for apparatus courses and CPD, refer friends and hire each other.</p></li>
+      <li><h3>High quality, in-depth, thorough education</h3><p>The practice hours exist because they make you a teacher studios trust: industry ready, confident and competent from your first class.</p></li>
+      <li><h3>Small groups, expert in-person coaching</h3><p>Being coached while you teach is the fastest way to improve. We structure every course with lots of opportunity to practice teach and refine that skill.</p></li>
+      <li><h3>The full spectrum of Pilates</h3><p>From contrology and classical through to a contemporary practice, so you can teach in any studio and understand why each tradition exists.</p></li>
+      <li><h3>Community and connection</h3><p>A supportive, engaging atmosphere where you'll meet like-minded people and make new friends. Graduates come back for apparatus courses and CPD, refer friends and hire each other.</p></li>
     </ul>
   </Section>
 
@@ -45,7 +47,7 @@ const trainers = team.filter((m) => !m.founder);
     <div class="grid">
       <div class="col-5"><p class="eyebrow">Method lineage</p><h2>From Contrology to today</h2></div>
       <div class="col-7">
-        <p class="secondary">Joseph Pilates called his work Contrology and built it around a set of original exercises and apparatus. The Classical tradition preserves that order and intention. Contemporary Pilates adapts it with modern movement science, props and variations. We teach all three, in that order, so you understand the roots before you adapt them.</p>
+        <p class="secondary">We teach it all. You'll learn Contrology (what Joseph Pilates himself taught), Classical Pilates (what the first generation of teachers then adapted) and Contemporary Pilates (a modern, evolving approach that builds on the original system and brings in newer insights from physiotherapy, biomechanics and sports science). You understand the roots before you adapt them.</p>
         <p class="mt-4"><a href="/accreditation" class="arrow-link">How our training is accredited</a></p>
       </div>
     </div>

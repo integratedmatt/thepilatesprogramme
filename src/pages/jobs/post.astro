@@ -7,12 +7,12 @@ import Turnstile from '@/components/Turnstile.astro';
 const disciplines = ['Mat', 'Reformer', 'Barre', 'Chair', 'Cadillac', 'Barrels', 'Apparatus', 'Prenatal'];
 const types: [string, string][] = [['PART_TIME', 'Part time'], ['FULL_TIME', 'Full time'], ['CONTRACTOR', 'Freelance / self-employed'], ['PER_DIEM', 'Cover'], ['TEMPORARY', 'Temporary'], ['OTHER', 'Other']];
 ---
-<Base title="List a Pilates Teaching Job Free | The Pilates Programme" description="Studios: list a Pilates or Barre teaching role free. Reviewed within 2 working days, live for 60 days and seen by qualified teachers across the UK." noindex>
-  <Hero eyebrow="For studios" title="List a role, free" lead="Reach qualified Pilates and Barre teachers across the UK. We review every listing within 2 working days and it runs for 60 days.">
+<Base title="List a Pilates Teaching Job | The Pilates Programme" description="Studios: list a Pilates or Barre teaching role. Reviewed within 2 working days, live for 60 days and seen by certified teachers across the UK." noindex>
+  <Hero eyebrow="For studios" title="List a role" lead="Reach certified Pilates and Barre teachers across the UK. Listings are paid: we review every one within 2 working days, send you a payment link on approval, and your role runs for 60 days.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }, { name: 'Post a job', url: '/jobs/post' }]} />
   </Hero>
   <Section>
-    <div class="form-status" data-state="success" id="sent" hidden role="status"><p><strong>Thanks. We have your listing.</strong> We review within 2 working days and will email you the live link. <a href="/jobs">Back to the jobs board</a>.</p></div>
+    <div class="form-status" data-state="success" id="sent" hidden role="status"><p><strong>Thanks. We have your listing.</strong> We review within 2 working days and will email you a payment link, then the live link once it is paid. <a href="/jobs">Back to the jobs board</a>.</p></div>
     <form class="form-grid" id="job-form" method="post" action="/api/job" data-form="job" data-form-id="job_post" data-path="studio" novalidate>
       <div class="error-summary form-status" data-state="error" tabindex="-1" hidden>Please check the highlighted fields below.</div>
       <div class="honeypot" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
@@ -41,9 +41,9 @@ const types: [string, string][] = [['PART_TIME', 'Part time'], ['FULL_TIME', 'Fu
           <fieldset class="checks"><legend>Disciplines</legend><div class="check-grid">{disciplines.map((d) => <label class="checkbox"><input type="checkbox" name="disciplines" value={d} /> {d}</label>)}</div></fieldset>
           <p class="error" hidden></p>
         </div>
-        <div class="field"><label for="requirements">Requirements</label><textarea class="input" id="requirements" name="requirements" maxlength="2000" placeholder="Qualifications, experience, availability"></textarea><p class="error" hidden></p></div>
+        <div class="field"><label for="requirements">Requirements</label><textarea class="input" id="requirements" name="requirements" maxlength="2000" placeholder="Certifications, experience, availability"></textarea><p class="error" hidden></p></div>
         <div class="field"><label for="description">Description</label><textarea class="input" id="description" name="description" required maxlength="2000"></textarea><p class="hint">Up to 2,000 characters. What the role involves, the studio, the timetable.</p><p class="error" hidden></p></div>
-        <label class="checkbox"><input type="checkbox" name="graduateFriendly" value="yes" /> We welcome recently qualified teachers (shows a "Graduate friendly" tag)</label>
+        <label class="checkbox"><input type="checkbox" name="graduateFriendly" value="yes" /> We welcome recently certified teachers (shows a "Graduate friendly" tag)</label>
       </fieldset>
       <fieldset>
         <legend class="h3">How to apply</legend>
@@ -55,7 +55,7 @@ const types: [string, string][] = [['PART_TIME', 'Part time'], ['FULL_TIME', 'Fu
       <Turnstile />
       <p class="small muted">By submitting you confirm this is a genuine role at a real studio and agree to our <a href="/terms">terms</a>.</p>
       <button type="submit" class="btn btn-primary">Submit listing for review</button>
-      <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. We have your listing and will email you the live link once it is approved."></div>
+      <div class="form-status" role="status" aria-live="polite" hidden data-success="Thanks. We have your listing and will email you a payment link once it is approved."></div>
     </form>
   </Section>
 </Base>

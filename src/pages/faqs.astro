@@ -9,12 +9,12 @@ import { getFaqs } from '@/lib/content';
 import { faqSchema } from '@/lib/schema';
 import { slugify } from '@/lib/format';
 const faqs = await getFaqs();
-const order = ['Choosing a course', 'Cost and finance', 'Practice hours and exams', 'Accreditation', 'After you qualify', 'Continuing education', 'The training centre'];
+const order = ['Choosing a course', 'Cost and finance', 'Practice hours and exams', 'Accreditation', 'After you certify', 'Continuing education', 'The training centre'];
 const groups = order.map((g) => ({ title: g, items: faqs.filter((f) => f.group === g) })).filter((g) => g.items.length);
 const other = faqs.filter((f) => !order.includes(f.group ?? ''));
 if (other.length) groups.push({ title: 'Other questions', items: other });
 ---
-<Base title="Pilates Teacher Training FAQs | The Pilates Programme" description="Answers on choosing a course, cost and finance, practice hours, exams, accreditation, finding work after qualifying and continuing education.">
+<Base title="Pilates Teacher Training FAQs | The Pilates Programme" description="Answers on choosing a course, cost and finance, practice hours, exams, accreditation, finding work after you certify and continuing education.">
   <Fragment slot="head"><JsonLd data={faqSchema(faqs)} /></Fragment>
   <Hero eyebrow="FAQs" title="Questions people ask before they book" lead="Honest answers. If yours is not here, ask us and we will add it.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'FAQs', url: '/faqs' }]} />

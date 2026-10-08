@@ -1,7 +1,7 @@
 [
-  { "_id": "cat-becoming", "_type": "category", "title": "Becoming a Teacher", "slug": "becoming-a-teacher", "description": "Choosing a course, what training involves and how to qualify." },
+  { "_id": "cat-becoming", "_type": "category", "title": "Becoming a Teacher", "slug": "becoming-a-teacher", "description": "Choosing a course, what training involves and how to certify." },
   { "_id": "cat-craft", "_type": "category", "title": "Teaching Craft", "slug": "teaching-craft", "description": "Cueing, programming, music and the method." },
   { "_id": "cat-careers", "_type": "category", "title": "Careers & Business", "slug": "careers-business", "description": "First jobs, earnings and building a teaching business." },
-  { "_id": "cat-ce", "_type": "category", "title": "Continuing Education", "slug": "continuing-education", "description": "Apparatus training and CPD for qualified teachers." },
+  { "_id": "cat-ce", "_type": "category", "title": "Continuing Education", "slug": "continuing-education", "description": "Apparatus training and CPD for certified teachers." },
   { "_id": "cat-studio", "_type": "category", "title": "Studio Life", "slug": "studio-life", "description": "Life at the Altrincham training centre." }
 ]

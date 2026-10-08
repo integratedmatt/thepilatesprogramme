@@ -1,11 +1,18 @@
 ---
+/**
+ * Accreditation badges. Site-wide placements show every badge in site settings. A course page passes
+ * `only` (badge names) so each course shows just the bodies that accredit it: CIMSPA does not endorse
+ * the Mat course and the Barre Fitness Alliance applies to Barre only (client rules, 8 Oct 2026).
+ */
 import type { SiteSettings } from '@/lib/types';
-interface Props { settings: SiteSettings; class?: string; tone?: 'light' | 'dark' }
-const { settings, class: className = '', tone = 'light' } = Astro.props;
-const badges = settings.accreditationBadges?.filter((b) => b.name) ?? [];
+interface Props { settings: SiteSettings; class?: string; tone?: 'light' | 'dark'; only?: string[] }
+const { settings, class: className = '', tone = 'light', only } = Astro.props;
+const all = settings.accreditationBadges?.filter((b) => b.name) ?? [];
+const badges = only ? all.filter((b) => only.some((n) => n.toLowerCase() === b.name.toLowerCase())) : all;
+const label = `Accredited by ${badges.map((b) => b.name).join(', ')}. Read about our accreditation`;
 ---
 {badges.length > 0 && (
-  <a href="/accreditation" class={`accreditation-strip ${tone} ${className}`.trim()} aria-label="Accredited by ITTAP through the Pilates Method Alliance; CIMSPA Training Partner. Read about our accreditation">
+  <a href="/accreditation" class={`accreditation-strip ${tone} ${className}`.trim()} aria-label={label}>
     <span class="eyebrow">Accredited by</span>
     <ul role="list">
       {badges.map((b) => (

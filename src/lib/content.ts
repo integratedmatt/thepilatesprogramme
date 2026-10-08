@@ -49,7 +49,8 @@ const SEO = `"seo": { "title": seo.title, "description": seo.description, "ogIma
 const COURSE_PROJECTION = `{
   _id, _type, order, title, shortTitle, "slug": slug.current, path, kind, discipline, level, format, eyebrow,
   outcome, bestFor, price, financeOptions, prerequisites, inclusions, curriculum, hoursBreakdown, durationDays, exams,
-  forYou, notForYou, afterBooking, unlocks, "heroImage": heroImage${IMAGE}, heroVideo, "gallery": gallery[]${IMAGE},
+  forYou, afterBooking, unlocks, accreditation, accreditationBadges, locationNote, timeToCertify,
+  "heroImage": heroImage${IMAGE}, "cardImage": cardImage${IMAGE}, heroVideo, "gallery": gallery[]${IMAGE},
   "faqs": faqs[]._ref, "testimonials": testimonials[]._ref, ${SEO}, answerQuestion, answerSummary,
   arketaFallbackUrl, guideUrl
 }`;

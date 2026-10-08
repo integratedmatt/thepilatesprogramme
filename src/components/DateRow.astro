@@ -48,7 +48,7 @@ const detailsId = `details-${date._id}`;
         <div><dt>Where</dt><dd>{where}</dd></div>
         <div><dt>Price</dt><dd>{priceLine}</dd></div>
         <div><dt>Prerequisite</dt><dd>{course.prerequisites?.length ? course.prerequisites.join('; ') : 'None'}</dd></div>
-        {course.hoursBreakdown && <div><dt>After the course</dt><dd>{course.hoursBreakdown.observation + course.hoursBreakdown.personalStudy + course.hoursBreakdown.practiceTeaching} supported practice hours, then {course.exams.length} exams, all included</dd></div>}
+        {course.hoursBreakdown && <div><dt>After the course</dt><dd>{course.hoursBreakdown.observation} observation, {course.hoursBreakdown.personalStudy} personal study and {course.hoursBreakdown.practiceTeaching} practice teaching hours in your own time, then the exams, all included</dd></div>}
         {date.spacesLeft != null && date.status === 'few-spaces' && <div><dt>Availability</dt><dd>{date.spacesLeft} {date.spacesLeft === 1 ? 'space' : 'spaces'} left</dd></div>}
       </dl>
       {included.length > 0 && (

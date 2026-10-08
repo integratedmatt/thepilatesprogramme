@@ -31,7 +31,7 @@ const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
             <h3>{g.name}</h3>
             <p class="small muted">{[courses.find((x) => x.slug === g.course)?.shortTitle ?? g.course, g.cohort].filter(Boolean).join(' · ')}</p>
             {g.studios?.length ? <p class="small">Teaches at {g.studios.join(', ')}{g.town ? `, ${g.town}` : ''}</p> : null}
-            {g.timeToFirstClass && <p class="small secondary">First class {g.timeToFirstClass} after qualifying</p>}
+            {g.timeToFirstClass && <p class="small secondary">First class {g.timeToFirstClass} after certifying</p>}
             {g.quote && <p class="secondary">“{g.quote}”</p>}
           </li>
         ))}

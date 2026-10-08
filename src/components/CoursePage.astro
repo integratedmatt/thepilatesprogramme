@@ -1,5 +1,9 @@
 ---
-/** Section 7.3 course page template. Shared by Qualify, apparatus, bundle and CPD pages. */
+/**
+ * Section 7.3 course page template. Shared by teacher training, apparatus, bundle and CPD pages.
+ * Copy rules (client, 8 Oct 2026): certify not qualify; hours listed separately, never "80" or "supported";
+ * time to certify is months not weeks; "This is for you if" only; accreditation and location per course.
+ */
 import Base from '@/layouts/Base.astro';
 import Hero from './Hero.astro';
 import { heroVideoSources } from '@/lib/video';
@@ -42,18 +46,20 @@ const unlocks = (course.unlocks ?? []).map((slug) => allCourses.find((c) => c.sl
 const allDates = await getUpcomingDates();
 const nextFor = (id: string) => allDates.find((d) => d.course === id);
 const hours = course.hoursBreakdown;
-const totalHours = hours ? hours.observation + hours.personalStudy + hours.practiceTeaching : undefined;
 const title = pageTitle(course.title, course.seo);
 const description = pageDescription(course.answerSummary.slice(0, 155), course.seo);
 const financeLine = course.financeOptions.find((f) => f.instalments && f.amount);
+const timeToCertify = course.timeToCertify ?? 'Usually around 6 months, anywhere from 3 to 12';
+const locationNote = course.locationNote ?? `Most dates at our ${settings.address.town} training centre; some run elsewhere in the UK and abroad`;
 const facts = [
   { label: 'Format', value: durationLabel(course) ?? (course.format === 'online' ? 'Online, on demand' : 'In person') },
-  { label: 'Practice hours', value: totalHours ? `${totalHours} supported hours` : undefined },
-  { label: 'Exams', value: course.exams.length ? `${course.exams.length} included` : undefined },
+  { label: 'After the course', value: hours ? `${hours.observation} observation, ${hours.personalStudy} personal study and ${hours.practiceTeaching} practice teaching hours, in your own time` : undefined },
+  { label: 'Time to certify', value: hours ? timeToCertify : undefined },
+  { label: 'Exams', value: course.exams.length ? (course.exams.length > 1 ? 'Included, all online' : 'Included') : undefined },
   { label: 'Price', value: course.price != null ? (financeLine ? `${gbp(course.price)} or ${financeLine.instalments} × ${gbp(financeLine.amount)}` : gbp(course.price)) : undefined },
-  { label: 'Location', value: course.format === 'online' ? 'Anywhere' : `${settings.address.town}, Greater Manchester` },
-  { label: 'Accreditation', value: 'ITTAP via PMA · CIMSPA Training Partner' },
-  { label: 'Prerequisite', value: course.prerequisites?.length ? course.prerequisites.join('; ') : isQualify ? 'None' : undefined },
+  { label: 'Location', value: course.format === 'online' ? 'Anywhere' : locationNote },
+  { label: 'Accreditation', value: course.accreditation || undefined },
+  { label: 'Prerequisite', value: course.prerequisites?.length ? course.prerequisites.join('; ') : isQualify ? 'No prior certification needed' : undefined },
 ];
 const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, path: course.path, kind: course.kind });
 ---
@@ -74,7 +80,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
         ? <a href={course.guideUrl} class="btn btn-secondary" target="_blank" rel="noopener">Download the course guide</a>
         : <a href="#guide" class="btn btn-secondary">Download the course guide</a>}
     </div>
-    <AccreditationStrip settings={settings} tone="dark" class="hero-accred" />
+    <AccreditationStrip settings={settings} tone="dark" class="hero-accred" only={course.accreditationBadges ?? []} />
   </Hero>
 
   {!isQualify && course.prerequisites && course.prerequisites.length > 0 && (
@@ -82,7 +88,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
       <aside class="prereq" aria-label="Prerequisite">
         <p class="eyebrow">Prerequisite</p>
         <p>You'll need {course.prerequisites.map((p) => p.charAt(0).toLowerCase() + p.slice(1)).join(' and ')}.</p>
-        <p class="small"><a href="/become-a-pilates-instructor">Not qualified yet? Start here.</a></p>
+        <p class="small"><a href="/become-a-pilates-instructor">Not certified yet? Start here.</a></p>
       </aside>
     </div>
   )}
@@ -96,23 +102,10 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
     </div>
   </Section>
 
-  {(course.forYou?.length || course.notForYou?.length) && (
+  {course.forYou && course.forYou.length > 0 && (
     <Section tone="subtle">
-      <header class="section-heading"><p class="eyebrow">Is this for you?</p><h2>Honest fit, before you book</h2></header>
-      <div class="two-col">
-        {course.forYou && course.forYou.length > 0 && (
-          <div>
-            <h3>This is for you if</h3>
-            <ul class="tick-list" role="list">{course.forYou.map((i) => <li>{i}</li>)}</ul>
-          </div>
-        )}
-        {course.notForYou && course.notForYou.length > 0 && (
-          <div>
-            <h3>This isn't for you if</h3>
-            <ul class="cross-list" role="list">{course.notForYou.map((i) => <li>{i}</li>)}</ul>
-          </div>
-        )}
-      </div>
+      <header class="section-heading"><p class="eyebrow">Is this for you?</p><h2>This is for you if</h2></header>
+      <ul class="tick-list for-you" role="list" data-stagger>{course.forYou.map((i) => <li>{i}</li>)}</ul>
     </Section>
   )}
 
@@ -139,29 +132,30 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
     </Section>
   )}
 
-  {hours && totalHours && (
+  {hours && (
     <Section id="road">
       <div class="grid">
         <div class="col-7">
-          <header class="section-heading"><p class="eyebrow">Road to Certification</p><h2>These hours are why studios hire our graduates</h2><p class="lead">After the intensive you complete {totalHours} supported hours, then three exams. Most students finish in eight weeks alongside a job.</p></header>
+          <header class="section-heading"><p class="eyebrow">Road to Certification</p><h2>These hours are why studios hire our graduates</h2><p class="lead">Once your in-person days are complete, you put it all into practice in your own time, around work, family and everything else in your life.</p></header>
+          <ul class="rule-list hours-list" role="list">
+            <li><strong>{hours.observation} observation hours.</strong> Watching other teachers, in person or on our online platform.</li>
+            <li><strong>{hours.personalStudy} personal study hours.</strong> Practising every exercise in the manual on your own body until you know it inside out.</li>
+            <li><strong>{hours.practiceTeaching} practice teaching hours.</strong> Planning and delivering practice classes.</li>
+          </ul>
           <HoursBar hours={hours} />
-          <h3 class="mt-7">A suggested 8-week plan</h3>
-          <ol class="plan" role="list">
-            <li><strong>Weeks 1 to 2.</strong> Observation heavy: book onto classes locally, at the centre or through the video library.</li>
-            <li><strong>Weeks 3 to 5.</strong> Start teaching short sections to friends and fellow students. Keep observing. Begin revision.</li>
-            <li><strong>Weeks 6 to 8.</strong> Teach full classes. Hire the studio if you need a room and equipment. Sit your exams.</li>
-          </ol>
+          <p class="secondary mt-5">These hours mean that once you pass your exams you are industry ready and can teach confidently in a studio from day one. Most students certify in around 6 months, and anywhere from 3 to 12 is normal. There is some ongoing personal study after the exam to keep you sharp.</p>
           <p class="small"><a href="/become-a-pilates-instructor/road-to-certification">Read the full Road to Certification guide</a></p>
         </div>
         <div class="col-5">
-          <h3>How to complete your hours</h3>
+          <h3>Where to do your hours</h3>
           <ul class="rule-list how-list" role="list">
-            <li><strong>Studio hire at the centre.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour.` : 'Rates on the pricing page.'}</li>
-            <li><strong>Equipment hire.</strong> {settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour.` : ''}</li>
-            <li><strong>Your local studio.</strong> Many studios welcome trainees to observe and cover.</li>
+            <li><strong>Studio hire at our training centre.</strong> {settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour for practice teaching.` : 'Book the studio for practice teaching; ask us for the current rate.'}</li>
+            <li><strong>Equipment hire at the centre.</strong> For your personal practice.</li>
+            <li><strong>Your local studio.</strong> Ask whether you can observe classes or hire their space.</li>
             <li><strong>Online observation.</strong> Through the video library and the app.</li>
           </ul>
-          <h3 class="mt-7">The three exams</h3>
+          <h3 class="mt-7">The exams</h3>
+          <p class="secondary">Once your hours are logged and you feel confident with your teaching, you sit your exams. They are all online and included in the price.</p>
           <ul class="rule-list how-list" role="list">
             {course.exams.map((e) => <li><strong>{e.title}.</strong> {e.detail}</li>)}
           </ul>
@@ -189,7 +183,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   <Section tone="subtle" id="pricing">
     <header class="section-heading"><p class="eyebrow">Pricing</p><h2>What it costs, with nothing hidden</h2></header>
     <PriceBlock course={course} rules={rules} />
-    <p class="mt-5 small"><a href="/pricing">See the full pricing breakdown, including cost per in-person hour</a></p>
+    <p class="mt-5 small"><a href="/pricing">See pricing and payment options for every course</a></p>
   </Section>
 
   {course.afterBooking && course.afterBooking.length > 0 && (
@@ -243,13 +237,13 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
   @media (min-width: 1024px) { .col-answer { grid-column: span 7; } .col-facts { grid-column: 9 / span 4; } }
   .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
   @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } }
-  .two-col { display: grid; gap: var(--space-7); }
-  @media (min-width: 768px) { .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .two-col h3 { margin-bottom: var(--space-4); }
-  .tick-list, .cross-list { list-style: none; display: grid; gap: var(--space-3); color: var(--text-secondary); }
-  .tick-list li, .cross-list li { padding-left: var(--space-5); position: relative; }
+  .tick-list { list-style: none; display: grid; gap: var(--space-3); color: var(--text-secondary); }
+  .tick-list li { padding-left: var(--space-5); position: relative; }
   .tick-list li::before { content: "\2713"; position: absolute; left: 0; color: var(--status-open); }
-  .cross-list li::before { content: "\00d7"; position: absolute; left: 0; color: var(--text-muted); }
+  .for-you { font-size: var(--type-lead, 1.125rem); gap: var(--space-4); max-width: var(--measure-body); }
+  @media (min-width: 768px) { .for-you { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; } }
+  .hours-list { list-style: none; margin-bottom: var(--space-5); }
+  .hours-list li { padding-block: var(--space-3); color: var(--text-secondary); }
   .curriculum { display: grid; gap: var(--space-7); }
   @media (min-width: 768px) { .curriculum { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); } }
   .curriculum-group h3 { margin-bottom: var(--space-4); }

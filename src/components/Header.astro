@@ -38,7 +38,7 @@ const meta = (c: (typeof qualify)[number]) => [durationLabel(c) ?? (c.format ===
           <div class="mega motion-pop" id="menu-courses" hidden data-menu="courses">
             <div class="container mega-inner">
               <section class="mega-group" aria-labelledby="mega-qualify">
-                <p class="eyebrow">I want to qualify</p>
+                <p class="eyebrow">I want to certify</p>
                 <a href="/become-a-pilates-instructor" class="mega-heading" id="mega-qualify">Become a teacher</a>
                 <ul class="mega-list" role="list">
                   {qualify.map((c) => <li><a href={courseUrl(c)} class="mega-item"><span class="mega-item-title">{c.shortTitle} teacher training</span><span class="small muted">{meta(c)}</span></a></li>)}
@@ -46,7 +46,7 @@ const meta = (c: (typeof qualify)[number]) => [durationLabel(c) ?? (c.format ===
                 <a href="/become-a-pilates-instructor/which-course" class="arrow-link small">Which course is right for me?</a>
               </section>
               <section class="mega-group" aria-labelledby="mega-continue">
-                <p class="eyebrow">I'm already qualified</p>
+                <p class="eyebrow">I'm already a teacher</p>
                 <a href="/continuing-education" class="mega-heading" id="mega-continue">Continue learning</a>
                 <ul class="mega-list" role="list">
                   {apparatus.map((c) => <li><a href={courseUrl(c)} class="mega-item"><span class="mega-item-title">{c.shortTitle}</span><span class="small muted">{meta(c)}</span></a></li>)}
@@ -80,11 +80,11 @@ const meta = (c: (typeof qualify)[number]) => [durationLabel(c) ?? (c.format ===
     <div class="container mobile-inner">
       <div class="mobile-tiles" data-stagger>
         <a href="/become-a-pilates-instructor" class="mobile-tile">
-          <span class="eyebrow">I want to qualify</span>
+          <span class="eyebrow">I want to certify</span>
           <span class="h3">Become a Pilates or Barre teacher</span>
         </a>
         <a href="/continuing-education" class="mobile-tile">
-          <span class="eyebrow">I'm already qualified</span>
+          <span class="eyebrow">I'm already a teacher</span>
           <span class="h3">Continue learning</span>
         </a>
       </div>

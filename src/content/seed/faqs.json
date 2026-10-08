@@ -13,7 +13,7 @@
     "group": "Cost and finance",
     "order": 2,
     "question": "Can I pay in instalments?",
-    "answer": "Yes. Qualify courses can be paid in four monthly interest-free payments of £550. A double booking of two courses can be spread over six payments. CPD can be paid in two instalments. All payments are non-refundable and non-transferable."
+    "answer": "Yes. Mat, Reformer and Barre can be paid in four monthly interest-free payments of £550. A double booking of two courses can be spread over six payments. CPD can be paid in two instalments. All payments are non-refundable and non-transferable."
   },
   {
     "_id": "faq-double",
@@ -28,7 +28,7 @@
     "_type": "faq",
     "group": "Cost and finance",
     "order": 4,
-    "question": "Is there a discount if I already have a fitness qualification?",
+    "question": "Is there a discount if I already hold a Level 3 fitness qualification?",
     "answer": "Students with an existing Level 3 fitness qualification receive £400 off. Email a copy of your certificate to info@thepilatesprogramme.co.uk and we will send you a discount code."
   },
   {
@@ -45,7 +45,7 @@
     "group": "Cost and finance",
     "order": 6,
     "question": "Are there any extra costs to plan for?",
-    "answer": "Exams, your manual and assessment are included. Beyond the course fee you may want to budget for studio or equipment hire for practice hours, teacher insurance once you start teaching, and travel to Altrincham. The pricing page lists current hire rates."
+    "answer": "Exams, your manual and assessment are included. Beyond the course fee you may want to budget for studio hire for practice teaching, teacher insurance once you start teaching, and travel. Ask us for current studio hire rates."
   },
   {
     "_id": "faq-hours",
@@ -53,7 +53,7 @@
     "group": "Practice hours and exams",
     "order": 10,
     "question": "How many practice hours do I need, and how do I organise them?",
-    "answer": "After the in-person intensive you complete 30 observation hours, 25 personal study hours and 25 practice teaching hours. Most students finish in eight to twelve weeks alongside a job. You can observe classes locally or online, hire studio space and equipment at the centre, and practise teaching friends, family or a local studio. We give you a plan and support you through it."
+    "answer": "Once your in-person days are complete you put it all into practice: 30 observation hours (watching other teachers, in person or on our online platform), 25 personal study hours (practising every exercise in the manual on your own body) and 25 practice teaching hours (planning and delivering practice classes). You complete them in your own time, at a location that works for you, around work and family. You can hire the studio at our training centre for practice teaching, observe classes locally or on our app, and teach friends, family or fellow students."
   },
   {
     "_id": "faq-exams",
@@ -61,7 +61,7 @@
     "group": "Practice hours and exams",
     "order": 11,
     "question": "What are the exams like?",
-    "answer": "There are three: a 50-question multiple choice Human Movement exam, a 30-question multiple choice theory exam, and a practical exam where you teach a 45-minute class plus five random exercises over Zoom. All are included in the course fee, and you are prepared for each one during training."
+    "answer": "All online and all included in the course fee. The HUMAN MOVEMENT exam is 50 multiple choice questions. The theory exam is 30 multiple choice questions on the practical application of teaching. The practical exam is a 45-minute class you plan and teach to a client you source. We structure the course so you are ready for each one."
   },
   {
     "_id": "faq-how-long",
@@ -69,7 +69,7 @@
     "group": "Practice hours and exams",
     "order": 12,
     "question": "How long does it take to become a Pilates instructor?",
-    "answer": "From booking to your first paid class is typically three to four months: pre-course online study, four or five in-person days, then around eight weeks of practice hours and exams. Some students take longer around work and family, and that is fine."
+    "answer": "It depends on you. The in-person days are four (Mat) or five (Reformer and Barre). After that you complete your practice hours in your own time, around your job, your kids and everything else in your life. Most students certify in around six months. Some do it in three, some take up to twelve, and both are fine."
   },
   {
     "_id": "faq-mat-experience",
@@ -77,7 +77,7 @@
     "group": "Choosing a course",
     "order": 20,
     "question": "Do I need Pilates experience to train as a Mat teacher?",
-    "answer": "You do not need a qualification, but you should have practised Pilates regularly and enjoy it. If you are new to Pilates, we suggest attending classes for a few months first so the repertoire feels familiar."
+    "answer": "You do not need a prior certification, but you do need to have practised mat Pilates before you train with us. We ask for a minimum of 50 hours of class experience in your chosen apparatus, 30 of them in classical Pilates classes so you have a sound understanding of the original exercises. You can clock these up on the road to your course dates."
   },
   {
     "_id": "faq-reformer-access",
@@ -109,23 +109,23 @@
     "group": "Accreditation",
     "order": 30,
     "question": "Are your courses accredited?",
-    "answer": "Our courses are internationally accredited by ITTAP through the Pilates Method Alliance, and The Pilates Programme is a CIMSPA Training Partner. The accreditation page explains what each body is and what it means for where you can teach."
+    "answer": "Our Mat and Reformer teacher trainings are internationally accredited by ITTAP via the Pilates Method Alliance (PMA), an internationally recognised body committed to high standards in Pilates education. Our Barre teacher training is the only one in the UK accredited by the Barre Fitness Alliance. Our Prenatal and Postpartum CPD is endorsed by CIMSPA. The accreditation page explains what each body is and what it means for where you can teach."
   },
   {
     "_id": "faq-after",
     "_type": "faq",
-    "group": "After you qualify",
+    "group": "After you certify",
     "order": 40,
-    "question": "What support do I get after I qualify?",
-    "answer": "You keep access to the online platform and video library, you can hire studio space and equipment at the centre, you receive 10% off further training, and our jobs board lists roles from studios across the UK."
+    "question": "What support do I get after I certify?",
+    "answer": "You keep access to the online platform and video library, you can hire studio space and equipment at the centre, you receive 10% off further training, and our jobs board lists roles from studios across the UK. Our graduates teach across the UK and abroad, and we provide a letter of validation covering our content criteria, international alignment and insurance coverage."
   },
   {
     "_id": "faq-where-teach",
     "_type": "faq",
-    "group": "After you qualify",
+    "group": "After you certify",
     "order": 41,
     "question": "Where do your graduates teach?",
-    "answer": "Our graduates teach in boutique studios, gyms, community venues and their own businesses across the North West and beyond. The graduates page lists profiles and studios as our graduates share them."
+    "answer": "Our graduates teach in boutique studios, gyms, community venues, online and in their own businesses across the UK and abroad, from Ireland and Europe to the Middle East and Australia."
   },
   {
     "_id": "faq-prereq-apparatus",
@@ -133,7 +133,7 @@
     "group": "Continuing education",
     "order": 50,
     "question": "What do I need before an apparatus course?",
-    "answer": "Chair, Cadillac and Barrels require an existing Mat or Reformer teaching certification from any provider. Advanced Reformer requires an existing Reformer qualification. Each course includes its manual, exam, an interest-free payment plan and online platform access with a 6-week free trial."
+    "answer": "Chair, Cadillac and Barrels require an existing Mat or Reformer teaching certification from any provider. Advanced Reformer requires an existing Reformer certification. Each course includes its manual, exam, an interest-free payment plan and online platform access with a 6-week free trial."
   },
   {
     "_id": "faq-bundle",
@@ -157,7 +157,7 @@
     "group": "Continuing education",
     "order": 53,
     "question": "Can I attend CPD if I trained elsewhere?",
-    "answer": "Yes. CPD days are open to qualified Pilates and Barre teachers from any provider."
+    "answer": "Yes. CPD days are open to certified Pilates and Barre teachers from any provider."
   },
   {
     "_id": "faq-cpd-online",
@@ -181,7 +181,7 @@
     "group": "The training centre",
     "order": 60,
     "question": "Where is the training centre?",
-    "answer": "23 Central Way, Altrincham, WA14 1RF, a short walk from Altrincham train and tram interchange with parking nearby. The centre has two floors with full apparatus and Barre fit-out, seminar screens, study spaces and a kitchen. Some courses run at partner studios in Manchester city centre."
+    "answer": "23 Central Way, Altrincham, WA14 1RF, a short walk from Altrincham train and tram interchange with parking nearby. The centre has two floors with full apparatus and Barre fit-out, seminar screens, study spaces and a kitchen. Most courses run here. Around half a dozen a year run elsewhere in the UK and abroad, and the course dates page shows where."
   },
   {
     "_id": "faq-studio-hire",
@@ -189,7 +189,7 @@
     "group": "The training centre",
     "order": 61,
     "question": "Can I hire the studio for practice hours?",
-    "answer": "Yes. Students can hire studio space and equipment at the centre for practice teaching and observation. Current rates are on the pricing and training centre pages."
+    "answer": "Yes. Students can hire the studio and equipment at the centre for practice teaching and personal practice. Ask us for current rates."
   },
   {
     "_id": "faq-weekend",

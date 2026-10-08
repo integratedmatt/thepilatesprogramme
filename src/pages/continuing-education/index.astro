@@ -20,17 +20,17 @@ const dates = allDates.filter((d) => ids.has(d.course));
 const nextFor = (id: string) => allDates.find((d) => d.course === id);
 const returning = rules.find((r) => r.slug === 'returning-student');
 const apparatusJobs = jobs.filter((j) => j.disciplines.some((d) => /reformer|chair|cadillac|barrel|apparatus/i.test(d))).slice(0, 3);
-const answer = `The Pilates Programme, Altrincham offers continuing education for qualified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three for £2,700 with Barrels free, plus CPD at £250. Every course includes the manual, exams, an interest-free payment plan and online platform access with a 6-week free trial. Past students receive 10% off.`;
+const answer = `The Pilates Programme, Altrincham offers continuing education for certified Pilates and Barre teachers from any provider: Advanced Reformer, Chair (£1,200), Cadillac (£1,500) and Barrels (£800), or all three for £2,700 with Barrels free, plus CPD at £250. Every course includes the manual, exams, an interest-free payment plan and online platform access with a 6-week free trial. Past students receive 10% off.`;
 ---
-<Base title="Pilates CPD and Apparatus Courses | The Pilates Programme" description="Advanced Reformer, Chair, Cadillac, Barrels and CPD days for qualified Pilates teachers from any provider, in Altrincham. Returning students save 10%.">
-  <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for qualified teachers from any provider, taught in person on full apparatus in Altrincham.">
+<Base title="Pilates CPD and Apparatus Courses | The Pilates Programme" description="Advanced Reformer, Chair, Cadillac, Barrels and CPD days for certified Pilates teachers from any provider, in Altrincham. Returning students save 10%.">
+  <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for certified teachers from any provider, taught in person on full apparatus in Altrincham.">
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Continuing education', url: '/continuing-education' }]} />
     <div class="hero-actions"><a href="#apparatus" class="btn btn-primary">Apparatus courses</a><a href="#cpd" class="btn btn-secondary">CPD days</a></div>
   </Hero>
 
   <Section>
     <div class="grid">
-      <div class="col-7"><AnswerBox question="What continuing education do you offer qualified teachers?" answer={answer} /></div>
+      <div class="col-7"><AnswerBox question="What continuing education do you offer certified teachers?" answer={answer} /></div>
       {included.length > 0 && (
         <div class="col-5">
           <p class="eyebrow">Included in every course</p>
@@ -41,7 +41,7 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
   </Section>
 
   <Section tone="subtle" id="apparatus">
-    <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer qualification. Manual, exam, interest-free instalments and online platform access are included in every course.</p></header>
+    <header class="section-heading"><p class="eyebrow">Apparatus pathway</p><h2>Teach on every piece of apparatus</h2><p class="lead">Each course requires an existing Mat or Reformer certification. Advanced Reformer requires a Reformer certification. Manual, exam, interest-free instalments and online platform access are included in every course.</p></header>
     <ul class="card-grid" role="list" data-stagger>{apparatus.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
     {bundle && (
       <div class="bundle">
@@ -73,7 +73,7 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
     <p class="mt-6"><a href="/jobs?discipline=Reformer" class="arrow-link">See Reformer and apparatus roles</a></p>
   </Section>
 
-  <Section><FaqAccordion faqs={faqs} heading="Questions from qualified teachers" /></Section>
+  <Section><FaqAccordion faqs={faqs} heading="Questions from certified teachers" /></Section>
 </Base>
 <style>
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }

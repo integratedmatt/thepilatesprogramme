@@ -99,12 +99,16 @@ export interface Course {
   curriculum: CurriculumGroup[];
   hoursBreakdown?: HoursBreakdown;
   exams: Exam[];
-  forYou?: string[];
-  notForYou?: string[];
+  forYou?: string[];       // "This is for you if" only. Never a "This isn't for you" list (client rule, 8 Oct 2026).
   afterBooking?: string[];
   unlocks?: string[];      // slugs of courses this unlocks
   durationDays?: number;   // course length in days (in person, or online equivalent)
+  accreditation?: string;  // per course, e.g. "Internationally accredited by ITTAP via the Pilates Method Alliance". Hidden when empty.
+  accreditationBadges?: string[]; // names from siteSettings.accreditationBadges to show on this course. Empty = none.
+  locationNote?: string;   // e.g. "Most dates at our Altrincham training centre; some run elsewhere in the UK and abroad"
+  timeToCertify?: string;  // e.g. "Usually around 6 months, anywhere from 3 to 12"
   heroImage?: ImageRef;   // also the hero video's poster
+  cardImage?: ImageRef;   // 16:9 graphic for course cards; falls back to heroImage
   heroVideo?: string;      // base path, e.g. /video/advanced-reformer (see src/lib/video.ts)
   gallery?: ImageRef[];
   faqs: string[];          // faq ids

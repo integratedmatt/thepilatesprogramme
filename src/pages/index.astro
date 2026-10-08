@@ -27,10 +27,10 @@ const stats = settings.proofStats
 const heroImage = { url: '/images/site/home-header.jpg', alt: 'A student working through the course manual on a Reformer at the Altrincham training centre', width: 1920, height: 1080 };
 const heroVideo = heroVideoSources('/video/header');
 ---
-<Base title="Pilates Teacher Training Manchester | The Pilates Programme" description="Become a Pilates or Barre teacher studios want to hire. Small cohorts, in-person coaching in Altrincham, every tradition. £2,200 with exams included.">
-  <Hero title="Become a Pilates teacher studios want to hire." lead="Small cohorts, individual coaching at our Altrincham training centre, and a method that covers every tradition: Contrology, Classical and Contemporary." image={heroImage} video={heroVideo} display>
+<Base title="Pilates Teacher Training Manchester | The Pilates Programme" description="Become a Pilates or Barre teacher studios want to hire. Small cohorts, in-person coaching in Altrincham, contrology to contemporary. £2,200, exams included.">
+  <Hero title="Become a Pilates teacher studios want to hire." lead="Small cohorts and coaching at our Altrincham training centre, with training across the full spectrum of Pilates: from contrology and classical through to a contemporary practice." image={heroImage} video={heroVideo} display>
     <div class="hero-actions">
-      <a href="/become-a-pilates-instructor" class="btn btn-primary">I want to qualify</a>
+      <a href="/become-a-pilates-instructor" class="btn btn-primary">I want to certify</a>
       <a href="/continuing-education" class="btn btn-secondary">I'm already a teacher</a>
     </div>
     {settings.heroTrustLine && <p class="trust-line small">{settings.heroTrustLine}</p>}
@@ -39,8 +39,8 @@ const heroVideo = heroVideoSources('/video/header');
 
   <Section>
     <div class="paths" data-stagger>
-      <PathTile eyebrow="I want to qualify" title="Become a Pilates or Barre teacher" promise="Mat, Reformer and Barre teacher training with 4 or 5 in-person days, supported practice hours and exams included." href="/become-a-pilates-instructor" image={{ url: '/images/site/about-5.jpg', alt: 'The Reformer studio at the Altrincham training centre, with the sign that reads cool people teach Pilates', width: 1600, height: 1068 }} cta="Start your route" />
-      <PathTile eyebrow="I'm already qualified" title="Continue learning" promise="Advanced Reformer, Chair, Cadillac, Barrels and CPD for teachers from any provider. Returning students save 10%." href="/continuing-education" image={{ url: '/images/site/about-6.jpg', alt: 'The Cadillac at the Altrincham training centre', width: 1068, height: 1600 }} cta="See apparatus and CPD" />
+      <PathTile eyebrow="I want to certify" title="Become a Pilates or Barre teacher" promise="Mat, Reformer and Barre teacher training with 4 or 5 in-person days, practice hours in your own time and exams included." href="/become-a-pilates-instructor" image={{ url: '/images/site/about-5.jpg', alt: 'The Reformer studio at the Altrincham training centre, with the sign that reads cool people teach Pilates', width: 1600, height: 1068 }} cta="Start your route" />
+      <PathTile eyebrow="I'm already a teacher" title="Continue learning" promise="Advanced Reformer, Chair, Cadillac, Barrels and CPD for teachers from any provider. Returning students save 10%." href="/continuing-education" image={{ url: '/images/site/about-6.jpg', alt: 'The Cadillac at the Altrincham training centre', width: 1068, height: 1600 }} cta="See apparatus and CPD" />
     </div>
   </Section>
 
@@ -54,21 +54,22 @@ const heroVideo = heroVideoSources('/video/header');
 
   <Section>
     <header class="section-heading"><p class="eyebrow">Why train with us</p><h2>Depth over speed, and a job at the end of it</h2></header>
+    {/* Photos: the client has hundreds of course photos with students in them. Swap these studio shots for people once the Drive folder is shared. */}
     <ul class="why-grid" role="list" data-stagger>
       <li>
-        <Picture image={{ url: '/images/site/about-7.jpg', alt: 'Wunda Chair reflected in the studio mirror', width: 1068, height: 1600 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <Picture image={{ url: '/images/site/advanced-reformer-header.jpg', alt: 'Teachers practising on Reformers with a trainer at the Altrincham training centre', width: 1920, height: 1080 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
         <h3>Small cohorts, individual coaching</h3>
-        <p class="secondary">Every student is seen, corrected and coached in person. You leave teaching, not just knowing.</p>
+        <p class="secondary">We keep our courses small so we can focus on your individual development, with lots of opportunity to practice teach and get coaching on it.</p>
       </li>
       <li>
-        <Picture image={{ url: '/images/site/about-4.jpg', alt: 'A row of Reformers by the windows', width: 1600, height: 1068 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
-        <h3>Every tradition</h3>
-        <p class="secondary">Contrology, Classical and Contemporary in one training, so you can teach any studio's style.</p>
+        <Picture image={{ url: '/images/site/home-header.jpg', alt: 'A student working through the course manual', width: 1920, height: 1080 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <h3>The full spectrum of Pilates</h3>
+        <p class="secondary">Steeped in the heritage of the original method and combined with modern movement science. Whether you'd rather teach classically or through a more contemporary lens, you'll have the tools to do so.</p>
       </li>
       <li>
-        <Picture image={{ url: '/images/site/about-13.jpg', alt: 'The seminar room where workshops run', width: 1600, height: 1068 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
-        <h3>Industry ready</h3>
-        <p class="secondary">Programming, teaching to music, inclusive cueing and a first-job workshop are built in.</p>
+        <Picture image={{ url: '/images/site/about-13.jpg', alt: 'The seminar room at the Altrincham training centre', width: 1600, height: 1068 }} aspect="portrait" sizes="(min-width: 768px) 33vw, 100vw" />
+        <h3>Community and connection</h3>
+        <p class="secondary">A supportive, engaging atmosphere for learning, where you'll meet like-minded people and make new friends. Train with confidence. Teach with purpose.</p>
       </li>
     </ul>
   </Section>
@@ -80,7 +81,7 @@ const heroVideo = heroVideoSources('/video/header');
         <h2>Not contemporary only. Not classical only. The whole method.</h2>
       </div>
       <div class="col-5">
-        <p class="lead">Joseph Pilates called his work Contrology. We teach the original repertoire, the Classical order that grew from it and the Contemporary variations studios use today. You graduate able to teach wherever you are hired.</p>
+        <p class="lead">You'll learn Contrology (what Joseph Pilates himself taught), Classical Pilates (what the first generation of teachers adapted) and Contemporary Pilates (the evolving approach that builds on the original system with newer insights from physiotherapy, biomechanics and sports science). You graduate able to teach wherever you are hired.</p>
         <p class="mt-4"><a href="/about" class="arrow-link">Read about our approach</a></p>
       </div>
     </div>
@@ -120,11 +121,11 @@ const heroVideo = heroVideoSources('/video/header');
     {jobs.length > 0 ? (
       <ul class="rule-list rule-top rule-bottom jobs" role="list">{jobs.slice(0, 3).map((j) => <JobRow job={j} />)}</ul>
     ) : (
-      <p class="lead">Studios across the UK list Pilates and Barre roles here, free.</p>
+      <p class="lead">Studios across the UK list Pilates and Barre roles here.</p>
     )}
     <div class="jobs-links">
       <a href="/jobs" class="arrow-link">See all roles</a>
-      <a href="/jobs/post" class="arrow-link">Studios: list a role free</a>
+      <a href="/jobs/post" class="arrow-link">Studios: list a role</a>
     </div>
   </Section>
 
