@@ -31,7 +31,6 @@ const typekit = import.meta.env.PUBLIC_TYPEKIT_ID as string | undefined;
 // only on the live project). Local dev builds are unaffected because VERCEL_ENV is unset there.
 const vercelEnv = (import.meta.env.VERCEL_ENV as string | undefined) ?? process.env.VERCEL_ENV;
 const previewNoindex = Boolean(vercelEnv) && vercelEnv !== 'production';
-const robotsNoindex = noindex || previewNoindex;
 ---
 <!doctype html>
 <html lang="en-GB" class="no-js">
@@ -41,7 +40,7 @@ const robotsNoindex = noindex || previewNoindex;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    {robotsNoindex && <meta name="robots" content={previewNoindex ? 'noindex, nofollow' : 'noindex, follow'} />}
+    {previewNoindex ? <meta name="robots" content="noindex, nofollow" data-preview /> : noindex && <meta name="robots" content="noindex, follow" />}
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={settings.entityName} />
     <meta property="og:title" content={title} />

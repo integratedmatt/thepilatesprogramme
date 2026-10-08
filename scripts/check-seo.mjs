@@ -15,11 +15,14 @@ async function* walk(d) {
     else if (e.name.endsWith('.html')) yield p;
   }
 }
+const stripPreviewRobots = (html) => html.replace(/<meta name="robots" content="[^"]*"[^>]*data-preview[^>]*>/g, '');
 const decode = (s) => s.replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
 const errors = [], warnings = [], titles = new Map(), descs = new Map();
 let pages = 0;
 for await (const file of walk(dir)) {
-  const html = await readFile(file, 'utf8');
+  // Preview deployments carry a site-wide <meta name="robots" ... data-preview> (src/layouts/Base.astro). It is not a
+  // page-level noindex, so strip it before checking, otherwise every preview build fails the sitemap hygiene check.
+  const html = stripPreviewRobots(await readFile(file, 'utf8'));
   if (/http-equiv="refresh"/i.test(html)) continue; // redirect stubs
   pages++;
   const page = '/' + relative(dir, file).replace(/^client\//, '').replace(/\/?index\.html$|\.html$/, '');
@@ -48,7 +51,7 @@ for await (const file of walk(dir)) {
 // be shadowed by a redirect. Server-rendered routes (no built HTML) are only checked against redirects.
 const pageInfo = new Map();
 for await (const file of walk(dir)) {
-  const html = await readFile(file, 'utf8');
+  const html = stripPreviewRobots(await readFile(file, 'utf8'));
   const path = '/' + relative(dir, file).replace(/^client\//, '').replace(/\/?index\.html$|\.html$/, '');
   pageInfo.set(path.replace(/\/$/, '') || '/', { noindex: /<meta name="robots" content="[^"]*noindex/.test(html), canonical: html.match(/<link rel="canonical" href="([^"]*)"/)?.[1] });
 }
