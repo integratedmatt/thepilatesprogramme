@@ -23,6 +23,7 @@ import EmailCapture from './EmailCapture.astro';
 import JsonLd from './JsonLd.astro';
 import Section from './Section.astro';
 import SectionNav from './SectionNav.astro';
+import WhyUs from './WhyUs.astro';
 import { getSiteSettings, getUpcomingDates, getPricingRules, getFaqsByIds, getTeam, getTestimonialsByIds, getCourses, courseUrl, hubUrl } from '@/lib/content';
 import { courseSchema } from '@/lib/schema';
 import { pageTitle, pageDescription } from '@/lib/seo';
@@ -51,7 +52,8 @@ const title = pageTitle(course.title, course.seo);
 const description = pageDescription(course.answerSummary.slice(0, 155), course.seo);
 const financeLine = course.financeOptions.find((f) => f.instalments && f.amount);
 const timeToCertify = course.timeToCertify ?? 'Usually around 6 months, anywhere from 3 to 12';
-const locationNote = course.locationNote ?? `Most dates at our ${settings.address.town} training centre; some run elsewhere in the UK and abroad`;
+const locationNote = course.locationNote ?? `Most dates at our purpose-built ${settings.address.town} training centre; some run elsewhere in the UK and abroad`;
+const showWhyUs = course.kind === 'teacher-training' && Boolean(settings.providerComparison?.rows?.length);
 const facts = [
   { label: 'Format', value: durationLabel(course) ?? (course.format === 'online' ? 'Online, on demand' : 'In person') },
   { label: 'After the course', value: hours ? `${hours.observation} observation, ${hours.personalStudy} personal study and ${hours.practiceTeaching} practice teaching hours, in your own time` : undefined },
@@ -67,6 +69,7 @@ const sectionNav = [
   ...(course.forYou?.length ? [{ href: '#for-you', label: 'Is it for you?' }] : []),
   ...(course.curriculum.length ? [{ href: '#learn', label: "What you'll learn" }] : []),
   ...(hours ? [{ href: '#road', label: 'Road to Certification' }] : []),
+  ...(showWhyUs ? [{ href: '#why-us', label: 'Why us' }] : []),
   { href: '#dates', label: 'Dates' },
   { href: '#pricing', label: 'Pricing' },
   ...(faqs.length ? [{ href: '#questions', label: 'FAQs' }] : []),
@@ -175,6 +178,8 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
       </div>
     </Section>
   )}
+
+  {showWhyUs && <Section tone="subtle"><WhyUs settings={settings} /></Section>}
 
   {team.length > 0 && <Section tone="subtle"><TeamCards members={team} /></Section>}
 

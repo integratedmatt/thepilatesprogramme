@@ -1,0 +1,74 @@
+---
+/**
+ * "What you get with us" comparison: The Pilates Programme against a typical provider, with no provider
+ * named. Rows come from site settings (providerComparison) so the client can edit them in the Studio.
+ * The "other courses" column is deliberately hedged ("often", "varies"): the client's rule is to criticise
+ * format, never people, and never to knock a named competitor. Plain table markup, so it reads on
+ * every device and to search engines; phones get one stacked card per row.
+ */
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings; id?: string; heading?: string }
+const { settings, id = 'why-us', heading } = Astro.props;
+const cmp = settings.providerComparison;
+const rows = cmp?.rows ?? [];
+---
+{cmp && rows.length > 0 && (
+  <div class="why-us" id={id}>
+    <header class="section-heading">
+      <p class="eyebrow">{cmp.eyebrow ?? 'Why train with us'}</p>
+      <h2>{heading ?? cmp.heading}</h2>
+      {cmp.lead && <p class="lead">{cmp.lead}</p>}
+    </header>
+    <div class="table-wrap">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col" class="cmp-feature"><span class="visually-hidden">What</span></th>
+            <th scope="col" class="cmp-us">{cmp.usLabel ?? 'The Pilates Programme'}</th>
+            <th scope="col" class="cmp-them">{cmp.themLabel ?? 'Many other courses'}</th>
+          </tr>
+        </thead>
+        <tbody data-stagger>
+          {rows.map((r) => (
+            <tr>
+              <th scope="row" class="cmp-feature">{r.feature}</th>
+              <td class="cmp-us"><span class="cmp-cell"><span class="tick" aria-hidden="true">✓</span><span>{r.us}</span></span></td>
+              <td class="cmp-them"><span class="cmp-label small muted" aria-hidden="true">{cmp.themLabel ?? 'Many other courses'}</span><span>{r.them}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    {cmp.footnote && <p class="small muted mt-4">{cmp.footnote}</p>}
+  </div>
+)}
+<style>
+  .why-us { display: grid; gap: var(--space-6); }
+  .section-heading { display: grid; gap: var(--space-3); }
+  .table-wrap { overflow-x: auto; }
+  .cmp { width: 100%; border-collapse: collapse; }
+  .cmp th, .cmp td { vertical-align: top; text-align: left; padding: var(--space-4) var(--space-4) var(--space-4) 0; border-top: var(--border-width) solid var(--border-subtle); }
+  .cmp thead th { border-top: 0; padding-top: 0; font-size: var(--type-eyebrow); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; font-weight: var(--weight-medium); color: var(--text-muted); }
+  .cmp thead .cmp-us { color: var(--text-link); }
+  .cmp th[scope="row"] { font-weight: var(--weight-medium); color: var(--text-primary); width: 22%; }
+  .cmp td { color: var(--text-secondary); }
+  .cmp-us { width: 44%; }
+  td.cmp-us { color: var(--text-primary); padding-right: var(--space-5); }
+  .cmp-cell { display: flex; gap: var(--space-3); }
+  .cmp-cell .tick { color: var(--text-link); font-weight: var(--weight-medium); flex: none; }
+  .cmp-them { width: 34%; }
+  .cmp-label { display: none; }
+  /* Phones: each row becomes a card. The "them" cell carries its own label so the comparison still reads. */
+  @media (max-width: 767px) {
+    .cmp thead { display: none; }
+    .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto; }
+    .cmp tr { border-top: var(--border-width) solid var(--border-strong); padding-block: var(--space-4); }
+    .cmp th[scope="row"], .cmp td { border-top: 0; padding: 0 0 var(--space-2); }
+    .cmp th[scope="row"] { width: auto; font-size: var(--type-small); letter-spacing: var(--tracking-button); text-transform: uppercase; color: var(--text-muted); font-weight: var(--weight-medium); }
+    .cmp-us, .cmp-them { width: auto; }
+    td.cmp-us { font-size: var(--type-body); }
+    td.cmp-them { display: grid; gap: var(--space-1); padding-top: var(--space-2); }
+    .cmp-label { display: block; }
+  }
+  .mt-4 { margin-top: var(--space-4); }
+</style>

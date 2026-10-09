@@ -153,3 +153,11 @@ Nothing downloadable is being sent. The career guide PDF does not exist yet, so 
 5. Hero video: re-cut the same footage, or a photo montage until new footage exists?
 6. Price per paid jobs listing.
 7. Still to send: the reel, the Mat/Reformer/Barre videos, the Drive photo folder, your quiz questions, a photo of you both, and the Cal.com calendar connection.
+
+## Added 9 Oct
+
+**Comparison table, "What you get with us, and what to check anywhere else".** On the Mat, Reformer and Barre pages and the teacher training hub. Nine rows: time in the room, the method, where you train, exams and manual, HUMAN MOVEMENT, the practice hours, accreditation, after you certify, paying. No provider is named and the right-hand column is deliberately hedged ("often", "varies", "check"). You can edit every row in the Studio. Tell us if any line overstates.
+
+**The training centre.** It was downplayed. It is now called "The UK's first purpose-built Pilates education centre" on the homepage, the training centre page and the About page, with your old line that it is "fully dedicated to your teacher training, unlike in-house trainings that work around a studio timetable". The Location fact on every course page says "purpose-built Altrincham training centre".
+
+**The map on phones.** It was cropping to a zoomed box that cut the arcs off and lost the sense of the world. It now shows the pinned half of the world at full height, every arc from Altrincham intact, with Australia labelled. The list of places stays underneath for the European cluster, where labels would overlap.

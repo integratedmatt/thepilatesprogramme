@@ -3,7 +3,7 @@
   "_type": "siteSettings",
   "siteName": "The Pilates Programme",
   "entityName": "The Pilates Programme, Altrincham",
-  "tagline": "Pilates and Barre teacher training in Altrincham, Greater Manchester. Small cohorts, in-person coaching, the full spectrum from contrology and classical to contemporary.",
+  "tagline": "Pilates and Barre teacher training from the UK's first purpose-built Pilates education centre in Altrincham. Small cohorts, in-person coaching, the full spectrum from contrology and classical to contemporary.",
   "email": "info@thepilatesprogramme.co.uk",
   "instagram": "@the_pilatesprogramme",
   "instagramUrl": "https://www.instagram.com/the_pilatesprogramme/",
@@ -266,5 +266,60 @@
     "name": "Align-Pilates",
     "url": "https://align-pilates.com/?utm_source=Partner&utm_medium=referral&utm_campaign=Affiliate&utm_id=AMB-1-TPP",
     "blurb": "Reformers, apparatus and home equipment from our equipment partner, for your studio or your own practice."
+  },
+  "providerComparison": {
+    "eyebrow": "Why train with us",
+    "heading": "What you get with us, and what to check anywhere else",
+    "lead": "We never name other providers; plenty of them are good. We do think you should know what to ask before you book anywhere, including here.",
+    "usLabel": "The Pilates Programme",
+    "themLabel": "Many other courses",
+    "rows": [
+      {
+        "feature": "Time in the room",
+        "us": "4 or 5 full in-person days in a small cohort, coached while you teach real bodies.",
+        "them": "Often larger groups, or mostly online with a short practical."
+      },
+      {
+        "feature": "The method",
+        "us": "The full spectrum: contrology, classical and contemporary, so you can teach in any studio.",
+        "them": "Often one style only."
+      },
+      {
+        "feature": "Where you train",
+        "us": "The UK's first purpose-built Pilates education centre, with full apparatus across two floors. Nothing squeezed around a class timetable.",
+        "them": "A working studio, fitted around its own classes."
+      },
+      {
+        "feature": "Exams, manual and assessment",
+        "us": "Included in the one price. No hidden fees.",
+        "them": "Often charged on top, including resits."
+      },
+      {
+        "feature": "Anatomy and physiology",
+        "us": "HUMAN MOVEMENT, our own anatomy and movement science course, included and sent to you the day you book.",
+        "them": "Often a separate course or an extra fee."
+      },
+      {
+        "feature": "After the in-person days",
+        "us": "30 observation, 25 personal study and 25 practice teaching hours, so you walk into your first class industry ready.",
+        "them": "Varies. Sometimes none at all."
+      },
+      {
+        "feature": "Accreditation",
+        "us": "Mat and Reformer internationally accredited by ITTAP via the Pilates Method Alliance. Barre is the only UK course accredited by the Barre Fitness Alliance.",
+        "them": "Check what the accreditation is and who it is from."
+      },
+      {
+        "feature": "After you certify",
+        "us": "An actual person on the end of the phone, studio hire at the centre, the jobs board and 10% off further training.",
+        "them": "Varies."
+      },
+      {
+        "feature": "Paying",
+        "us": "Pay in full or in interest-free instalments. Book two courses together and save £1,000.",
+        "them": "Varies."
+      }
+    ],
+    "footnote": "Facts about our courses are on this page and the pricing page. The right-hand column describes patterns we hear about from students who trained elsewhere; ask any provider the same questions."
   }
 }

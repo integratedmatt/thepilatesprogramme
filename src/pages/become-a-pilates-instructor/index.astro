@@ -8,6 +8,7 @@ import FactsBlock from '@/components/FactsBlock.astro';
 import Timeline from '@/components/Timeline.astro';
 import CourseCard from '@/components/CourseCard.astro';
 import CompareTabs from '@/components/CompareTabs.astro';
+import WhyUs from '@/components/WhyUs.astro';
 import DatesList from '@/components/DatesList.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
@@ -30,7 +31,7 @@ const answer = `To become a Pilates instructor you complete a teacher training c
 const steps = [
   { title: 'Choose your course', text: 'Mat, Reformer or Barre. Take the quiz if you are unsure, or book two together and save £1,000.', meta: 'Step 1' },
   { title: 'The HUMAN MOVEMENT course', text: 'Our online anatomy and movement science course is sent to you as soon as you sign up, to work through before your in-person days.', meta: 'Step 2' },
-  { title: '4 or 5 in-person days', text: 'A small cohort and expert coaching, usually at our Altrincham training centre.', meta: 'Step 3' },
+  { title: '4 or 5 in-person days', text: "A small cohort and expert coaching, usually at our purpose-built Altrincham training centre, the first of its kind in the UK.", meta: 'Step 3' },
   { title: 'Your practice hours', text: '30 observation, 25 personal study and 25 practice teaching hours, in your own time around work and family. Most students certify in around six months.', meta: 'Step 4' },
   { title: 'The exams and your first class', text: 'All online and all included. Then cover, apply through the jobs board or launch your own classes.', meta: 'Step 5' },
 ];
@@ -41,7 +42,7 @@ const facts = [
   { label: 'Time to certify', value: 'Usually around 6 months, anywhere from 3 to 12' },
   { label: 'Exams', value: 'Included, all online' },
   { label: 'Price', value: `${gbp(minPrice)} or 4 × ${gbp(minPrice / 4)}` },
-  { label: 'Location', value: 'Mostly Altrincham; some dates elsewhere in the UK and abroad' },
+  { label: 'Location', value: 'Mostly our purpose-built Altrincham centre; some dates elsewhere in the UK and abroad' },
   { label: 'Prerequisite', value: 'No prior certification needed' },
 ];
 ---
@@ -76,6 +77,8 @@ const facts = [
     <CompareTabs courses={courses} nextFor={nextFor} id="compare-courses" />
     <p class="small muted mt-4">Job demand varies by area. The jobs board shows which disciplines local studios are hiring for right now.</p>
   </Section>
+
+  <Section><WhyUs settings={settings} /></Section>
 
   {dbl && (
     <Section tone="inverse">

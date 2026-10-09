@@ -20,13 +20,16 @@ const places = (map?.locations ?? []).map((l, i) => {
   const end = anchor === 'end' ? [lx + 3, ly - 4] : anchor === 'start' ? [lx - 3, ly - 4] : dy > 0 ? [lx, ly - 11] : [lx, ly + 3];
   return { ...l, ...p, i, lx, ly, anchor, leader: Math.hypot(dx, dy) > 18, end, arc: arcPath([map!.home.lng, map!.home.lat], [l.lng, l.lat]) };
 });
-// Small-screen crop: the box around all pins plus padding, so markers stay readable on phones.
-const xs = [home?.x ?? 0, ...places.map((p) => p.x)], ys = [home?.y ?? 0, ...places.map((p) => p.y)];
-const pad = 36;
-const cx0 = Math.max(0, Math.min(...xs) - pad), cx1 = Math.min(VIEW_WIDTH, Math.max(...xs) + pad);
-const cy0 = Math.max(0, Math.min(...ys) - pad), cy1 = Math.min(height, Math.max(...ys) + pad);
+// Small-screen crop: trim only the empty width to the left of the pins (the Americas carry no pins) and keep the
+// full height, so every pin, every arc (great circles bow north of the training centre) and the land around
+// them stay in frame. The point of the map is international reach, so the world has to read as the world.
+const xs = [home?.x ?? 0, ...places.map((p) => p.x)];
+const padL = 110, padR = 24;
+const cx0 = Math.max(0, Math.min(...xs) - padL), cx1 = Math.min(VIEW_WIDTH, Math.max(...xs) + padR);
+const cy0 = 0, cy1 = height;
 const crop = { w: cx1 - cx0, h: cy1 - cy0 };
 const cropVars = `--crop-ratio: ${crop.w.toFixed(1)} / ${crop.h.toFixed(1)}; --crop-scale: ${(VIEW_WIDTH / crop.w * 100).toFixed(2)}%; --crop-left: ${(-cx0 / crop.w * 100).toFixed(2)}%; --crop-top: ${(-cy0 / crop.h * 100).toFixed(2)}%; --full-ratio: ${VIEW_WIDTH} / ${height};`;
+const solo = new Set(places.filter((a) => places.every((b) => b === a || Math.hypot(a.x - b.x, a.y - b.y) > 60) && Math.hypot(a.x - (home?.x ?? 0), a.y - (home?.y ?? 0)) > 60).map((p) => p.i));
 const regions = Array.from(new Set(places.map((p) => p.region ?? p.name)));
 const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. All trained at ${map.home.name}.` : '';
 ---
@@ -56,7 +59,8 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
                 {p.leader && <line class="leader" x1={p.x} y1={p.y} x2={p.end[0]} y2={p.end[1]} aria-hidden="true" />}
                 <circle class="pulse" cx={p.x} cy={p.y} r="4.5" aria-hidden="true" />
                 <circle class="dot" cx={p.x} cy={p.y} r="4.5" />
-                <text class="label" x={p.lx} y={p.ly} text-anchor={p.anchor} aria-hidden="true">{p.name}</text>
+                <text class="label label-d" x={p.lx} y={p.ly} text-anchor={p.anchor} aria-hidden="true">{p.name}</text>
+                {solo.has(p.i) && <text class="label label-solo" x={p.x > cx1 - 120 ? p.x - 14 : p.x + 14} y={p.y + 6} text-anchor={p.x > cx1 - 120 ? 'end' : 'start'} aria-hidden="true">{p.name}</text>}
               </g>
             ))}
             <text class="label home-label" x={home.x + 10} y={home.y - 10} text-anchor="start" aria-hidden="true">{map.home.name}</text>
@@ -80,14 +84,16 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
   .world-figure { margin: 0; display: grid; gap: var(--space-5); }
   .world-frame { position: relative; width: 100%; aspect-ratio: var(--full-ratio); }
   .world-map { position: absolute; inset: 0; }
-  /* Phones: zoom to the pins. The inner map keeps its own ratio and is offset inside a clipped frame. */
+  /* Phones: show the pinned half of the world at full height. The inner map keeps its own ratio and is offset inside a clipped frame. */
   @media (max-width: 767px) {
     .world-frame { aspect-ratio: var(--crop-ratio); overflow: hidden; }
     .world-map { inset: auto; left: var(--crop-left); top: var(--crop-top); width: var(--crop-scale); aspect-ratio: var(--full-ratio); }
-    .dot, .pulse { r: 6; }
-    .home-dot { r: 6; }
-    .home-ring { r: 11; }
-    .arc { stroke-width: 1.8; }
+    .dot, .pulse { r: 7; }
+    .home-dot { r: 7; }
+    .home-ring { r: 13; }
+    .arc { stroke-width: 2; }
+    .label { font-size: 17px; }
+    .home-label { font-size: 18px; }
   }
   .world-map img, .world-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
   .world-map svg { overflow: visible; }
@@ -107,8 +113,10 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
   @keyframes pulse { 0% { opacity: 0.35; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(3.2); } }
   .place:hover .dot { transform: scale(1.3); }
   .place:hover .label { fill: var(--text-primary); }
-  /* Labels are too small to read under 768px; the list carries the names there. */
-  @media (max-width: 767px) { .label, .leader { display: none; } }
+  /* Phones: the European pins sit too close for labels, so the list below carries every name. Labels stay on
+     for the training centre and for pins that are on their own (data-solo), which is what sells the reach. */
+  .label-solo { display: none; }
+  @media (max-width: 767px) { .label-d, .leader { display: none; } .label-solo { display: block; } }
   /* Names only on phones, where map labels are too small to show. The SVG's aria-label carries them for screen readers everywhere. */
   .world-list { display: grid; gap: var(--space-3); }
   @media (min-width: 768px) { .world-list { display: none; } }

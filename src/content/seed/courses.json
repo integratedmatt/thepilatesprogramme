@@ -133,7 +133,7 @@
       "ITTAP",
       "Pilates Method Alliance"
     ],
-    "locationNote": "Most Mat dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "locationNote": "Most Mat dates run at our purpose-built Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
     "cardImage": {
       "url": "/images/site/course-mat.jpg",
       "alt": "Mat Pilates teacher training",
@@ -275,7 +275,7 @@
       "ITTAP",
       "Pilates Method Alliance"
     ],
-    "locationNote": "Most Reformer dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "locationNote": "Most Reformer dates run at our purpose-built Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
     "cardImage": {
       "url": "/images/site/course-reformer.jpg",
       "alt": "Reformer Pilates teacher training",
@@ -409,7 +409,7 @@
     "accreditationBadges": [
       "Barre Fitness Alliance"
     ],
-    "locationNote": "Most Barre dates run at our Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
+    "locationNote": "Most Barre dates run at our purpose-built Altrincham training centre; around half a dozen courses a year run elsewhere in the UK and abroad",
     "cardImage": {
       "url": "/images/site/course-barre.jpg",
       "alt": "Barre teacher training",
@@ -508,7 +508,7 @@
       "width": 1600,
       "height": 900
     },
-    "locationNote": "At our Altrincham training centre",
+    "locationNote": "At our purpose-built Altrincham training centre",
     "accreditation": "Internationally accredited by ITTAP via the Pilates Method Alliance",
     "accreditationBadges": [
       "ITTAP",
@@ -606,7 +606,7 @@
       "width": 1600,
       "height": 900
     },
-    "locationNote": "At our Altrincham training centre"
+    "locationNote": "At our purpose-built Altrincham training centre"
   },
   {
     "_id": "course-cadillac",
@@ -699,7 +699,7 @@
       "width": 1600,
       "height": 900
     },
-    "locationNote": "At our Altrincham training centre"
+    "locationNote": "At our purpose-built Altrincham training centre"
   },
   {
     "_id": "course-barrels",
@@ -791,7 +791,7 @@
       "width": 1600,
       "height": 900
     },
-    "locationNote": "At our Altrincham training centre"
+    "locationNote": "At our purpose-built Altrincham training centre"
   },
   {
     "_id": "course-apparatus-bundle",

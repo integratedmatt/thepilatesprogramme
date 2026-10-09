@@ -267,6 +267,10 @@ export interface SiteSettings {
     home: { name: string; lat: number; lng: number };
     locations: { name: string; region?: string; lat: number; lng: number; labelDx?: number; labelDy?: number; anchor?: 'start' | 'middle' | 'end' }[];
   };                // "What's included" on the Continuing Education hub
+  providerComparison?: {                       // "What you get with us" table; other providers never named
+    eyebrow?: string; heading: string; lead?: string; usLabel?: string; themLabel?: string; footnote?: string;
+    rows: { feature: string; us: string; them: string }[];
+  };
   heroTrustLine?: string;                      // e.g. "Trusted by 850+ students"
   pressLogos: { name: string; image?: ImageRef; url?: string }[];   // "As seen in"; image optional, text wordmark fallback
   equipmentPartner?: { name: string; url: string; blurb?: string };  // affiliate URL; every link to its domain gets these tracking params

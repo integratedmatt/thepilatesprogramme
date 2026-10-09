@@ -32,9 +32,9 @@ const localSchema = {
   hasMap: settings.mapUrl, sameAs: [settings.instagramUrl].filter(Boolean),
 };
 ---
-<Base title="Pilates Training Centre Altrincham | The Pilates Programme" description="Our two-floor centre at 23 Central Way, Altrincham: apparatus and Barre studios, seminar and study rooms, near the train and tram. Studio hire available.">
+<Base title="Purpose-Built Pilates Training Centre, Altrincham | The Pilates Programme" description="The UK's first purpose-built Pilates education centre: two floors of apparatus and Barre studios, seminar and study rooms at 23 Central Way, Altrincham. Studio hire available.">
   <Fragment slot="head"><JsonLd data={localSchema} /></Fragment>
-  <Hero eyebrow="Training centre" title="The training centre, Altrincham" lead={`${settings.address.street}, ${settings.address.town}, ${settings.address.postcode}. Two floors of apparatus, Barre and study space, a short walk from Altrincham interchange.`} image={gallery[0]}>
+  <Hero eyebrow="Training centre" title="The UK's first purpose‑built Pilates education centre" lead={`Still the only one of its kind. A luxury centre at ${settings.address.street}, ${settings.address.town}, ${settings.address.postcode}, designed for teacher training rather than fitted around a studio timetable: two floors of apparatus, Barre and study space, a short walk from Altrincham interchange.`} image={gallery[0]}>
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Training centre', url: '/training-centre' }]} />
     <div class="hero-actions"><a href={settings.mapUrl} class="btn btn-primary" target="_blank" rel="noopener">Open in Google Maps</a><a href="#hire" class="btn btn-secondary">Studio hire</a></div>
   </Hero>
@@ -45,8 +45,11 @@ const localSchema = {
 
   <Section tone="subtle">
     <div class="grid">
-      <div class="col-5"><p class="eyebrow">Facilities</p><h2>What's here</h2></div>
-      <div class="col-7"><ul class="rule-list facilities" role="list">{facilities.map((f) => <li>{f}</li>)}</ul></div>
+      <div class="col-5"><p class="eyebrow">Facilities</p><h2>Built for learning to teach</h2></div>
+      <div class="col-7">
+        <p class="lead">Unlike in-house trainings that work around a studio timetable, this centre is fully dedicated to your teacher training. We were proud to be the first of our kind in the UK, raising the standard of education in the fitness industry, and we still are.</p>
+        <ul class="rule-list facilities mt-5" role="list">{facilities.map((f) => <li>{f}</li>)}</ul>
+      </div>
     </div>
   </Section>
 
