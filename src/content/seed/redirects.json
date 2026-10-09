@@ -1,16 +1,107 @@
 [
-  { "_id": "redirect-1", "_type": "redirect", "from": "/uk-pilates-barre-instructor-courses", "to": "/become-a-pilates-instructor", "permanent": true },
-  { "_id": "redirect-2", "_type": "redirect", "from": "/mat-pilates-course", "to": "/become-a-pilates-instructor/mat-pilates-teacher-training", "permanent": true },
-  { "_id": "redirect-3", "_type": "redirect", "from": "/reformer-pilates-course", "to": "/become-a-pilates-instructor/reformer-pilates-teacher-training", "permanent": true },
-  { "_id": "redirect-4", "_type": "redirect", "from": "/barre-course", "to": "/become-a-pilates-instructor/barre-teacher-training", "permanent": true },
-  { "_id": "redirect-5", "_type": "redirect", "from": "/advanced-reformer-pilates-course-1", "to": "/continuing-education/advanced-reformer", "permanent": true },
-  { "_id": "redirect-6", "_type": "redirect", "from": "/chair-pilates-course", "to": "/continuing-education/chair", "permanent": true },
-  { "_id": "redirect-7", "_type": "redirect", "from": "/cadillac-pilates-course", "to": "/continuing-education/cadillac", "permanent": true },
-  { "_id": "redirect-8", "_type": "redirect", "from": "/barrel-pilates-course", "to": "/continuing-education/barrels", "permanent": true },
-  { "_id": "redirect-9", "_type": "redirect", "from": "/uk-pilates-cpd-courses", "to": "/continuing-education/cpd", "permanent": true },
-  { "_id": "redirect-10", "_type": "redirect", "from": "/prenatalandpostpartumcpd", "to": "/continuing-education/cpd/prenatal-postpartum", "permanent": true },
-  { "_id": "redirect-11", "_type": "redirect", "from": "/strengthandendurancecpd", "to": "/continuing-education/cpd/strength-endurance", "permanent": true },
-  { "_id": "redirect-12", "_type": "redirect", "from": "/jumpboard", "to": "/continuing-education/cpd/jumpboard-online", "permanent": true },
-  { "_id": "redirect-13", "_type": "redirect", "from": "/painscience", "to": "/continuing-education/cpd/pain-science", "permanent": true },
-  { "_id": "redirect-15", "_type": "redirect", "from": "/elevatingothers", "to": "/elevating-others", "permanent": true }
+  {
+    "_id": "redirect-1",
+    "_type": "redirect",
+    "from": "/uk-pilates-barre-instructor-courses",
+    "to": "/become-a-pilates-instructor",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-2",
+    "_type": "redirect",
+    "from": "/mat-pilates-course",
+    "to": "/become-a-pilates-instructor/mat-pilates-teacher-training",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-3",
+    "_type": "redirect",
+    "from": "/reformer-pilates-course",
+    "to": "/become-a-pilates-instructor/reformer-pilates-teacher-training",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-4",
+    "_type": "redirect",
+    "from": "/barre-course",
+    "to": "/become-a-pilates-instructor/barre-teacher-training",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-5",
+    "_type": "redirect",
+    "from": "/advanced-reformer-pilates-course-1",
+    "to": "/continuing-education/advanced-reformer",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-6",
+    "_type": "redirect",
+    "from": "/chair-pilates-course",
+    "to": "/continuing-education/chair",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-7",
+    "_type": "redirect",
+    "from": "/cadillac-pilates-course",
+    "to": "/continuing-education/cadillac",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-8",
+    "_type": "redirect",
+    "from": "/barrel-pilates-course",
+    "to": "/continuing-education/barrels",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-9",
+    "_type": "redirect",
+    "from": "/uk-pilates-cpd-courses",
+    "to": "/continuing-education/cpd",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-10",
+    "_type": "redirect",
+    "from": "/prenatalandpostpartumcpd",
+    "to": "/continuing-education/cpd/prenatal-postpartum",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-11",
+    "_type": "redirect",
+    "from": "/strengthandendurancecpd",
+    "to": "/continuing-education/cpd/strength-endurance",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-12",
+    "_type": "redirect",
+    "from": "/jumpboard",
+    "to": "/continuing-education/cpd/jumpboard-online",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-13",
+    "_type": "redirect",
+    "from": "/painscience",
+    "to": "/continuing-education/cpd/pain-science",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-15",
+    "_type": "redirect",
+    "from": "/elevatingothers",
+    "to": "/elevating-others",
+    "permanent": true
+  },
+  {
+    "_id": "redirect-16",
+    "_type": "redirect",
+    "from": "/training-centre",
+    "to": "/about#training-centre",
+    "permanent": true
+  }
 ]

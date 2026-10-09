@@ -71,6 +71,11 @@
       "source": "/elevatingothers",
       "destination": "/elevating-others",
       "permanent": true
+    },
+    {
+      "source": "/training-centre",
+      "destination": "/about#training-centre",
+      "permanent": true
     }
   ],
   "headers": [

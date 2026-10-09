@@ -44,7 +44,7 @@ const lines = [
   `- [Road to Certification](${site}/become-a-pilates-instructor/road-to-certification)`,
   `- [Jobs board](${site}/jobs)`,
   `- [Graduates](${site}/graduates)`,
-  `- [Training centre](${site}/training-centre)`,
+  `- [About us and the training centre](${site}/about)`,
   `- [Journal](${site}/blog)`,
   `- [FAQs](${site}/faqs)`,
   '',

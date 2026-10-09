@@ -41,7 +41,8 @@ test('no redirect hides a page on this site', () => {
 
 test('every redirect target exists as a built page', () => {
   for (const r of vercel.redirects) {
-    const p = r.destination === '/' ? 'dist/client/index.html' : `dist/client${r.destination}/index.html`;
+    const dest = r.destination.replace(/#.*$/, ''); // a fragment (e.g. /about#training-centre) still targets a built page
+    const p = dest === '/' ? 'dist/client/index.html' : `dist/client${dest}/index.html`;
     assert.doesNotThrow(() => readFileSync(p), `${r.destination} not built`);
   }
 });

@@ -30,7 +30,6 @@ const cy0 = 0, cy1 = height;
 const crop = { w: cx1 - cx0, h: cy1 - cy0 };
 const cropVars = `--crop-ratio: ${crop.w.toFixed(1)} / ${crop.h.toFixed(1)}; --crop-scale: ${(VIEW_WIDTH / crop.w * 100).toFixed(2)}%; --crop-left: ${(-cx0 / crop.w * 100).toFixed(2)}%; --crop-top: ${(-cy0 / crop.h * 100).toFixed(2)}%; --full-ratio: ${VIEW_WIDTH} / ${height};`;
 const solo = new Set(places.filter((a) => places.every((b) => b === a || Math.hypot(a.x - b.x, a.y - b.y) > 60) && Math.hypot(a.x - (home?.x ?? 0), a.y - (home?.y ?? 0)) > 60).map((p) => p.i));
-const regions = Array.from(new Set(places.map((p) => p.region ?? p.name)));
 const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. All trained at ${map.home.name}.` : '';
 ---
 {map && places.length > 0 && home && (
@@ -67,14 +66,6 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
           </svg>
         </div>
         </div>
-        <figcaption class="world-list">
-          <ul role="list">
-            {regions.map((r) => {
-              const names = places.filter((p) => (p.region ?? p.name) === r).map((p) => p.name);
-              return <li><strong>{names.join(', ')}</strong>{names.length === 1 && names[0] === r ? null : <span class="muted">{r}</span>}</li>;
-            })}
-          </ul>
-        </figcaption>
       </figure>
     </div>
   </section>
@@ -117,14 +108,9 @@ const label = map ? `${map.heading}: ${places.map((p) => p.name).join(', ')}. Al
      for the training centre and for pins that are on their own (data-solo), which is what sells the reach. */
   .label-solo { display: none; }
   @media (max-width: 767px) { .label-d, .leader { display: none; } .label-solo { display: block; } }
-  /* Names only on phones, where map labels are too small to show. The SVG's aria-label carries them for screen readers everywhere. */
-  .world-list { display: grid; gap: var(--space-3); }
-  @media (min-width: 768px) { .world-list { display: none; } }
+  /* No list of places on any screen (client, 9 Oct 2026): the map is the message. The SVG's aria-label carries the names for screen readers. */
   .legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
   .legend > span { white-space: nowrap; }
-  .world-list ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
-  .world-list li { display: inline-flex; gap: var(--space-2); align-items: baseline; font-size: var(--type-small); }
-  .world-list strong { font-weight: var(--weight-medium); color: var(--text-primary); }
   .key { display: inline-block; width: var(--space-2); height: var(--space-2); border-radius: var(--radius-pill); margin-right: var(--space-2); vertical-align: middle; }
   .key-home { background: var(--ink-900); }
   .key-place { background: var(--bronze-700); }

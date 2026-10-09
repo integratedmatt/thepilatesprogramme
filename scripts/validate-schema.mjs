@@ -14,7 +14,7 @@ const required = {
   '/course-dates': ['Course'],
   '/faqs': ['FAQPage'],
   '/blog/how-to-become-a-pilates-instructor-uk': ['Article', 'BreadcrumbList'],
-  '/training-centre': ['LocalBusiness'],
+  '/about': ['LocalBusiness'],
 };
 
 async function html(path) {

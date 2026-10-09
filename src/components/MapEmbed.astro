@@ -1,0 +1,50 @@
+---
+/**
+ * Google Map of the training centre. The old page drew a grey grid placeholder that linked out, which is
+ * why "the embedded map doesn't work". This embeds the real map with Google's keyless embed URL.
+ *
+ * Google's iframe sets cookies, so it only loads once the visitor has accepted marketing cookies (the
+ * cookie banner stores the choice in localStorage as tpp-consent). Until then the frame shows the address
+ * with a "Load map" button, and the static directions link always works. No API key needed.
+ */
+import type { SiteSettings } from '@/lib/types';
+interface Props { settings: SiteSettings; class?: string }
+const { settings, class: className = '' } = Astro.props;
+const query = encodeURIComponent(`${settings.entityName}, ${settings.address.street}, ${settings.address.town} ${settings.address.postcode}`);
+const src = `https://www.google.com/maps?q=${query}&z=16&hl=en-GB&output=embed`;
+const label = `Map of ${settings.address.street}, ${settings.address.town}`;
+---
+<div class={`map-embed ${className}`.trim()} data-map-embed data-src={src}>
+  <div class="map-placeholder" data-map-placeholder>
+    <p class="eyebrow">{settings.address.town} {settings.address.postcode}</p>
+    <p class="secondary">{settings.address.street}, {settings.address.town}, {settings.address.postcode}</p>
+    <div class="map-actions">
+      <button type="button" class="btn btn-primary" data-map-load>Load the map</button>
+      <a href={settings.mapUrl} class="btn btn-secondary" target="_blank" rel="noopener">Open in Google Maps</a>
+    </div>
+    <p class="small muted">The map is served by Google and sets cookies, so it loads when you ask for it or once you have accepted marketing cookies.</p>
+  </div>
+  <iframe title={label} loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+</div>
+<style>
+  .map-embed { position: relative; aspect-ratio: 3 / 2; background: var(--bg-subtle); border: var(--border-width) solid var(--border-subtle); overflow: hidden; }
+  .map-placeholder { position: absolute; inset: 0; display: grid; align-content: center; justify-items: start; gap: var(--space-3); padding: var(--space-6); background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px); background-size: var(--space-7) var(--space-7); }
+  .map-placeholder[hidden] { display: none; }
+  .map-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  iframe[hidden] { display: none; }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-map-embed]').forEach((root) => {
+    const frame = root.querySelector<HTMLIFrameElement>('iframe')!;
+    const placeholder = root.querySelector<HTMLElement>('[data-map-placeholder]')!;
+    const load = () => { if (frame.src) return; frame.src = root.dataset.src!; frame.hidden = false; placeholder.hidden = true; };
+    root.querySelector('[data-map-load]')?.addEventListener('click', load);
+    const consented = () => { try { const c = JSON.parse(localStorage.getItem('tpp-consent') || 'null'); return Boolean(c && c.marketing); } catch { return false; } };
+    if (consented()) load();
+    // Load as soon as the visitor accepts marketing cookies in the banner.
+    const w = window as any; w.dataLayer = w.dataLayer || [];
+    const push = w.dataLayer.push.bind(w.dataLayer);
+    w.dataLayer.push = (...args: any[]) => { const r = push(...args); const e = args[0]; if (e && e.event === 'consent_update' && e.consent_marketing) load(); return r; };
+  });
+</script>

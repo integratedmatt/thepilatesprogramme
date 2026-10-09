@@ -161,3 +161,7 @@ Nothing downloadable is being sent. The career guide PDF does not exist yet, so 
 **The training centre.** It was downplayed. It is now called "The UK's first purpose-built Pilates education centre" on the homepage, the training centre page and the About page, with your old line that it is "fully dedicated to your teacher training, unlike in-house trainings that work around a studio timetable". The Location fact on every course page says "purpose-built Altrincham training centre".
 
 **The map on phones.** It was cropping to a zoomed box that cut the arcs off and lost the sense of the world. It now shows the pinned half of the world at full height, every arc from Altrincham intact, with Australia labelled. The list of places stays underneath for the European cluster, where labels would overlap.
+
+**About page, consolidated.** One page now. It opens with "The UK's first purpose-built Pilates education centre" over the main studio photo, then the photo gallery (tap to enlarge), what the centre offers, how to find us with a real Google map, studio hire, and then Georgie and Sarah, the approach, values and method. The old training centre page redirects here. The map loads on a tap, or automatically once a visitor accepts marketing cookies, because Google's map sets cookies.
+
+**The map of where students teach.** No list of places on phones any more. Just the map.
