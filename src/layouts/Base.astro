@@ -76,6 +76,8 @@ const previewNoindex = Boolean(vercelEnv) && vercelEnv !== 'production';
     <Footer settings={settings} />
     <CookieBanner />
     <FormEnhancer />
+    {/* Arketa AI chatbot: answers from TPP's own FAQ library in Arketa, hands the rest to the Arketa inbox, creates a lead from every new chat. Loaded as a module after the page so it never blocks rendering. */}
+    <script type="module" src="https://chatbot.arketa.com/v0/widget.js?partner_id=S8JPMxKNCvg20C6oI4ZMpOQBPxu1" is:inline></script>
     <script>
       // Reveal on entry: fade + rise once, disabled under prefers-reduced-motion.
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -98,6 +100,11 @@ const previewNoindex = Boolean(vercelEnv) && vercelEnv !== 'production';
         const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-book]');
         if (!a) return;
         push({ event: 'book_click', course: a.dataset.course, date_id: a.dataset.dateId, price: a.dataset.price ? Number(a.dataset.price) : undefined, path: a.dataset.path, location: a.dataset.location });
+      });
+      // book_call_click on any link to the Book a call page
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href="/book-a-call"], a[href^="/book-a-call?"], a[href^="https://cal.com/"]');
+        if (a) push({ event: 'book_call_click', placement: a.dataset.placement || 'link', page: location.pathname });
       });
       // job_apply_click
       document.addEventListener('click', (e) => {

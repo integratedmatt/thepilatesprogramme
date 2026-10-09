@@ -25,6 +25,7 @@ Not to be confused with the Irish on-demand app of a similar name. This is the A
 ## Key pages
 - [How to become a Pilates instructor in Manchester](https://www.thepilatesprogramme.co.uk/become-a-pilates-instructor)
 - [Course dates](https://www.thepilatesprogramme.co.uk/course-dates)
+- [Book a call](https://www.thepilatesprogramme.co.uk/book-a-call)
 - [Pricing](https://www.thepilatesprogramme.co.uk/pricing)
 - [Accreditation](https://www.thepilatesprogramme.co.uk/accreditation)
 - [Road to Certification](https://www.thepilatesprogramme.co.uk/become-a-pilates-instructor/road-to-certification)

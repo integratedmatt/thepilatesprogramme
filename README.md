@@ -75,7 +75,12 @@ The playbook's 3D transitions and animated 3D clay icons were deliberately not u
 
 ## Analytics
 
-GTM container `GTM-NSDMRJW6` loads on production builds (`src/lib/analytics.ts`; `PUBLIC_GTM_ID` overrides it, dev and test builds load nothing). Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, view_dates, scroll_depth, job_apply_click, page_not_found), the form enhancer (lead_submit, job_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
+GTM container `GTM-NSDMRJW6` loads on production builds (`src/lib/analytics.ts`; `PUBLIC_GTM_ID` overrides it, dev and test builds load nothing). Consent Mode v2 defaults everything to denied; the banner stores the choice in `localStorage` and pushes `consent_update`. Data-layer events from Section 9.3 are pushed by `Base.astro` (book_click, book_call_click, view_dates, scroll_depth, job_apply_click, page_not_found), the Book a call page (book_call_view, book_call_booked from Cal.com's bookingSuccessful event), the form enhancer (lead_submit, job_submit, contact_submit) and the quiz (quiz_start, quiz_complete). GA4 and Meta Pixel tags, plus the Conversions API, are configured inside GTM against those events, gated on consent.
+
+## Chat and call booking
+
+- **Arketa chatbot**: `Base.astro` loads `https://chatbot.arketa.com/v0/widget.js` (partner id in the tag) on every page as a deferred module. It answers from the FAQ library TPP maintain in Arketa and creates a lead from every new conversation. Point its FAQ answers about calls at `/book-a-call`.
+- **Book a call**: `src/pages/book-a-call.astro` embeds Cal.com (`thepilatesprogramme/30min`) inline with the official loader and a plain-link fallback. The header button, footer, homepage, hub hero and course pages link to it.
 
 ## Server routes on Vercel
 

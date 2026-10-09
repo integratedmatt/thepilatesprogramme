@@ -39,6 +39,7 @@ const lines = [
   '## Key pages',
   `- [How to become a Pilates instructor in Manchester](${site}/become-a-pilates-instructor)`,
   `- [Course dates](${site}/course-dates)`,
+  `- [Book a call](${site}/book-a-call)`,
   `- [Pricing](${site}/pricing)`,
   `- [Accreditation](${site}/accreditation)`,
   `- [Road to Certification](${site}/become-a-pilates-instructor/road-to-certification)`,

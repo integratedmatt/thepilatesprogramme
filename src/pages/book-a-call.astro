@@ -1,0 +1,82 @@
+---
+/**
+ * Book a call: Cal.com inline embed (thepilatesprogramme/30min). The calendar renders inside the page so the
+ * visitor never leaves the site; the plain link underneath is the fallback for no-JS and for screen readers.
+ * The header "Book a call" button and the Arketa chatbot FAQ answers both point here.
+ */
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { getSiteSettings } from '@/lib/content';
+const settings = await getSiteSettings();
+export const CAL_LINK = 'thepilatesprogramme/30min';
+const calUrl = `https://cal.com/${CAL_LINK}`;
+---
+<Base title="Book a Call | The Pilates Programme" description="Talk it through with Georgie or Sarah before you book: a free 30-minute call about Mat, Reformer or Barre teacher training, the practice hours and how it fits around your life.">
+  <Hero eyebrow="Book a call" title="Talk it through with an actual person" lead="Thirty minutes with Georgie or Sarah, free, no pressure. Bring your questions about the courses, the practice hours, paying in instalments or how it fits around your job. Pick a time that suits you below.">
+    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Book a call', url: '/book-a-call' }]} />
+  </Hero>
+
+  <Section reveal={false}>
+    <div class="cal-wrap">
+      <div id="cal-inline" class="cal-inline" data-cal-inline data-cal-link={CAL_LINK} aria-label="Choose a date and time for your call"></div>
+      <p class="small muted cal-fallback" data-cal-fallback>Calendar not showing? <a href={calUrl} target="_blank" rel="noopener">Open the booking page in a new tab</a>, or email <a href={`mailto:${settings.email}`}>{settings.email}</a>.</p>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="grid">
+      <div class="col-5"><p class="eyebrow">Prefer not to call?</p><h2>Other ways to get your answers</h2></div>
+      <div class="col-7">
+        <ul class="rule-list ways" role="list">
+          <li><strong>Ask the chat.</strong> The chat bubble in the corner answers the questions we get most, any time of day, and passes anything else to us.</li>
+          <li><strong>Take the 60-second quiz.</strong> <a href="/become-a-pilates-instructor/which-course">Which course should you start with?</a></li>
+          <li><strong>Read the questions people ask first.</strong> <a href="/faqs">Cost, hours, exams and accreditation</a>.</li>
+          <li><strong>Email us.</strong> <a href={`mailto:${settings.email}`}>{settings.email}</a></li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+</Base>
+<style>
+  .cal-wrap { display: grid; gap: var(--space-4); }
+  .cal-inline { min-height: 640px; width: 100%; background: var(--bg-surface); border: var(--border-width) solid var(--border-subtle); }
+  .cal-inline:empty { display: grid; place-content: center; }
+  .cal-inline:empty::before { content: "Loading the calendar…"; color: var(--text-muted); font-size: var(--type-small); }
+  :global(.no-js) .cal-inline { display: none; }
+  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-5 { grid-column: span 4; } .col-7 { grid-column: 6 / span 7; } }
+  .col-5 h2 { margin-block: var(--space-3) var(--space-4); }
+  .ways { list-style: none; } .ways li { padding-block: var(--space-3); color: var(--text-secondary); }
+</style>
+<script>
+  // Cal.com's official embed loader (https://cal.com/docs/developing/guides/embed). Kept verbatim apart from formatting.
+  (function (C: any, A: string, L: string) {
+    let p = function (a: any, ar: any) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement('script')).src = A; cal.loaded = true; }
+      if (ar[0] === L) {
+        const api: any = function () { p(api, arguments); };
+        const namespace = ar[1]; api.q = api.q || [];
+        if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, 'https://app.cal.com/embed/embed.js', 'init');
+  const w = window as any;
+  const el = document.querySelector<HTMLElement>('[data-cal-inline]');
+  if (el) {
+    const calLink = el.dataset.calLink!;
+    w.Cal('init', '30min', { origin: 'https://app.cal.com' });
+    w.Cal.ns['30min']('inline', { elementOrSelector: '#cal-inline', config: { layout: 'month_view', theme: 'light' }, calLink });
+    w.Cal.ns['30min']('ui', { hideEventTypeDetails: false, layout: 'month_view', cssVarsPerTheme: { light: { 'cal-brand': '#7A5C43' } } });
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({ event: 'book_call_view' });
+    // Cal fires bookingSuccessful when a slot is confirmed; push it so GTM can count it as a conversion.
+    w.Cal.ns['30min']('on', { action: 'bookingSuccessful', callback: () => w.dataLayer.push({ event: 'book_call_booked' }) });
+  }
+</script>
