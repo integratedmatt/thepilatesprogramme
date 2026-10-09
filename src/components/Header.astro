@@ -10,7 +10,7 @@ const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 const apparatus = continueCourses.filter((c) => c.kind !== 'cpd');
 // One "Courses" menu holds both paths side by side, so visitors see every course before choosing a route.
-// The header button is Book a call (client, 8 Oct 2026); Course dates lives in the Plan menu. Journal, FAQs and Contact live in the footer.
+// The header button is Book now (course dates). Book a call is a secondary route on course pages and in the menus. Journal, FAQs and Contact live in the footer.
 const links = [
   { label: 'Jobs', href: '/jobs' },
   { label: 'About', href: '/about' },
@@ -69,7 +69,7 @@ const meta = (c: (typeof qualify)[number]) => [durationLabel(c) ?? (c.format ===
     </nav>
 
     <div class="header-actions">
-      <a href="/book-a-call" class="btn btn-primary btn-book" data-placement="header"><span class="book-full">Book a call</span><span class="book-short">Call</span></a>
+      <a href="/course-dates" class="btn btn-primary btn-book"><span class="book-full">Book now</span><span class="book-short">Book</span></a>
       <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
       </button>

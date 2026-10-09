@@ -101,6 +101,13 @@ const previewNoindex = Boolean(vercelEnv) && vercelEnv !== 'production';
         if (!a) return;
         push({ event: 'book_click', course: a.dataset.course, date_id: a.dataset.dateId, price: a.dataset.price ? Number(a.dataset.price) : undefined, path: a.dataset.path, location: a.dataset.location });
       });
+      // "Chat with our team": open the Arketa chatbot if its widget has loaded, otherwise follow the link to Book a call.
+      document.addEventListener('click', (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-open-chat]');
+        if (!a) return;
+        const bot = w.ArketaChatbot;
+        if (bot && typeof bot.open === 'function') { e.preventDefault(); bot.open(); push({ event: 'chat_open', placement: a.dataset.placement || 'link', page: location.pathname }); }
+      });
       // book_call_click on any link to the Book a call page
       document.addEventListener('click', (e) => {
         const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href="/book-a-call"], a[href^="/book-a-call?"], a[href^="https://cal.com/"]');

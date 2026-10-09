@@ -92,6 +92,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
       {course.guideUrl
         ? <a href={course.guideUrl} class="btn btn-secondary" target="_blank" rel="noopener">Download the course guide</a>
         : <a href="#guide" class="btn btn-secondary">Download the course guide</a>}
+      <a href="/book-a-call" class="btn btn-secondary" data-open-chat data-placement="course_hero">Got questions? Chat with our team</a>
     </div>
     <AccreditationStrip settings={settings} tone="dark" class="hero-accred" only={course.accreditationBadges ?? []} />
   </Hero>
@@ -237,7 +238,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
       <a href={hubUrl(course.path)} class="arrow-link">{isQualify ? 'How to become a Pilates instructor' : 'All continuing education'}</a>
       <a href="/become-a-pilates-instructor/road-to-certification" class="arrow-link">Road to Certification</a>
       <a href="/pricing" class="arrow-link">Pricing and finance</a>
-      <a href="/book-a-call" class="arrow-link" data-placement="course_related">Book a call to talk it through</a>
+      <a href="/book-a-call" class="arrow-link" data-placement="course_related">Book a call</a>
       <a href="/accreditation" class="arrow-link">Our accreditation</a>
     </nav>
   </Section>

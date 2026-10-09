@@ -80,7 +80,7 @@ GTM container `GTM-NSDMRJW6` loads on production builds (`src/lib/analytics.ts`;
 ## Chat and call booking
 
 - **Arketa chatbot**: `Base.astro` loads `https://chatbot.arketa.com/v0/widget.js` (partner id in the tag) on every page as a deferred module. It answers from the FAQ library TPP maintain in Arketa and creates a lead from every new conversation. Point its FAQ answers about calls at `/book-a-call`.
-- **Book a call**: `src/pages/book-a-call.astro` embeds Cal.com (`thepilatesprogramme/30min`) inline with the official loader and a plain-link fallback. The header button, footer, homepage, hub hero and course pages link to it.
+- **Book a call**: `src/pages/book-a-call.astro` embeds Cal.com (`thepilatesprogramme/30min`) inline with the official loader and a plain-link fallback. The footer, homepage and course pages link to it; the header button stays Book now (course dates).
 
 ## Server routes on Vercel
 
