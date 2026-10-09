@@ -165,3 +165,5 @@ Nothing downloadable is being sent. The career guide PDF does not exist yet, so 
 **About page, consolidated.** One page now. It opens with "The UK's first purpose-built Pilates education centre" over the main studio photo, then the photo gallery (tap to enlarge), what the centre offers, how to find us with a real Google map, studio hire, and then Georgie and Sarah, the approach, values and method. The old training centre page redirects here. The map loads on a tap, or automatically once a visitor accepts marketing cookies, because Google's map sets cookies.
 
 **The map of where students teach.** No list of places on phones any more. Just the map.
+
+**About page, restructured (9 Oct, later).** Five sections, in the order a visitor needs them: the centre (hero, gallery, four facts), Georgie and Sarah (story and approach), what we stand for, find us and studio hire in one block with the map, and a "Ready to train with us?" step. Elevating Others, the method lineage and the FAQs have come off this page; they live on their own pages and in the footer.

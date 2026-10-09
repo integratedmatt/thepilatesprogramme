@@ -1,8 +1,9 @@
 ---
 /**
- * About: leads with the training centre (the UK's first purpose-built Pilates education centre), then the
- * founders, then the approach. Absorbs the old /training-centre page (redirected here) so there is one
- * place that says who they are and where you train. Client direction, 9 Oct 2026.
+ * About. Two questions a visitor brings here: where will I train, and who will teach me. The page answers
+ * them in that order and stops: the centre (hero and gallery), the founders, what they stand for, then one
+ * compact practical block (find us, studio hire) and a next step. Elevating Others, the method lineage and
+ * the FAQs live on their own pages. Client direction, 9 Oct 2026.
  */
 import { AFFILIATE_REL } from '@/lib/affiliate';
 import Base from '@/layouts/Base.astro';
@@ -13,11 +14,9 @@ import TeamCards from '@/components/TeamCards.astro';
 import Picture from '@/components/Picture.astro';
 import Gallery from '@/components/Gallery.astro';
 import MapEmbed from '@/components/MapEmbed.astro';
-import FaqAccordion from '@/components/FaqAccordion.astro';
-import AccreditationStrip from '@/components/AccreditationStrip.astro';
-import { getSiteSettings, getTeam, getFaqsByIds } from '@/lib/content';
+import { getSiteSettings, getTeam } from '@/lib/content';
 import { gbp } from '@/lib/format';
-const [settings, team, faqs] = await Promise.all([getSiteSettings(), getTeam(), getFaqsByIds(['faq-location', 'faq-studio-hire'])]);
+const [settings, team] = await Promise.all([getSiteSettings(), getTeam()]);
 const founders = team.filter((m) => m.founder);
 const trainers = team.filter((m) => !m.founder);
 const travel = settings.travelTimes.filter((t) => t.minutes);
@@ -28,86 +27,41 @@ const gallery = [
   { url: '/images/site/about-6.jpg', alt: 'The Cadillac', width: 1068, height: 1600 },
   { url: '/images/site/about-13.jpg', alt: 'The seminar room with screens for theory sessions', width: 1600, height: 1068 },
   { url: '/images/site/about-8.jpg', alt: 'The lounge, with the words Be you not them on the wall', width: 1600, height: 1068 },
-  { url: '/images/site/about-3.jpg', alt: 'The study and breakout space', width: 1600, height: 1068 },
-  { url: '/images/site/about-14.jpg', alt: 'The kitchen for lunch and breaks', width: 1600, height: 1068 },
-  { url: '/images/site/about-10.jpg', alt: 'Lockers for students', width: 1068, height: 1600 },
 ];
-const facilities = ['Full Pilates apparatus and Barre fit-out across two floors', 'Integrated screens for seminars and presentations', 'Study and breakout spaces', 'Kitchen facilities', 'Easy access by train, tram, bus and car, with parking nearby', 'Equipment hire for personal practice', 'Studio hire for practice teaching'];
+const facts = [
+  ['Two floors', 'of studio space'],
+  ['Full apparatus', 'Reformers, Cadillac, Chairs, Barrels and a Barre fit-out'],
+  ['Seminar screens', 'study spaces and a kitchen'],
+  ['A short walk', 'from Altrincham train and tram'],
+];
 ---
-<Base title="About Us and the Training Centre | The Pilates Programme" description="The UK's first purpose-built Pilates education centre, in Altrincham, and the two teachers who built it. Two floors of apparatus and Barre, studio hire, and how to find us.">
-  <Hero eyebrow="About" title="The UK's first purpose‑built Pilates education centre" lead={`Still the only one of its kind. A luxury centre at ${settings.address.street}, ${settings.address.town}, designed for teacher training rather than fitted around a studio timetable, with full apparatus and Barre across two floors. Built by two teachers who wanted to fix what their own training missed.`} image={gallery[0]}>
+<Base title="About Us and the Training Centre | The Pilates Programme" description="The UK's first purpose-built Pilates education centre, in Altrincham, and the two teachers who built it. Look around, meet Georgie and Sarah, and find us.">
+  <Hero eyebrow="About" title="The UK's first purpose‑built Pilates education centre" lead="Still the only one of its kind. A luxury centre in Altrincham designed for teacher training rather than fitted around a studio timetable, built by two teachers who wanted to fix what their own training missed." image={gallery[0]}>
     <Breadcrumbs slot="breadcrumbs" items={[{ name: 'About', url: '/about' }]} />
-    <div class="hero-actions"><a href="#founders" class="btn btn-primary">Meet Georgie and Sarah</a><a href="#hire" class="btn btn-secondary">Studio hire</a></div>
+    <div class="hero-actions"><a href="#founders" class="btn btn-primary">Meet Georgie and Sarah</a><a href="#training-centre" class="btn btn-secondary">Look around</a></div>
   </Hero>
 
   <Section id="training-centre">
-    <header class="section-heading"><p class="eyebrow">The training centre</p><h2>Look around</h2></header>
-    <Gallery images={gallery} label="Photos of the training centre" />
-  </Section>
-
-  <Section tone="subtle">
-    <div class="grid">
-      <div class="col-5"><p class="eyebrow">Why it matters</p><h2>Built for learning to teach</h2></div>
-      <div class="col-7">
-        <p class="lead">Unlike in-house trainings that work around a studio timetable, this centre is fully dedicated to your teacher training. We were proud to be the first of our kind in the UK, raising the standard of education in the fitness industry, and we still are.</p>
-        <ul class="rule-list facilities mt-5" role="list">{facilities.map((f) => <li>{f}</li>)}</ul>
-      </div>
-    </div>
-  </Section>
-
-  <Section id="find-us">
-    <div class="grid">
-      <div class="col-5">
-        <p class="eyebrow">Getting here</p>
-        <h2>How to find us</h2>
-        <address class="not-italic secondary">{settings.address.street}<br />{settings.address.town}<br />{settings.address.postcode}</address>
-        <p class="mt-4"><a href={settings.mapUrl} target="_blank" rel="noopener" class="arrow-link">Directions in Google Maps</a></p>
-        {settings.parkingNote && <p class="secondary mt-4">{settings.parkingNote}</p>}
-        {settings.accessibilityNote && <p class="secondary mt-4">{settings.accessibilityNote}</p>}
-        <p class="small muted mt-4">Most courses run here. Around half a dozen a year run elsewhere in the UK and abroad; your date row shows the location.</p>
-      </div>
-      <div class="col-7">
-        <MapEmbed settings={settings} />
-        {travel.length > 0 && (
-          <div class="table-wrap mt-6">
-            <table><thead><tr><th scope="col">From</th><th scope="col">Time</th><th scope="col">By</th></tr></thead>
-              <tbody>{travel.map((t) => <tr><th scope="row">{t.from}</th><td>About {t.minutes} min</td><td>{t.mode}</td></tr>)}</tbody></table>
-          </div>
-        )}
-      </div>
-    </div>
-  </Section>
-
-  <Section tone="subtle" id="hire">
-    <div class="grid">
-      <div class="col-5"><p class="eyebrow">Practice hours</p><h2>Studio and equipment hire</h2></div>
-      <div class="col-7">
-        <p class="lead">Students and graduates can hire the studio and apparatus for practice teaching, observation and their own practice.</p>
-        <dl class="facts mt-5">
-          <div><dt>Studio hire</dt><dd>{settings.studioHireRate ? `${gbp(settings.studioHireRate)} per hour` : 'Ask us for the current rate'}</dd></div>
-          <div><dt>Equipment hire</dt><dd>{settings.equipmentHireRate ? `${gbp(settings.equipmentHireRate)} per hour` : 'Ask us'}</dd></div>
-        </dl>
-        <p class="mt-5"><a href={`mailto:${settings.email}?subject=Studio%20hire`} class="btn btn-primary">Book studio hire by email</a></p>
-        {settings.equipmentPartner?.url && <p class="small secondary mt-5">Setting up your own studio or home practice? {settings.equipmentPartner.name} is our equipment partner: <a href={settings.equipmentPartner.url} rel={AFFILIATE_REL} target="_blank">visit {settings.equipmentPartner.name}<span class="visually-hidden"> (opens in a new tab)</span></a>. <span class="muted">Affiliate link: we may earn a commission at no cost to you.</span></p>}
-      </div>
-    </div>
-  </Section>
-
-  <Section id="founders">
-    <header class="section-heading">
-      <p class="eyebrow">The founders</p>
-      <h2>Built by two teachers who wanted to fix what their own training missed</h2>
-      <p class="lead">We're Georgie and Sarah. We built The Pilates Programme to close the gaps we found in our own training when we first started teaching. We teach what we wish we'd been taught, and we stay with you until you're teaching your first classes.</p>
+    <header class="section-heading split">
+      <div><p class="eyebrow">The training centre</p><h2>Built for learning to teach</h2></div>
+      <p class="lead">Unlike in-house trainings that work around a studio timetable, this centre is fully dedicated to your teacher training. We were proud to be the first of our kind in the UK, and we still are.</p>
     </header>
+    <Gallery images={gallery} label="Photos of the training centre" />
+    <dl class="fact-strip" data-stagger>
+      {facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+    </dl>
+  </Section>
+
+  <Section tone="subtle" id="founders">
     <div class="grid founders">
-      {/* Photo: the client wants a picture of Sarah and Georgie here. Replace this studio shot once they supply one. */}
-      <div class="col-7"><Picture image={{ url: '/images/site/home-header.jpg', alt: 'A student working through the course manual on a Reformer', width: 1920, height: 1080 }} aspect="landscape" sizes="(min-width: 1024px) 58vw, 100vw" /></div>
-      <div class="col-5">
-        <p class="eyebrow">Our approach</p>
-        <h3>What makes us different</h3>
-        <p class="secondary">Our courses are steeped in the heritage of the original method, combined with modern knowledge of training principles and the science of movement, so your clients get results. Whether you would prefer to teach classically or through a more contemporary lens, you'll have all the tools to do so.</p>
-        <p class="secondary mt-4">We keep our course sizes small so we can focus on your individual development, all while building a community and valuing connection. A handful of times a year we also run courses in partnership with boutique studios elsewhere in the UK and abroad.</p>
-        <p class="secondary mt-4">Train with confidence. Teach with purpose. Build a career without limits.</p>
+      {/* Photo: the client wants a picture of Sarah and Georgie here. Replace this stand-in once they supply one. */}
+      <div class="col-6"><Picture image={{ url: '/images/site/home-header.jpg', alt: 'A student working through the course manual on a Reformer', width: 1920, height: 1080 }} aspect="portrait" sizes="(min-width: 1024px) 50vw, 100vw" /></div>
+      <div class="col-6">
+        <p class="eyebrow">The founders</p>
+        <h2>Built by two teachers who wanted to fix what their own training missed</h2>
+        <p class="lead">We're Georgie and Sarah. We built The Pilates Programme to close the gaps we found in our own training when we first started teaching. We teach what we wish we'd been taught, and we stay with you until you're teaching your first classes.</p>
+        <p class="secondary">Our courses are steeped in the heritage of the original method and combined with modern movement science, so whether you'd rather teach classically or through a more contemporary lens, you'll have the tools to do it. We keep every cohort small so we can focus on you, and we build a community around it, because nobody figures this out alone.</p>
+        <p class="secondary">Train with confidence. Teach with purpose. Build a career without limits.</p>
       </div>
     </div>
     <div class="mt-7"><TeamCards members={founders} heading="Georgie and Sarah" /></div>
@@ -115,50 +69,63 @@ const facilities = ['Full Pilates apparatus and Barre fit-out across two floors'
   </Section>
 
   <Section tone="inverse">
-    <header class="section-heading"><p class="eyebrow">Values</p><h2>What we stand for</h2></header>
+    <header class="section-heading"><p class="eyebrow">What we stand for</p><h2>Four things we won't compromise on</h2></header>
     <ul class="values" role="list" data-stagger>
       <li><h3>High quality, in-depth, thorough education</h3><p>The practice hours exist because they make you a teacher studios trust: industry ready, confident and competent from your first class.</p></li>
-      <li><h3>Small groups, expert in-person coaching</h3><p>Being coached while you teach is the fastest way to improve. We structure every course with lots of opportunity to practice teach and refine that skill.</p></li>
+      <li><h3>Small groups, expert in-person coaching</h3><p>Being coached while you teach is the fastest way to improve. Every course is built around practice teaching and feedback.</p></li>
       <li><h3>The full spectrum of Pilates</h3><p>From contrology and classical through to a contemporary practice, so you can teach in any studio and understand why each tradition exists.</p></li>
-      <li><h3>Community and connection</h3><p>A supportive, engaging atmosphere where you'll meet like-minded people and make new friends. Graduates come back for apparatus courses and CPD, refer friends and hire each other.</p></li>
+      <li><h3>Community and connection</h3><p>A supportive, engaging atmosphere where you'll meet like-minded people and make new friends. Graduates come back, refer friends and hire each other.</p></li>
     </ul>
   </Section>
 
-  <Section>
-    <div class="grid">
-      <div class="col-5"><p class="eyebrow">Method lineage</p><h2>From Contrology to today</h2></div>
-      <div class="col-7">
-        <p class="secondary">We teach it all. Contrology, which is what Joseph Pilates himself taught. Classical Pilates, which the first generation of teachers adapted from it. And Contemporary Pilates, the evolving approach that builds on the original system with what physiotherapy, biomechanics and sports science have learned since. You understand the roots before you adapt them.</p>
-        <p class="mt-4"><a href="/accreditation" class="arrow-link">How our training is accredited</a></p>
+  <Section id="find-us">
+    <div class="grid practical">
+      <div class="col-6"><MapEmbed settings={settings} /></div>
+      <div class="col-6">
+        <p class="eyebrow">Find us</p>
+        <h2>{settings.address.street}, {settings.address.town}</h2>
+        <p class="secondary">{settings.address.postcode}. {settings.parkingNote}</p>
+        <p><a href={settings.mapUrl} target="_blank" rel="noopener" class="arrow-link">Directions in Google Maps</a></p>
+        {travel.length > 0 && <p class="small muted">{travel.map((t) => `${t.from}: about ${t.minutes} min by ${t.mode}`).join(' · ')}</p>}
+        <div class="hire" id="hire">
+          <p class="eyebrow">Studio and equipment hire</p>
+          <p class="secondary">Students and graduates can hire the studio and apparatus for practice teaching and their own practice. {settings.studioHireRate ? `Studio hire is ${gbp(settings.studioHireRate)} per hour.` : 'Ask us for current rates.'}</p>
+          <p><a href={`mailto:${settings.email}?subject=Studio%20hire`} class="btn btn-secondary">Book studio hire by email</a></p>
+          {settings.equipmentPartner?.url && <p class="small muted">Setting up at home? <a href={settings.equipmentPartner.url} rel={AFFILIATE_REL} target="_blank">{settings.equipmentPartner.name}<span class="visually-hidden"> (opens in a new tab)</span></a> is our equipment partner (affiliate link).</p>}
+        </div>
       </div>
     </div>
   </Section>
 
   <Section tone="subtle">
-    <div class="grid">
-      <div class="col-5"><p class="eyebrow">Elevating Others</p><h2>Two funded places a year</h2></div>
-      <div class="col-7"><p class="secondary">Every year we fully fund two Mat teacher trainings for people who face barriers to access. <a href="/elevating-others">Read about Elevating Others</a>.</p><div class="mt-6"><AccreditationStrip settings={settings} /></div></div>
+    <div class="next">
+      <div><p class="eyebrow">Next</p><h2>Ready to train with us?</h2></div>
+      <div class="hero-actions"><a href="/become-a-pilates-instructor" class="btn btn-primary">See the courses</a><a href="/book-a-call" class="btn btn-secondary" data-placement="about_next">Book a call</a></div>
     </div>
   </Section>
-
-  <Section><FaqAccordion faqs={faqs} heading="Questions about the centre" /></Section>
 </Base>
 <style>
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  .section-heading.split { align-items: end; }
+  @media (min-width: 1024px) { .section-heading.split { grid-template-columns: 5fr 7fr; gap: var(--space-8); } }
   .section-heading .lead { max-width: var(--measure-body); }
-  .col-7 { grid-column: span 12; } .col-5 { grid-column: span 12; }
-  @media (min-width: 1024px) { .col-7 { grid-column: span 7; } .col-5 { grid-column: 9 / span 4; } .grid > .col-5:first-child { grid-column: span 4; } .grid > .col-5:first-child + .col-7 { grid-column: 6 / span 7; } }
-  .col-5 h2 { margin-block: var(--space-3) var(--space-4); }
-  .founders .col-5 h3 { margin-block: var(--space-2) var(--space-4); }
-  .facilities { list-style: none; } .facilities li { padding-block: var(--space-3); color: var(--text-secondary); }
-  .not-italic { font-style: normal; }
-  .table-wrap { overflow-x: auto; } td { color: var(--text-secondary); }
-  .facts { display: grid; gap: var(--space-4); grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .facts div { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); }
+  .col-6 { grid-column: span 12; }
+  @media (min-width: 1024px) { .col-6 { grid-column: span 6; } }
+  .founders, .practical { align-items: center; }
+  .founders .col-6:last-child, .practical .col-6:last-child { display: grid; gap: var(--space-4); align-content: center; }
+  .fact-strip { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+  @media (min-width: 768px) { .fact-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); } }
+  .fact-strip div { border-top: var(--border-width) solid var(--border-subtle); padding-top: var(--space-3); display: grid; gap: var(--space-1); }
+  .fact-strip dt { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-h3); line-height: var(--leading-h3); }
+  .fact-strip dd { margin: 0; color: var(--text-secondary); font-size: var(--type-small); }
   .values { list-style: none; display: grid; gap: var(--space-6); }
   @media (min-width: 768px) { .values { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .values li { display: grid; gap: var(--space-2); border-top: var(--border-width) solid var(--ink-700); padding-top: var(--space-4); }
   .values p { color: var(--stone-300); }
+  .hire { margin-top: var(--space-4); padding-top: var(--space-5); border-top: var(--border-width) solid var(--border-subtle); display: grid; gap: var(--space-3); }
+  .next { display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .next { grid-template-columns: 1fr auto; align-items: center; } }
+  .next h2 { margin-top: var(--space-2); }
   .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
-  .mt-4 { margin-top: var(--space-4); } .mt-5 { margin-top: var(--space-5); } .mt-6 { margin-top: var(--space-6); } .mt-7 { margin-top: var(--space-7); }
+  .mt-7 { margin-top: var(--space-7); }
 </style>
