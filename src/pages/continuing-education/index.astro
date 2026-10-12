@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import AnswerBox from '@/components/AnswerBox.astro';
 import CourseCard from '@/components/CourseCard.astro';
 import DatesList from '@/components/DatesList.astro';
@@ -24,7 +23,6 @@ const answer = `The Pilates Programme, Altrincham offers continuing education fo
 ---
 <Base title="Pilates CPD and Apparatus Courses | The Pilates Programme" description="Advanced Reformer, Chair, Cadillac, Barrels and CPD days for certified Pilates teachers from any provider, in Altrincham. Returning students save 10%.">
   <Hero eyebrow="Continue learning" title="Grow your teaching, grow your income" lead="Apparatus training and CPD for certified teachers from any provider, taught in person on full apparatus in Altrincham.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Continuing education', url: '/continuing-education' }]} />
     <div class="hero-actions"><a href="#apparatus" class="btn btn-primary">Apparatus courses</a><a href="#cpd" class="btn btn-secondary">CPD days</a></div>
   </Hero>
 

@@ -37,6 +37,8 @@ const heroVideo = heroVideoSources('/video/header');
     <PressStrip slot="footer" settings={settings} tone="dark" />
   </Hero>
 
+  <Section tone="subtle" reveal={false} class="accred-band"><AccreditationStrip settings={settings} /></Section>
+
   <Section>
     <div class="paths" data-stagger>
       <PathTile eyebrow="I want to certify" title="Become a Pilates or Barre teacher" promise="Mat, Reformer and Barre teacher training with 4 or 5 in-person days, practice hours in your own time and exams included." href="/become-a-pilates-instructor" image={{ url: '/images/site/about-5.jpg', alt: 'The Reformer studio at the Altrincham training centre, with the sign that reads cool people teach Pilates', width: 1600, height: 1068 }} cta="Start your route" />
@@ -137,7 +139,7 @@ const heroVideo = heroVideoSources('/video/header');
         <h2>{settings.freeGuide.title}</h2>
         <ul class="plain-list" role="list">{settings.freeGuide.bullets.map((b) => <li>{b}</li>)}</ul>
       </div>
-      <div class="col-5"><EmailCapture formId="home_guide" path="qualify" tag="career-guide" successText="Thanks. The guide is on its way to your inbox." /></div>
+      <div class="col-5"><EmailCapture formId="home_guide" path="qualify" tag="career-guide" successText="Thanks. We will email the guide to you." /></div>
     </div>
   </Section>
 
@@ -154,12 +156,10 @@ const heroVideo = heroVideoSources('/video/header');
     <p class="mt-6"><a href="/faqs" class="arrow-link">All questions</a></p>
   </Section>
 
-  <Section reveal={false}>
-    <AccreditationStrip settings={settings} />
-  </Section>
 </Base>
 <style>
   .section-heading { display: grid; gap: var(--space-3); margin-bottom: var(--space-7); }
+  :global(.accred-band) { padding-block: var(--space-5); border-bottom: var(--border-width) solid var(--border-subtle); }
   .trust-line { color: var(--stone-100); font-weight: var(--weight-regular); display: inline-flex; align-items: center; gap: var(--space-2); }
   .trust-line::before { content: ""; width: var(--space-2); height: var(--space-2); border-radius: var(--radius-pill); background: var(--text-inverse-accent); }
   .paths { display: grid; gap: var(--space-4); }

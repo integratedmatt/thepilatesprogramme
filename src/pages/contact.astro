@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Turnstile from '@/components/Turnstile.astro';
 import { getSiteSettings } from '@/lib/content';
 const settings = await getSiteSettings();
@@ -16,8 +15,7 @@ const topics = [
 ];
 ---
 <Base title="Contact The Pilates Programme, Altrincham | The Pilates Programme" description="Ask a question about Pilates or Barre teacher training, join a waitlist, or arrange studio hire. Email info@thepilatesprogramme.co.uk or use the form.">
-  <Hero eyebrow="Contact" title="Ask us anything" lead="We reply within two working days. If you are deciding between courses, the 60-second quiz may answer it faster.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Contact', url: '/contact' }]} />
+  <Hero title="Ask us anything" lead="We reply within two working days. If you are deciding between courses, the 60-second quiz may answer it faster.">
   </Hero>
   <Section>
     <div class="grid">

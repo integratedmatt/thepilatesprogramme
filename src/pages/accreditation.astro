@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import AnswerBox from '@/components/AnswerBox.astro';
 import AccreditationStrip from '@/components/AccreditationStrip.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
@@ -17,9 +16,8 @@ const questions = [
   { q: 'Which traditions do they teach?', a: 'Some courses teach one style. Ask whether you will learn Contrology, Classical and Contemporary repertoire so you can work in any studio.' },
 ];
 ---
-<Base title="Our Accreditation Explained | The Pilates Programme" description="What our ITTAP, Pilates Method Alliance, Barre Fitness Alliance and CIMSPA accreditation covers, what it means for your career, and the questions to ask any provider.">
-  <Hero eyebrow="Accreditation" title="Our accreditation, explained honestly" lead="What each accreditation is, which course it applies to, what it means for where you can teach, and how to compare any provider without the marketing.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Accreditation', url: '/accreditation' }]} />
+<Base title="Our Accreditation Explained | The Pilates Programme" description="What our ITTAP, Pilates Method Alliance, Barre Fitness Alliance and CIMSPA accreditation covers, and the questions to ask any provider.">
+  <Hero title="Our accreditation, explained honestly" lead="What each accreditation is, which course it applies to, what it means for where you can teach, and how to compare any provider without the marketing.">
   </Hero>
 
   <Section>

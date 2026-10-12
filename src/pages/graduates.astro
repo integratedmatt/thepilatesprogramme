@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Picture from '@/components/Picture.astro';
 import Testimonials from '@/components/Testimonials.astro';
 import { getGraduates, getTestimonials, getQualifyCourses, getContinueCourses } from '@/lib/content';
@@ -14,8 +13,7 @@ const studios = Array.from(new Set(graduates.flatMap((g) => g.studios ?? []))).s
 const courseNames = Array.from(new Set(graduates.map((g) => g.course)));
 ---
 <Base title="Where Our Pilates Graduates Teach | The Pilates Programme" description="Where our graduates teach now, how soon they landed their first paid class and what they say about training with The Pilates Programme in Altrincham.">
-  <Hero eyebrow="Graduates" title="Where our graduates teach" lead="Outcomes, not promises. Every profile is published with the graduate's consent.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Graduates', url: '/graduates' }]} />
+  <Hero title="Where our graduates teach" lead="Outcomes, not promises. Every profile is published with the graduate's consent.">
   </Hero>
 
   {showGrid ? (

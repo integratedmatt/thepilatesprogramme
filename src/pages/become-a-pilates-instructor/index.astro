@@ -2,11 +2,9 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import AnswerBox from '@/components/AnswerBox.astro';
 import FactsBlock from '@/components/FactsBlock.astro';
 import Timeline from '@/components/Timeline.astro';
-import CourseCard from '@/components/CourseCard.astro';
 import CompareTabs from '@/components/CompareTabs.astro';
 import WhyUs from '@/components/WhyUs.astro';
 import DatesList from '@/components/DatesList.astro';
@@ -48,7 +46,6 @@ const facts = [
 ---
 <Base title="Become a Pilates Instructor in Manchester | The Pilates Programme" description="How to become a certified Pilates or Barre teacher: 4 or 5 in-person days, practice hours in your own time and exams included, from £2,200. Small cohorts.">
   <Hero eyebrow="Teacher training" title="How to become a Pilates instructor" lead="One route, no shortcuts: four or five in-person days in a small cohort, your practice hours in your own time, and exams that studios trust. Everything included in one price.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Become a Pilates instructor', url: '/become-a-pilates-instructor' }]} />
     <div class="hero-actions">
       <a href="#courses" class="btn btn-primary">Choose a course</a>
       <a href="/become-a-pilates-instructor/which-course" class="btn btn-secondary">Take the 60-second quiz</a>
@@ -67,13 +64,8 @@ const facts = [
     <Timeline steps={steps} />
   </Section>
 
-  <Section id="courses">
-    <header class="section-heading"><p class="eyebrow">Teacher training</p><h2>Choose your first course</h2></header>
-    <ul class="card-grid" role="list" data-stagger>{courses.map((c) => <li><CourseCard course={c} nextDate={nextFor(c._id)} showBestFor /></li>)}</ul>
-  </Section>
-
-  <Section tone="subtle" id="compare">
-    <header class="section-heading"><p class="eyebrow">Compare</p><h2>Mat, Reformer or Barre?</h2><p class="lead">Train in the apparatus you are most passionate about. All three set you up to teach in studios, gyms, online and one to one. The difference is what you can practise on.</p></header>
+  <Section tone="subtle" id="courses">
+    <header class="section-heading"><p class="eyebrow">Teacher training</p><h2>Choose your first course: Mat, Reformer or Barre?</h2><p class="lead">Train in the apparatus you are most passionate about. All three set you up to teach in studios, gyms, online and one to one. The difference is what you can practise on.</p></header>
     <CompareTabs courses={courses} nextFor={nextFor} id="compare-courses" />
     <p class="small muted mt-4">Job demand varies by area. The jobs board shows which disciplines local studios are hiring for right now.</p>
   </Section>
@@ -121,7 +113,7 @@ const facts = [
   <Section tone="inverse">
     <div class="grid">
       <div class="col-7"><p class="eyebrow">Free guide</p><h2>{settings.freeGuide.title}</h2></div>
-      <div class="col-5"><EmailCapture formId="qualify_guide" path="qualify" tag="career-guide" successText="Thanks. The guide is on its way to your inbox." /></div>
+      <div class="col-5"><EmailCapture formId="qualify_guide" path="qualify" tag="career-guide" successText="Thanks. We will email the guide to you." /></div>
     </div>
   </Section>
 </Base>

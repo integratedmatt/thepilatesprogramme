@@ -3,7 +3,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import JobRow from '@/components/JobRow.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
 import PartnerCard from '@/components/PartnerCard.astro';
@@ -31,8 +30,7 @@ const isFiltered = Boolean(f.discipline || f.area || f.type || f.graduate);
 const settings = await getSiteSettings();
 ---
 <Base title="Pilates Instructor Jobs Across the UK | The Pilates Programme" description="Pilates and Barre teaching jobs across the UK, listed by studios and checked by us. Filter by discipline, area and type, or get alerts for new roles." canonicalPath="/jobs" noindex={isFiltered}>
-  <Hero eyebrow="Jobs board" title="Pilates and Barre teaching jobs across the UK" lead="Roles listed by studios, reviewed by us, free for teachers to browse. New roles are added as they are approved.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Jobs', url: '/jobs' }]} />
+  <Hero title="Pilates and Barre teaching jobs across the UK" lead="Roles listed by studios, reviewed by us, free for teachers to browse. New roles are added as they are approved.">
   </Hero>
   <Section reveal={false}>
     <div class="grid">

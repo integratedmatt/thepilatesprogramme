@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import Turnstile from '@/components/Turnstile.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
 import Picture from '@/components/Picture.astro';
@@ -12,7 +11,6 @@ const eo = settings.elevatingOthers;
 ---
 <Base title="Elevating Others: Funded Training | The Pilates Programme" description="Two fully funded Mat Pilates teacher trainings a year for people facing barriers to access. How Elevating Others works, who it is for, and how to apply.">
   <Hero eyebrow="Elevating Others" title="Two fully funded places a year" lead="Every year we fund two Mat Pilates teacher trainings in full for people who face barriers to access. No catch, no strings." image={{ url: '/images/site/elevatingothers-1.jpg', alt: 'A Giving Back sign from The Pilates Programme on a tree-lined street', width: 1080, height: 1080 }}>
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Elevating Others', url: '/elevating-others' }]} />
   </Hero>
 
   <Section>

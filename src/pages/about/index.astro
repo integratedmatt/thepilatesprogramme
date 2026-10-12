@@ -9,7 +9,6 @@ import { AFFILIATE_REL } from '@/lib/affiliate';
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import TeamCards from '@/components/TeamCards.astro';
 import Picture from '@/components/Picture.astro';
 import Gallery from '@/components/Gallery.astro';
@@ -31,14 +30,13 @@ const gallery = [
 const facts = [
   ['Two floors', 'of studio space'],
   ['Full apparatus', 'Reformers, Cadillac, Chairs, Barrels and a Barre fit-out'],
-  ['Seminar screens', 'study spaces and a kitchen'],
+  ['Seminar screens', 'plus study spaces and a kitchen'],
   ['A short walk', 'from Altrincham train and tram'],
 ];
 ---
 <Base title="About Us and the Training Centre | The Pilates Programme" description="The UK's first purpose-built Pilates education centre, in Altrincham, and the two teachers who built it. Look around, meet Georgie and Sarah, and find us.">
-  <Hero eyebrow="About" title="The UK's first purpose‑built Pilates education centre" lead="Still the only one of its kind. A luxury centre in Altrincham designed for teacher training rather than fitted around a studio timetable, built by two teachers who wanted to fix what their own training missed." image={gallery[0]}>
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'About', url: '/about' }]} />
-    <div class="hero-actions"><a href="#founders" class="btn btn-primary">Meet Georgie and Sarah</a><a href="#training-centre" class="btn btn-secondary">Look around</a></div>
+  <Hero title="The UK's first purpose‑built Pilates education centre" lead="Still the only one of its kind. A luxury centre in Altrincham designed for teacher training rather than fitted around a studio timetable, built by two teachers who wanted to fix what their own training missed." image={gallery[0]}>
+    <div class="hero-actions"><a href="#founders" class="btn btn-primary">Meet our founders</a><a href="#training-centre" class="btn btn-secondary">Look around</a></div>
   </Hero>
 
   <Section id="training-centre">

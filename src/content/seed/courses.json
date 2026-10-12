@@ -429,17 +429,18 @@
     "discipline": "Reformer",
     "level": "Advanced",
     "format": "in-person",
-    "eyebrow": "Continuing education · in person",
+    "eyebrow": "Continuing education · 2 in-person days",
     "outcome": "Add the advanced Reformer repertoire and teach progressions your strongest clients ask for.",
     "bestFor": "For certified Reformer teachers ready to teach advanced classes.",
-    "price": null,
+    "price": 750,
     "financeOptions": [
       {
         "label": "Pay in full"
       },
       {
-        "label": "2 interest-free instalments",
-        "instalments": 2
+        "label": "6 monthly interest-free payments",
+        "instalments": 6,
+        "amount": 125
       }
     ],
     "prerequisites": [
@@ -513,7 +514,13 @@
     "accreditationBadges": [
       "ITTAP",
       "Pilates Method Alliance"
-    ]
+    ],
+    "durationDays": 2,
+    "hoursBreakdown": {
+      "observation": 30,
+      "personalStudy": 35,
+      "practiceTeaching": 15
+    }
   },
   {
     "_id": "course-chair",

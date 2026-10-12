@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import { getFaqs } from '@/lib/content';
@@ -16,8 +15,7 @@ if (other.length) groups.push({ title: 'Other questions', items: other });
 ---
 <Base title="Pilates Teacher Training FAQs | The Pilates Programme" description="Answers on choosing a course, cost and finance, practice hours, exams, accreditation, finding work after you certify and continuing education.">
   <Fragment slot="head"><JsonLd data={faqSchema(faqs)} /></Fragment>
-  <Hero eyebrow="FAQs" title="Questions people ask before they book" lead="Honest answers. If yours is not here, ask us and we will add it.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'FAQs', url: '/faqs' }]} />
+  <Hero title="Questions people ask before they book" lead="Honest answers. If yours is not here, ask us and we will add it.">
     <div class="field search"><label for="faq-search">Search questions</label><input class="input" id="faq-search" type="search" placeholder="e.g. instalments, Reformer, hours" autocomplete="off" /></div>
   </Hero>
   <Section reveal={false}>

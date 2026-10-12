@@ -91,7 +91,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
       <a href="#dates" class="btn btn-primary">See dates</a>
       {course.guideUrl
         ? <a href={course.guideUrl} class="btn btn-secondary" target="_blank" rel="noopener">Download the course guide</a>
-        : <a href="#guide" class="btn btn-secondary">Download the course guide</a>}
+        : <a href="#guide" class="btn btn-secondary">Get the course guide</a>}
       <a href="/book-a-call" class="btn btn-secondary" data-open-chat data-placement="course_hero">Got questions? Chat with our team</a>
     </div>
     <AccreditationStrip settings={settings} tone="dark" class="hero-accred" only={course.accreditationBadges ?? []} />
@@ -219,7 +219,7 @@ const pageEvent = JSON.stringify({ event: 'view_course', course: course.slug, pa
         <ul class="plain-list" role="list">{settings.freeGuide.bullets.map((b) => <li>{b}</li>)}</ul>
       </div>
       <div class="col-5">
-        <EmailCapture formId={`course_guide_${course.slug}`} path={course.path} course={course.slug} tag="course-guide" buttonLabel="Send me the guide" successText="Thanks. The guide is on its way to your inbox." />
+        <EmailCapture formId={`course_guide_${course.slug}`} path={course.path} course={course.slug} tag="course-guide" buttonLabel="Send me the guide" successText="Thanks. We will email the guide to you." />
       </div>
     </div>
   </Section>

@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import AnswerBox from '@/components/AnswerBox.astro';
 import FaqAccordion from '@/components/FaqAccordion.astro';
 import { getSiteSettings, getCourses, getPricingRules, getFaqsByIds, courseUrl } from '@/lib/content';
@@ -15,8 +14,7 @@ const financeLabel = (c: typeof courses[number]) => c.financeOptions.map((f) => 
 const answer = `Pilates teacher training at The Pilates Programme costs ${gbp(minQualify)} for Mat, Reformer or Barre, including the online HUMAN MOVEMENT course, four or five in-person days, your manual, the video library, workshops and the exams. Pay in full or in four monthly interest-free payments. Two courses together cost £3,400. Apparatus courses run from £800 and CPD days are £250.`;
 ---
 <Base title="Pilates Teacher Training Cost | The Pilates Programme" description="What Pilates teacher training costs: £2,200 all in with exams included, interest-free instalments, double booking savings and the costs to plan for.">
-  <Hero eyebrow="Pricing" title="How much does Pilates teacher training cost?" lead="One price per course with exams, manual and assessment included. No hidden fees. Here is every number and every way to pay.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Pricing', url: '/pricing' }]} />
+  <Hero title="How much does Pilates teacher training cost?" lead="One price per course with exams, manual and assessment included. No hidden fees. Here is every number and every way to pay.">
   </Hero>
 
   <Section><AnswerBox question="What does it cost to train with The Pilates Programme?" answer={answer} /></Section>

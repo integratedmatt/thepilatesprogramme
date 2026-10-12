@@ -2,7 +2,6 @@
 import Base from '@/layouts/Base.astro';
 import Hero from '@/components/Hero.astro';
 import Section from '@/components/Section.astro';
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import DateRow from '@/components/DateRow.astro';
 import EmailCapture from '@/components/EmailCapture.astro';
 import JsonLd from '@/components/JsonLd.astro';
@@ -18,8 +17,7 @@ const schema = rows.map((r) => ({ '@context': 'https://schema.org', '@type': 'Co
 ---
 <Base title="Pilates Teacher Training Course Dates | The Pilates Programme" description="All upcoming Mat, Reformer, Barre, apparatus and CPD dates at our Altrincham training centre. Filter by course, month and location, and book in two clicks." canonicalPath="/course-dates">
   <Fragment slot="head"><JsonLd data={schema} /></Fragment>
-  <Hero eyebrow="Course dates" title="Upcoming course dates" lead="Every date, every course. Book opens Arketa in a new tab. Full dates show a waitlist.">
-    <Breadcrumbs slot="breadcrumbs" items={[{ name: 'Course dates', url: '/course-dates' }]} />
+  <Hero title="Upcoming course dates" lead="Every date, every course. Book opens Arketa in a new tab. Full dates show a waitlist.">
   </Hero>
   <Section id="dates" reveal={false}>
     <form class="filters" id="date-filters" aria-label="Filter dates">
