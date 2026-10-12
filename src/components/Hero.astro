@@ -57,7 +57,6 @@ const videoSources = video ? [...video.sources].sort((a, b) => b.minWidth - a.mi
   .hero.is-center .hero-inner { text-align: center; justify-items: center; }
   .hero-page .hero-inner { gap: var(--space-4); }
   .hero :global(.hero-actions) { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
-  .hero :global(.breadcrumbs a), .hero-inverse :global(.breadcrumbs span) { color: var(--stone-300); }
   .hero-video-toggle { position: absolute; z-index: 2; right: var(--margin-outer); top: var(--space-5); display: inline-grid; place-items: center; width: var(--touch-target); height: var(--touch-target); border-radius: var(--radius-pill); border: var(--border-width) solid color-mix(in srgb, var(--white) 50%, transparent); background: color-mix(in srgb, var(--ink-900) 40%, transparent); color: var(--white); cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
   .hero-video-toggle:hover { background: var(--ink-900); border-color: var(--white); }
   .hero-video-toggle svg { width: var(--space-4); height: var(--space-4); }

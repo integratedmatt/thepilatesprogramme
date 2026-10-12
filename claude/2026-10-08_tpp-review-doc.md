@@ -28,7 +28,8 @@ Your old website copy was the starting point everywhere. Your notes on the Mat p
 | The training centre | Mentioned in passing | "The UK's first purpose-built Pilates education centre", on the homepage, the About page, the course pages and the comparison table, with your old line that it is "fully dedicated to your teacher training, unlike in-house trainings that work around a studio timetable" |
 | Jobs board | "List a role, free", "listed free by studios" | "List a role". "Listings are paid: we review every one within 2 working days, send you a payment link on approval, and your role runs for 60 days." No price shown until you confirm it. |
 | Full spectrum | "a method that covers every tradition" | "training across the full spectrum of Pilates: from contrology and classical through to a contemporary practice" |
-| Breadcrumbs and eyebrows | Many pages showed both a breadcrumb trail and a small label saying the same thing above the heading | One or the other, never both |
+| Breadcrumbs | A breadcrumb trail at the top of most pages, often repeating the small label above the heading | No breadcrumb trail anywhere. Search engines still get the page hierarchy behind the scenes. |
+| Course photos | Some apparatus pages used the wrong apparatus: the Reformer page showed the Cadillac, the Chair page showed the Ladder Barrel | Each page shows its own apparatus from your photos: Mat the lounge and manual, Reformer the Reformer studio, Barre the barre, Chair the Wunda Chairs, Cadillac the Cadillac by the windows, Barrels the Ladder Barrel. Please check these, since you know the apparatus and we do not. |
 | Free guide forms | "Check your inbox" | "Thanks. We will email the guide to you." The guides do not exist yet, so the forms collect addresses and nothing goes out until you have signed the copy off. |
 
 ## 2. Menu and header
@@ -113,14 +114,18 @@ Same structure and rules as Mat. Not yet reviewed by you.
 - Repertoire from your old page: "ALL of the Classical exercises, including transitions, from the beginner and intermediate tiers" and "Contemporary exercises, variations and modifications".
 - Same teaching skills list as Mat, with "Cueing on the apparatus".
 - This is for you if: your four lines plus "You have, or can arrange, access to a Reformer for your practice hours".
-- Hero photo is the Reformers by the window. Card shows your Reformer graphic.
+- Hero photo is the Reformer studio, the same scene as your old Reformer graphic. Card shows the graphic.
 - Accreditation: ITTAP via PMA. CIMSPA is not shown until you confirm it should be.
 
 **Barre**
 - First line: "Certify on the only Barre teacher training in the UK accredited by the Barre Fitness Alliance: the most in-depth training and the truest to the original method."
 - Summary, what's included and what you'll learn are lifted from your old Barre page (Lotte Berk origins, classical versus contemporary Barre, movement patterns at the barre and on the floor, the signature exercises and the burn, programming and transitions, pre and postnatal basics).
 - Accreditation: Barre Fitness Alliance only. The BFA badge appears on this course alone.
-- Hero image is the barre rail from your old Barre graphic; the card shows the graphic.
+- Hero image is the barre from your old Barre graphic, with the lettering cropped off; the card shows the graphic.
+
+**Apparatus and CPD pages**
+- Chair: the row of Wunda Chairs. Cadillac: the Cadillac by the windows. Barrels: the Ladder Barrel. Advanced Reformer: teachers training on the Reformers. All from your photos, matched to your old graphics.
+- CPD pages use centre photos rather than your portrait cover graphics, because the lettering on those would sit under the page heading. Jumpboard shows the Reformer studio, Strength and Endurance the Reformers in use, Prenatal the lounge, Pain Science the seminar room. Swap any you would rather see differently.
 
 ## 7. Become a Pilates instructor (the hub page)
 

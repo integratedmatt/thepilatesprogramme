@@ -246,8 +246,8 @@
       "jumpboard-online"
     ],
     "heroImage": {
-      "url": "/images/site/about-9.jpg",
-      "alt": "Reformers by the windows at the Altrincham training centre",
+      "url": "/images/site/about-1.jpg",
+      "alt": "The Reformer studio at the Altrincham training centre",
       "width": 1600,
       "height": 1068
     },
@@ -383,8 +383,8 @@
     ],
     "heroImage": {
       "url": "/images/site/barre-studio.jpg",
-      "alt": "A wooden barre in the studio",
-      "width": 1600,
+      "alt": "The wooden barre in the Barre studio at the Altrincham training centre",
+      "width": 1530,
       "height": 1385
     },
     "faqs": [
@@ -587,10 +587,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-7.jpg",
-      "alt": "Wunda Chair reflected in the studio mirror at the Altrincham training centre",
-      "width": 1068,
-      "height": 1600
+      "url": "/images/site/about-4.jpg",
+      "alt": "A row of Wunda Chairs at the Altrincham training centre",
+      "width": 1600,
+      "height": 1068
     },
     "faqs": [
       "faq-prereq-apparatus",
@@ -680,8 +680,8 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-6.jpg",
-      "alt": "The Cadillac at the Altrincham training centre",
+      "url": "/images/site/about-9.jpg",
+      "alt": "The Cadillac by the windows at the Altrincham training centre",
       "width": 1068,
       "height": 1600
     },
@@ -773,7 +773,7 @@
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/barrel-pilates-course-1.jpg",
-      "alt": "Ladder Barrel and Chair at the Altrincham training centre",
+      "alt": "The Ladder Barrel at the Altrincham training centre",
       "width": 1068,
       "height": 1600
     },
@@ -859,7 +859,7 @@
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-9.jpg",
-      "alt": "Full apparatus studio at the Altrincham training centre",
+      "alt": "The Cadillac, Reformers and a Chair in the apparatus studio at the Altrincham training centre",
       "width": 1068,
       "height": 1600
     },
@@ -932,7 +932,7 @@
     "unlocks": [],
     "heroImage": {
       "url": "/images/site/about-3.jpg",
-      "alt": "The study and breakout space at the Altrincham training centre",
+      "alt": "The lounge at the Altrincham training centre, with the course manual on the table",
       "width": 1600,
       "height": 1068
     },
@@ -1003,10 +1003,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-4.jpg",
-      "alt": "A row of Reformers at the Altrincham training centre",
-      "width": 1600,
-      "height": 1068
+      "url": "/images/site/advanced-reformer-header.jpg",
+      "alt": "Teachers training on the Reformers at the Altrincham training centre",
+      "width": 1920,
+      "height": 1080
     },
     "faqs": [
       "faq-cpd-who",
@@ -1075,10 +1075,10 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-9.jpg",
-      "alt": "Reformer at the Altrincham training centre",
-      "width": 1068,
-      "height": 1600
+      "url": "/images/site/about-1.jpg",
+      "alt": "The Reformer studio at the Altrincham training centre",
+      "width": 1600,
+      "height": 1068
     },
     "faqs": [
       "faq-cpd-who",
@@ -1148,8 +1148,8 @@
     ],
     "unlocks": [],
     "heroImage": {
-      "url": "/images/site/about-8.jpg",
-      "alt": "The lounge at the Altrincham training centre",
+      "url": "/images/site/about-13.jpg",
+      "alt": "The seminar room at the Altrincham training centre",
       "width": 1600,
       "height": 1068
     },
