@@ -8,9 +8,10 @@ const { course, nextDate } = Astro.props;
   <div class="container sticky-inner">
     <div class="sticky-copy">
       <p class="sticky-title">{course.shortTitle}{course.kind === 'teacher-training' ? ' teacher training' : ''}</p>
-      <p class="small secondary">
-        {course.price != null && <span>From {gbp(course.price)}</span>}
-        {nextDate && <span> · Next {dateRange(nextDate.startDate, nextDate.endDate)}</span>}
+      <p class="small secondary sticky-meta">
+        {course.price != null && <span class="sticky-price">From {gbp(course.price)}</span>}
+        {course.price != null && nextDate && <span class="sticky-sep"> · </span>}
+        {nextDate && <span class="sticky-next"><span class="sticky-next-label">Next </span>{dateRange(nextDate.startDate, nextDate.endDate)}</span>}
       </p>
     </div>
     <a href="#dates" class="btn btn-primary">Choose a date</a>
@@ -19,9 +20,18 @@ const { course, nextDate } = Astro.props;
 <style>
   .sticky-bar { position: fixed; inset-inline: 0; bottom: 0; z-index: 70; background: var(--bg-surface); border-top: var(--border-width) solid var(--border-subtle); padding-block: var(--space-3); }
   .sticky-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
-  .sticky-copy { display: grid; gap: var(--space-1); min-width: 0; }
-  .sticky-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); line-height: var(--leading-h3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .sticky-bar .btn { min-height: var(--touch-target); padding-block: var(--space-3); flex: none; }
+  .sticky-copy { display: grid; gap: var(--space-1); min-width: 0; flex: 1 1 auto; }
+  .sticky-title, .sticky-copy .small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky-title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--type-lead); line-height: var(--leading-h3); }
+  /* The global mobile rule stretches buttons to full width; here the button shares a row with the copy. */
+  .sticky-bar .btn { width: auto; min-height: var(--touch-target); padding-block: var(--space-3); padding-inline: var(--space-5); flex: 0 0 auto; white-space: nowrap; }
+  /* Phones: the course name is already in the page header, so the bar shows price and next date, one per line, with no truncation. */
+  @media (max-width: 767px) {
+    .sticky-title, .sticky-sep, .sticky-next-label { display: none; }
+    .sticky-meta { display: grid; gap: 2px; white-space: normal; overflow: visible; }
+    .sticky-bar .btn { padding-inline: var(--space-4); }
+    .sticky-price { font-size: var(--type-body); font-weight: var(--weight-medium); color: var(--text-primary); }
+  }
   body.has-sticky { padding-bottom: calc(var(--space-9)); }
 </style>
 <script>
